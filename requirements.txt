@@ -5,3 +5,4 @@ matplotlib
 vos
 cadcutils
 h5py
+tqdm
