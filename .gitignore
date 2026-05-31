@@ -1,3 +1,4 @@
 .kan-test/
 .chime-analysis/
 all_bursts.hdf5
+.ipynb_checkpoints/
