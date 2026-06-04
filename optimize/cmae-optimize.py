@@ -114,7 +114,7 @@ TARGET_LENGTH = 128
 
 train_loader, val_loader = make_dataloader(
     hdf5_path="/scratch/gpfs/MLISANTI/ra0438/all_bursts.hdf5",
-    catalog_path="chimefrbcat2.csv",
+    catalog_path="/home/ra0438/chime-catalog-two-analysis/chimefrbcat2.csv",
     target_length=TARGET_LENGTH,
     batch_size=32,
     num_workers=4,
