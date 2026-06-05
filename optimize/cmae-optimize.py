@@ -8,6 +8,10 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import optuna
 import os
+from torch.utils.data import Subset
+from sklearn.model_selection import train_test_split
+
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 print(torch.cuda.get_device_name(0))
@@ -67,7 +71,6 @@ class CHIMEFRBDataset(Dataset):
         
         return tensor, label
 
-
 def make_dataloader(
     hdf5_path: str,
     catalog_path: str,
@@ -79,34 +82,33 @@ def make_dataloader(
     seed: int = 42,
 ):
     dataset = CHIMEFRBDataset(hdf5_path, catalog_path, target_length)
-
     n_total = len(dataset)
-    n_train = int(n_total * train_frac)
-    n_val = n_total - n_train
 
-    generator = torch.Generator().manual_seed(seed)
-    train_ds, val_ds = torch.utils.data.random_split(
-        dataset, [n_train, n_val], generator=generator
-    )
-
-    train_loader = DataLoader(
-        train_ds,
-        batch_size=batch_size,
-        shuffle=shuffle,
-        num_workers=num_workers,
-    )
-    val_loader = DataLoader(
-        val_ds,
-        batch_size=batch_size,
-        shuffle=False,
-        num_workers=num_workers,
-    )
-
+    # Collect labels once up front (needed for stratify)
     labels = [dataset[i][1].item() for i in range(n_total)]
+
+    indices = list(range(n_total))
+    train_idx, val_idx = train_test_split(
+        indices,
+        test_size=1 - train_frac,
+        stratify=labels,
+        random_state=seed,
+    )
+
+    train_ds = Subset(dataset, train_idx)
+    val_ds   = Subset(dataset, val_idx)
+
+    train_loader = DataLoader(train_ds, batch_size=batch_size,
+                              shuffle=shuffle, num_workers=num_workers)
+    val_loader   = DataLoader(val_ds,   batch_size=batch_size,
+                              shuffle=False, num_workers=num_workers)
+
     n_rep = sum(labels)
-    print(f"Dataset: {n_total} bursts | {n_rep} repeaters ({100*n_rep/n_total:.1f}%) "
-          f"| {n_total-n_rep} non-repeaters")
-    print(f"Train: {n_train} | Val: {n_val}")
+    n_rep_train = sum(labels[i] for i in train_idx)
+    n_rep_val   = sum(labels[i] for i in val_idx)
+    print(f"Dataset: {n_total} | repeaters: {n_rep} ({100*n_rep/n_total:.1f}%)")
+    print(f"Train: {len(train_idx)} | repeaters: {n_rep_train} ({100*n_rep_train/len(train_idx):.1f}%)")
+    print(f"Val:   {len(val_idx)}   | repeaters: {n_rep_val}   ({100*n_rep_val/len(val_idx):.1f}%)")
 
     return train_loader, val_loader
 
@@ -120,10 +122,12 @@ train_loader, val_loader = make_dataloader(
     num_workers=4,
 )
 
+
 for wfall_batch, label_batch in train_loader:
     print(f"Batch shape : {wfall_batch.shape}")
     print(f"Labels      : {label_batch}")
     break
+
 class SupConLoss(nn.Module):
 
     def __init__(self, temperature=0.07, contrast_mode='all',
@@ -208,7 +212,7 @@ class SinusoidalPE(nn.Module):
 
 
 class FRBMaskedAutoencoder(nn.Module):
-    def __init__(self, seq_len, n_freq, embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_heads=2, dim_feedforward=128):
+    def __init__(self, seq_len, n_freq, embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_heads=2, dim_feedforward=128, n_blocks=2):
         super().__init__()
         self.seq_len = seq_len
         self.n_freq = n_freq
@@ -221,7 +225,7 @@ class FRBMaskedAutoencoder(nn.Module):
         self.enc_pe = SinusoidalPE(seq_len + 1, embed_dim)
         self.enc_blocks = nn.ModuleList([
             nn.TransformerEncoderLayer(embed_dim, nhead=n_heads, dim_feedforward=dim_feedforward,
-                                       batch_first=True, dropout=dropout) for _ in range(2)
+                                       batch_first=True, dropout=dropout) for _ in range(n_blocks)
         ])
         self.enc_norm = nn.LayerNorm(embed_dim)
 
@@ -231,7 +235,7 @@ class FRBMaskedAutoencoder(nn.Module):
         self.dec_pe = SinusoidalPE(seq_len + 1, embed_dim)
         self.dec_blocks = nn.ModuleList([
             nn.TransformerEncoderLayer(embed_dim, nhead=n_heads, dim_feedforward=dim_feedforward,
-                                       batch_first=True, dropout=dropout) for _ in range(2)
+                                       batch_first=True, dropout=dropout) for _ in range(n_blocks)
         ])
         self.dec_norm = nn.LayerNorm(embed_dim)
         self.dec_proj = nn.Linear(embed_dim, n_freq)
@@ -397,7 +401,7 @@ os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 best_overall = {"acc": float('-inf')}
 
 def objective(trial):
-    embed_dim       = trial.suggest_categorical("embed_dim",       [32, 64, 128])
+    embed_dim       = trial.suggest_categorical("embed_dim",       [32, 64, 128, 256])
     contrast_dim    = trial.suggest_categorical("contrast_dim",    [16, 32, 64])
     mask_ratio      = trial.suggest_float("mask_ratio",            0.1, 0.75)
     dropout         = trial.suggest_float("dropout",               0.0, 0.5)
@@ -406,9 +410,10 @@ def objective(trial):
     alpha           = trial.suggest_float("alpha",                 0.1, 5.0)
     beta            = trial.suggest_float("beta",                  0.1, 5.0)
     gamma           = trial.suggest_float("gamma",                 0.01, 1.0, log=True)
-    pos_weight      = trial.suggest_float("pos_weight_scalar",     0.01, 0.5)
+    pos_weight      = trial.suggest_float("pos_weight_scalar",     1.0, 5.0)
     lr_patience     = trial.suggest_int("LR_PATIENCE",             3, 15)
     es_patience     = trial.suggest_int("ES_PATIENCE",             5, 25)
+    n_blocks        = trial.suggest_categorical("n_blocks",        [2, 4, 6])
 
     if embed_dim % n_heads != 0:
         raise optuna.exceptions.TrialPruned()
@@ -422,6 +427,7 @@ def objective(trial):
         dropout=dropout,
         n_heads=n_heads,
         dim_feedforward=dim_feedforward,
+        n_blocks=n_blocks
     ).to(device)
 
     optimiser = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
