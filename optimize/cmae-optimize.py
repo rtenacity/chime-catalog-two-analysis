@@ -495,7 +495,7 @@ def objective(trial):
 study = optuna.create_study(
     direction="maximize",
 )
-study.optimize(objective, n_trials=50)
+study.optimize(objective, n_trials=100)
 
 print("\nBest trial:")
 for k, v in study.best_trial.params.items():

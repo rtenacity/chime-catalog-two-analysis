@@ -6,7 +6,7 @@
 #SBATCH --mem=12G
 #SBATCH --constraint="intel&gpu40"
 #SBATCH --gres=gpu:1
-#SBATCH --time=8:00:00
+#SBATCH --time=10:00:00
 #SBATCH --output=output.txt
 #SBATCH --error=error.txt
 #SBATCH --mail-type=begin,end,fail
