@@ -4,7 +4,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, roc_auc_score, f1_score, fbeta_score
 import matplotlib.pyplot as plt
 import optuna
 import os
@@ -128,101 +128,76 @@ for wfall_batch, label_batch in train_loader:
     print(f"Labels      : {label_batch}")
     break
 
-class SupConLoss(nn.Module):
+# class SupConLoss(nn.Module):
 
-    def __init__(self, temperature=0.07, contrast_mode='all',
-                 base_temperature=0.07):
-        super(SupConLoss, self).__init__()
-        self.temperature = temperature
-        self.contrast_mode = contrast_mode
-        self.base_temperature = base_temperature
+#     def __init__(self, temperature=0.07, contrast_mode='all',
+#                  base_temperature=0.07):
+#         super(SupConLoss, self).__init__()
+#         self.temperature = temperature
+#         self.contrast_mode = contrast_mode
+#         self.base_temperature = base_temperature
 
-    def forward(self, features, labels=None, mask=None):
+#     def forward(self, features, labels=None, mask=None):
         
-        if len(features.shape) < 3:
-            raise ValueError('`features` needs to be [bsz, n_views, ...],'
-                             'at least 3 dimensions are required')
-        if len(features.shape) > 3:
-            features = features.view(features.shape[0], features.shape[1], -1)
+#         if len(features.shape) < 3:
+#             raise ValueError('`features` needs to be [bsz, n_views, ...],'
+#                              'at least 3 dimensions are required')
+#         if len(features.shape) > 3:
+#             features = features.view(features.shape[0], features.shape[1], -1)
 
-        batch_size = features.shape[0]
-        if labels is not None and mask is not None:
-            raise ValueError('Cannot define both `labels` and `mask`')
-        elif labels is None and mask is None:
-            mask = torch.eye(batch_size, dtype=torch.float32).to(device)
-        elif labels is not None:
-            labels = labels.contiguous().view(-1, 1)
-            if labels.shape[0] != batch_size:
-                raise ValueError('Num of labels does not match num of features')
-            mask = torch.eq(labels, labels.T).float().to(device)
-        else:
-            mask = mask.float().to(device)
+#         batch_size = features.shape[0]
+#         if labels is not None and mask is not None:
+#             raise ValueError('Cannot define both `labels` and `mask`')
+#         elif labels is None and mask is None:
+#             mask = torch.eye(batch_size, dtype=torch.float32).to(device)
+#         elif labels is not None:
+#             labels = labels.contiguous().view(-1, 1)
+#             if labels.shape[0] != batch_size:
+#                 raise ValueError('Num of labels does not match num of features')
+#             mask = torch.eq(labels, labels.T).float().to(device)
+#         else:
+#             mask = mask.float().to(device)
 
-        contrast_count = features.shape[1]
-        contrast_feature = torch.cat(torch.unbind(features, dim=1), dim=0)
-        if self.contrast_mode == 'one':
-            anchor_feature = features[:, 0] 
-            anchor_count = 1
-        elif self.contrast_mode == 'all':
-            anchor_feature = contrast_feature
-            anchor_count = contrast_count
-        else:
-            raise ValueError('Unknown mode: {}'.format(self.contrast_mode))
+#         contrast_count = features.shape[1]
+#         contrast_feature = torch.cat(torch.unbind(features, dim=1), dim=0)
+#         if self.contrast_mode == 'one':
+#             anchor_feature = features[:, 0] 
+#             anchor_count = 1
+#         elif self.contrast_mode == 'all':
+#             anchor_feature = contrast_feature
+#             anchor_count = contrast_count
+#         else:
+#             raise ValueError('Unknown mode: {}'.format(self.contrast_mode))
 
-        anchor_dot_contrast = torch.div(
-            torch.matmul(anchor_feature, contrast_feature.T),
-            self.temperature)
-        logits_max, _ = torch.max(anchor_dot_contrast, dim=1, keepdim=True)
-        logits = anchor_dot_contrast - logits_max.detach()
+#         anchor_dot_contrast = torch.div(
+#             torch.matmul(anchor_feature, contrast_feature.T),
+#             self.temperature)
+#         logits_max, _ = torch.max(anchor_dot_contrast, dim=1, keepdim=True)
+#         logits = anchor_dot_contrast - logits_max.detach()
 
-        mask = mask.repeat(anchor_count, contrast_count)
-        logits_mask = torch.scatter(
-            torch.ones_like(mask),
-            1,
-            torch.arange(batch_size * anchor_count).view(-1, 1).to(device),
-            0
-        )
-        mask = mask * logits_mask
+#         mask = mask.repeat(anchor_count, contrast_count)
+#         logits_mask = torch.scatter(
+#             torch.ones_like(mask),
+#             1,
+#             torch.arange(batch_size * anchor_count).view(-1, 1).to(device),
+#             0
+#         )
+#         mask = mask * logits_mask
 
-        exp_logits = torch.exp(logits) * logits_mask
-        log_prob = logits - torch.log(exp_logits.sum(1, keepdim=True))
+#         exp_logits = torch.exp(logits) * logits_mask
+#         log_prob = logits - torch.log(exp_logits.sum(1, keepdim=True))
 
-        mask_pos_pairs = mask.sum(1)
-        mask_pos_pairs = torch.where(mask_pos_pairs < 1e-6, 1, mask_pos_pairs)
-        mean_log_prob_pos = (mask * log_prob).sum(1) / mask_pos_pairs
+#         mask_pos_pairs = mask.sum(1)
+#         mask_pos_pairs = torch.where(mask_pos_pairs < 1e-6, 1, mask_pos_pairs)
+#         mean_log_prob_pos = (mask * log_prob).sum(1) / mask_pos_pairs
 
-        loss = - (self.temperature / self.base_temperature) * mean_log_prob_pos
-        loss = loss.view(anchor_count, batch_size).mean()
+#         loss = - (self.temperature / self.base_temperature) * mean_log_prob_pos
+#         loss = loss.view(anchor_count, batch_size).mean()
 
-        return loss
-    
-class WaterfallAugment(nn.Module):
-    def __init__(self, time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05):
-        super().__init__()
-        self.time_mask_frac = time_mask_frac
-        self.freq_mask_frac = freq_mask_frac
-        self.noise_std = noise_std
+#         return loss
 
-    def forward(self, x):
-        x = x.clone()
-        B, n_freq, seq_len = x.shape
+# SupConLoss_fn = SupConLoss(temperature=0.07, contrast_mode='all')
 
-        # Per-sample time masking
-        t_mask = max(1, int(seq_len * self.time_mask_frac))
-        for i in range(B):
-            t0 = torch.randint(0, seq_len - t_mask, (1,)).item()
-            x[i, :, t0:t0 + t_mask] = 0.0
-
-        # Per-sample frequency masking
-        f_mask = max(1, int(n_freq * self.freq_mask_frac))
-        for i in range(B):
-            f0 = torch.randint(0, n_freq - f_mask, (1,)).item()
-            x[i, f0:f0 + f_mask, :] = 0.0
-
-        # Gaussian noise (already per-sample since randn_like is elementwise)
-        x = x + torch.randn_like(x) * self.noise_std
-
-        return x
 
 
 class SinusoidalPE(nn.Module):
@@ -271,19 +246,15 @@ class FRBMaskedAutoencoder(nn.Module):
         self.cls_head = nn.Linear(embed_dim, 1)
         self.cls_drop = nn.Dropout(dropout)
         
-        self.proj_head = nn.Sequential(
-            nn.Linear(embed_dim, embed_dim),
-            nn.ReLU(),
-            nn.Dropout(dropout),
-            nn.Linear(embed_dim, contrast_dim),
-        )
+        # self.proj_head = nn.Sequential(
+        #     nn.Linear(embed_dim, embed_dim),
+        #     nn.ReLU(),
+        #     nn.Dropout(dropout),
+        #     nn.Linear(embed_dim, contrast_dim),
+        # )
 
         nn.init.normal_(self.cls_token, std=0.02)
         nn.init.normal_(self.mask_token, std=0.02)
-        
-        self.augment_fn = WaterfallAugment(
-            time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05
-        )
 
     def mask_input(self, x):
         N, L, D = x.shape
@@ -339,7 +310,7 @@ class FRBMaskedAutoencoder(nn.Module):
         recon = self.dec_proj(x_full[:, 1:, :])
         return recon
 
-    def forward(self, x, augment=True):
+    def forward(self, x):
         x_t = x.permute(0, 2, 1)                       
         x_enc, mask, ids_restore = self.encoder(x_t)
         
@@ -347,22 +318,12 @@ class FRBMaskedAutoencoder(nn.Module):
         cls_out = self.cls_drop(self.cls_head(cls_token))
         recon = self.decoder(x_enc, ids_restore) 
         
-        proj1 = nn.functional.normalize(self.proj_head(cls_token), dim=1)
-        
-        if augment:
-            x_aug = self.augment_fn(x)
-            x_aug_t = x_aug.permute(0, 2, 1)
-            x_enc2, _, _ = self.encoder(x_aug_t)
-            cls_token2 = x_enc2[:, 0, :]
-            proj2 = nn.functional.normalize(self.proj_head(cls_token2), dim=1)
-            proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
-        else:
-            proj = proj1.unsqueeze(1)  # fallback: [B, 1, contrast_dim]
-
-        return recon, cls_out.squeeze(-1), mask, proj
+        # proj = nn.functional.normalize(self.proj_head(cls_token), dim=1)
+        # proj = proj.unsqueeze(1)
+        #! Returning zeros for proj for now since contrastive loss is not implemented yet
+        return recon, cls_out.squeeze(-1), mask, torch.zeros(x.size(0), 1, device=x.device) #proj will be used for contrastive loss if implemented
 
 
-SupConLoss_fn = SupConLoss(temperature=0.07, contrast_mode='all')
 
 def compute_loss(cls_out, x_recon, mask, wfall, labels, proj,
                  alpha=1.0, beta=1.0, gamma=0.1, pos_weight=None, device='cpu'):
@@ -371,10 +332,11 @@ def compute_loss(cls_out, x_recon, mask, wfall, labels, proj,
     target = wfall.permute(0, 2, 1)                   
     diff = (x_recon - target) ** 2
     recon_loss = (diff * mask.unsqueeze(-1)).sum() / (mask.sum() * wfall.size(1))
-    con_loss = SupConLoss_fn(proj, labels=labels, mask=None)
+    # con_loss = SupConLoss_fn(proj, labels=labels, mask=None)
+    con_loss = torch.tensor(0.0, device=device)
     return alpha * cls_loss + beta * recon_loss + gamma * con_loss, cls_loss, recon_loss, con_loss
 
-def train_one_epoch(model, loader, optimizer, device, alpha, beta, gamma, pos_weight_scalar):
+def train_one_epoch(model, loader, optimiser, device, alpha, beta, gamma, pos_weight_scalar):
     model.train()
     total, correct = 0, 0
     running_loss = running_cls = running_recon = running_con = 0.0
@@ -382,16 +344,17 @@ def train_one_epoch(model, loader, optimizer, device, alpha, beta, gamma, pos_we
     for wfall, labels in loader:
         wfall, labels = wfall.to(device), labels.to(device)
 
-        x_recon, cls_out, mask, proj = model(wfall, augment=True)
+        x_recon, cls_out, mask, proj = model(wfall)
         loss, cls_loss, recon_loss, con_loss = compute_loss(
             cls_out, x_recon, mask, wfall, labels, proj,
             alpha=alpha, beta=beta, gamma=gamma,
             pos_weight=pos_weight_scalar, device=device
         )
 
-        optimizer.zero_grad()
+        optimiser.zero_grad()
         loss.backward()
-        optimizer.step()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+        optimiser.step()
 
         running_loss  += loss.item()
         running_cls   += cls_loss.item()
@@ -410,53 +373,49 @@ def train_one_epoch(model, loader, optimizer, device, alpha, beta, gamma, pos_we
 @torch.no_grad()
 def evaluate(model, loader, device, alpha, beta, gamma, pos_weight_scalar):
     model.eval()
-    total, correct = 0, 0
     running_loss = 0.0
-    confusion_matrix_global = np.zeros((2, 2), dtype=int)
+    all_probs = []
+    all_labels = []
 
     for wfall, labels in loader:
         wfall, labels = wfall.to(device), labels.to(device)
-        x_recon, cls_out, mask, proj = model(wfall, augment=False)
+        x_recon, cls_out, mask, proj = model(wfall)
         loss, *_ = compute_loss(
             cls_out, x_recon, mask, wfall, labels, proj,
             alpha=alpha, beta=beta, gamma=gamma,
             pos_weight=pos_weight_scalar, device=device
         )
         running_loss += loss.item()
+        all_probs.extend(torch.sigmoid(cls_out.squeeze(-1)).cpu().numpy())
+        all_labels.extend(labels.cpu().numpy())
 
-        preds = (torch.sigmoid(cls_out.squeeze(-1)) > 0.5).long()
-        cf_mat = confusion_matrix(labels.cpu(), preds.cpu(), labels=[0, 1])
-        confusion_matrix_global += cf_mat
-        correct += (preds == labels).sum().item()
-        total += labels.size(0)
-        
+    all_probs = np.array(all_probs)
+    all_labels = np.array(all_labels)
 
     val_loss = running_loss / len(loader)
-    val_acc = correct / total
-    return val_loss, val_acc, confusion_matrix_global
+    val_auroc = roc_auc_score(all_labels, all_probs)
+    return val_loss, val_auroc, all_probs, all_labels
 N_EPOCHS = 150
 
 
 CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-best_overall = {"acc": float('-inf')}
+best_overall = {"auroc": float('-inf')}
 
 def objective(trial):
-    lr_patience     = 15
-    es_patience     = 25
     embed_dim       = trial.suggest_categorical("embed_dim",       [32, 64, 128, 256])
-    contrast_dim    = trial.suggest_categorical("contrast_dim",    [16, 32, 64])
+    # contrast_dim    = trial.suggest_categorical("contrast_dim",    [16, 32, 64])
     mask_ratio      = trial.suggest_float("mask_ratio",            0.1, 0.75)
     dropout         = trial.suggest_float("dropout",               0.0, 0.5)
     n_heads         = trial.suggest_categorical("n_heads",         [1, 2, 4])
     dim_feedforward = trial.suggest_categorical("dim_feedforward", [64, 128, 256, 512])
     alpha           = trial.suggest_float("alpha",                 0.1, 5.0)
     beta            = trial.suggest_float("beta",                  0.1, 5.0)
-    gamma           = trial.suggest_float("gamma",                 0.01, 1.0, log=True)
+    # gamma           = trial.suggest_float("gamma",                 0.01, 1.0, log=True)
     pos_weight      = trial.suggest_float("pos_weight_scalar",     1.0, 5.0)
-    n_blocks        = trial.suggest_categorical("n_blocks",        [2, 4, 6])
-    lr = trial.suggest_float("lr",           1e-4, 5e-3, log=True)
+    n_blocks        = trial.suggest_categorical("n_blocks",        [2, 4])
+    lr           = trial.suggest_float("lr",           1e-4, 5e-3, log=True)
     weight_decay = trial.suggest_float("weight_decay", 1e-4, 1e-2, log=True)
 
     if embed_dim % n_heads != 0:
@@ -466,41 +425,47 @@ def objective(trial):
         seq_len=TARGET_LENGTH,
         n_freq=256,
         embed_dim=embed_dim,
-        contrast_dim=contrast_dim,
+        contrast_dim=16,
         mask_ratio=mask_ratio,
         dropout=dropout,
         n_heads=n_heads,
         dim_feedforward=dim_feedforward,
         n_blocks=n_blocks
     ).to(device)
-
-    optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
+    
+    lr_patience     = 15
+    es_patience     = 25
+    optimiser = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
-        optimizer, mode='min', factor=0.5, patience=lr_patience, min_lr=1e-6
+        optimiser, mode='max', factor=0.5, patience=lr_patience, min_lr=1e-6
     )
 
-    best_val_acc = float('-inf')
+    best_val_auroc = float('-inf')
     best_val_loss = float('inf')
+    best_probs = None
+    best_labels = None
 
     best_state = None
     epochs_no_improve = 0
-    
+
     print(f"Trial {trial.number}: {trial.params}")
 
     for epoch in range(N_EPOCHS):
-        train_one_epoch(model, train_loader, optimizer, device,
-                        alpha=alpha, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
-        val_loss, val_acc, confusion_matrix_global = evaluate(model, val_loader, device,
-                            alpha=alpha, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
-        scheduler.step(val_loss)
-        trial.report(val_acc, epoch)
-        
+        train_one_epoch(model, train_loader, optimiser, device,
+                        alpha=alpha, beta=beta, gamma=1, pos_weight_scalar=pos_weight)
+        val_loss, val_auroc, all_probs, all_labels = evaluate(model, val_loader, device,
+                            alpha=alpha, beta=beta, gamma=1, pos_weight_scalar=pos_weight)
+        scheduler.step(val_auroc)
+        trial.report(val_auroc, epoch)
         if trial.should_prune():
             raise optuna.exceptions.TrialPruned()
 
-        if val_acc > best_val_acc:
+
+        if val_auroc > best_val_auroc:
             best_val_loss = val_loss
-            best_val_acc = val_acc
+            best_val_auroc = val_auroc
+            best_probs = all_probs
+            best_labels = all_labels
             best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
             epochs_no_improve = 0
         else:
@@ -509,40 +474,60 @@ def objective(trial):
         if epochs_no_improve >= es_patience:
             print(f"Early stopping at epoch {epoch+1}")
             break
-        
-    print(f"Trial {trial.number}: Final val_loss={val_loss:.4f}  val_acc={val_acc:.3f}")
-    print("  Confusion Matrix:")
-    print(confusion_matrix_global)
+
+    # Sweep thresholds to find the one maximizing F2 on the repeater (positive) class
+    thresholds = np.linspace(0.05, 0.95, 91)
+    best_f2_thresh, best_f2_val = 0.5, -1.0
+    for thresh in thresholds:
+        preds = (best_probs >= thresh).astype(int)
+        f2 = fbeta_score(best_labels, preds, beta=2, zero_division=0)
+        if f2 > best_f2_val:
+            best_f2_val = f2
+            best_f2_thresh = thresh
+
+    opt_preds = (best_probs >= best_f2_thresh).astype(int)
+    opt_acc = (opt_preds == best_labels).mean()
+    opt_f1  = f1_score(best_labels, opt_preds, zero_division=0)
+    opt_f2  = fbeta_score(best_labels, opt_preds, beta=2, zero_division=0)
+
+    print(f"Trial {trial.number}: best val_auroc={best_val_auroc:.4f}  val_loss={best_val_loss:.4f}")
+    print(f"  Optimal threshold={best_f2_thresh:.2f}  acc={opt_acc:.3f}  "
+          f"F1(repeater)={opt_f1:.3f}  F2(repeater)={opt_f2:.3f}")
+    print("  Confusion Matrix (at optimal threshold):")
+    print(confusion_matrix(best_labels, opt_preds, labels=[0, 1]))
 
     trial_path = os.path.join(CHECKPOINT_DIR, f"trial_{trial.number}.pt")
     torch.save({
         "model_state_dict": best_state,
         "params": trial.params,
-        "val_loss": best_val_loss,   # was: val_loss
-        "val_acc": best_val_acc,
+        "val_loss": best_val_loss,
+        "val_auroc": best_val_auroc,
+        "optimal_threshold": best_f2_thresh,
         "trial_number": trial.number,
     }, trial_path)
     print(f"Trial {trial.number} checkpoint saved -> {trial_path}")
 
-    if best_val_acc > best_overall["acc"]:
-        best_overall["acc"] = best_val_acc
+    if best_val_auroc > best_overall["auroc"]:
+        best_overall["auroc"] = best_val_auroc
         best_path = os.path.join(CHECKPOINT_DIR, "best_model.pt")
         torch.save({
             "model_state_dict": best_state,
             "params": trial.params,
-            "val_loss": best_val_loss,   # was: val_loss
-            "val_acc": best_val_acc,
+            "val_loss": best_val_loss,
+            "val_auroc": best_val_auroc,
+            "optimal_threshold": best_f2_thresh,
             "trial_number": trial.number,
         }, best_path)
-        print(f"New best model saved -> {best_path}  (val_acc={best_val_acc:.3f}, trial={trial.number})")
+        print(f"New best model saved -> {best_path}  (val_auroc={best_val_auroc:.4f}, trial={trial.number})")
 
-    return best_val_acc
+    return best_val_auroc
 
 
 study = optuna.create_study(
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15)
 )
+
 study.optimize(objective, n_trials=100)
 
 print("\nBest trial:")
@@ -550,4 +535,4 @@ for k, v in study.best_trial.params.items():
     print(f"  {k}: {v}")
     
 print(f"\nAll checkpoints saved to: {CHECKPOINT_DIR}")
-print(f"Best overall val_acc: {best_overall['acc']:.3f}")
+print(f"Best overall val_auroc: {best_overall['auroc']:.4f}")
