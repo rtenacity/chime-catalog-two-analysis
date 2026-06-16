@@ -239,7 +239,7 @@ class SinusoidalPE(nn.Module):
         return x + self.pe
 
 
-class FRBMaskedAutoencoder(nn.Module):
+class FRBMaskedAutoencoder(nn.Module): 
     def __init__(self, seq_len, n_freq, embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_heads=2, dim_feedforward=128, n_blocks=2):
         super().__init__()
         self.seq_len = seq_len
@@ -268,11 +268,20 @@ class FRBMaskedAutoencoder(nn.Module):
         self.dec_norm = nn.LayerNorm(embed_dim)
         self.dec_proj = nn.Linear(embed_dim, n_freq)
 
-        self.cls_head = nn.Linear(embed_dim, 1)
-        self.cls_drop = nn.Dropout(dropout)
+        self.cls_head = nn.Sequential(
+            nn.Linear(embed_dim * 2, embed_dim),
+            nn.LayerNorm(embed_dim),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(embed_dim, embed_dim // 2),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(embed_dim // 2, 1),
+        )
         
         self.proj_head = nn.Sequential(
             nn.Linear(embed_dim, embed_dim),
+            nn.LayerNorm(embed_dim),
             nn.ReLU(),
             nn.Dropout(dropout),
             nn.Linear(embed_dim, contrast_dim),
@@ -285,28 +294,31 @@ class FRBMaskedAutoencoder(nn.Module):
             time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05
         )
 
-    def mask_input(self, x):
-        N, L, D = x.shape
-        len_keep = int(L * (1 - self.mask_ratio))
+    def mask_input(self, x, shared_noise=None):
+        B, T, F = x.shape
+        len_keep = int(T * (1 - self.mask_ratio))
 
-        noise = torch.rand(N, L, device=x.device)
+        if shared_noise is not None:
+            noise = shared_noise
+        else:
+            noise = torch.rand(B, T, device=x.device)
         ids_shuffle = torch.argsort(noise, dim=1)
         ids_restore = torch.argsort(ids_shuffle, dim=1)
 
         ids_keep = ids_shuffle[:, :len_keep]
         x_masked = torch.gather(x, dim=1,
-                                index=ids_keep.unsqueeze(-1).expand(-1, -1, D))
+                                index=ids_keep.unsqueeze(-1).expand(-1, -1, F))
 
-        mask = torch.ones(N, L, device=x.device)
+        mask = torch.ones(B, T, device=x.device)
         mask[:, :len_keep] = 0
         mask = torch.gather(mask, dim=1, index=ids_restore)
 
         return x_masked, mask, ids_restore, ids_keep
 
-    def encoder(self, x):
+    def encoder(self, x, shared_noise=None):
         x = self.enc_drop(self.enc_proj(x))
         x = x + self.enc_pe.pe[1:self.seq_len + 1] 
-        x_vis, mask, ids_restore, ids_keep = self.mask_input(x)
+        x_vis, mask, ids_restore, ids_keep = self.mask_input(x, shared_noise)
 
         cls = (self.cls_token + self.enc_pe.pe[0]).expand(x_vis.size(0), -1, -1)
         x_vis = torch.cat([cls, x_vis], dim=1)
@@ -340,11 +352,19 @@ class FRBMaskedAutoencoder(nn.Module):
         return recon
 
     def forward(self, x, augment=True):
-        x_t = x.permute(0, 2, 1)                       
-        x_enc, mask, ids_restore = self.encoder(x_t)
+        x_t = x.permute(0, 2, 1)        
+        shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
+               
+        x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
+        
         
         cls_token = x_enc[:, 0, :]
-        cls_out = self.cls_drop(self.cls_head(cls_token))
+        seq_tokens = x_enc[:, 1:, :]
+        mean_pooled = seq_tokens.mean(dim=1)
+
+        rich_embed = torch.cat([cls_token, mean_pooled], dim=1)
+        
+        cls_out = self.cls_head(rich_embed)
         recon = self.decoder(x_enc, ids_restore) 
         
         proj1 = nn.functional.normalize(self.proj_head(cls_token), dim=1)
@@ -352,7 +372,7 @@ class FRBMaskedAutoencoder(nn.Module):
         if augment:
             x_aug = self.augment_fn(x)
             x_aug_t = x_aug.permute(0, 2, 1)
-            x_enc2, _, _ = self.encoder(x_aug_t)
+            x_enc2, _, _ = self.encoder(x_aug_t, shared_noise)
             cls_token2 = x_enc2[:, 0, :]
             proj2 = nn.functional.normalize(self.proj_head(cls_token2), dim=1)
             proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
