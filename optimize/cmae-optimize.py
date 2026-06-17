@@ -454,6 +454,52 @@ def evaluate(model, loader, device, alpha, beta, gamma, pos_weight_scalar):
     val_loss = running_loss / len(loader)
     val_acc = correct / total
     return val_loss, val_acc, confusion_matrix_global
+
+@torch.no_grad()
+def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar):
+    model.eval()
+    all_probs, all_labels = [], []
+    running_loss = 0.0
+
+    for wfall, labels in loader:
+        wfall, labels = wfall.to(device), labels.to(device)
+        x_recon, cls_out, mask, proj = model(wfall, augment=False)
+        
+        loss, *_ = compute_loss(
+            cls_out, x_recon, mask, wfall, labels, proj,
+            alpha=alpha, beta=beta, gamma=gamma,
+            pos_weight=pos_weight_scalar, device=device
+        )
+        
+        running_loss += loss.item()
+        probs = torch.sigmoid(cls_out.squeeze(-1)).cpu().numpy()
+        all_probs.extend(probs)
+        all_labels.extend(labels.cpu().numpy())
+
+    all_probs  = np.array(all_probs)
+    all_labels = np.array(all_labels)
+
+    best_thresh, best_acc = 0.5, 0.0
+    for thresh in np.linspace(0.05, 0.95, 91):
+        preds = (all_probs > thresh).astype(int)
+        acc = (preds == all_labels).mean()
+        if acc > best_acc:
+            best_acc, best_thresh = acc, thresh
+
+    best_preds = (all_probs > best_thresh).astype(int)
+    confusion_matrix_global = np.zeros((2, 2), dtype=int)
+    for i in range(len(all_labels)):
+        cf_mat = confusion_matrix([all_labels[i]], [best_preds[i]], labels=[0, 1])
+        confusion_matrix_global += cf_mat
+        
+    val_loss = running_loss / len(loader)
+
+    print(f"Best threshold : {best_thresh:.2f}")
+    print(f"Best val acc   : {best_acc:.4f}")
+    print(f"Confusion matrix:\n{confusion_matrix_global}")
+
+    return val_loss, best_thresh, best_acc, confusion_matrix_global
+
 N_EPOCHS = 150
 
 
@@ -504,14 +550,18 @@ def objective(trial):
 
     best_state = None
     epochs_no_improve = 0
+    best_thresh = 0.5
     
     print(f"Trial {trial.number}: {trial.params}")
 
     for epoch in range(N_EPOCHS):
         train_one_epoch(model, train_loader, optimizer, device,
                         alpha=alpha, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
-        val_loss, val_acc, confusion_matrix_global = evaluate(model, val_loader, device,
+        # val_loss, _, _ = evaluate(model, val_loader, device,
+        #                     alpha=alpha, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
+        val_loss, opt_thresh, val_acc, confusion_matrix_global = sweep_threshold(model, val_loader, device,
                             alpha=alpha, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
+        
         scheduler.step(val_loss)
         trial.report(val_acc, epoch)
         
@@ -523,6 +573,7 @@ def objective(trial):
             best_val_acc = val_acc
             best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
             epochs_no_improve = 0
+            best_thresh = opt_thresh
         else:
             epochs_no_improve += 1
 
@@ -530,7 +581,7 @@ def objective(trial):
             print(f"Early stopping at epoch {epoch+1}")
             break
         
-    print(f"Trial {trial.number}: Final val_loss={val_loss:.4f}  val_acc={val_acc:.3f}")
+    print(f"Trial {trial.number}: Final val_loss={val_loss:.4f}, best_thresh = {opt_thresh:.3f}, val_acc={val_acc:.3f}")
     print("  Confusion Matrix:")
     print(confusion_matrix_global)
 
@@ -540,6 +591,7 @@ def objective(trial):
         "params": trial.params,
         "val_loss": best_val_loss,   # was: val_loss
         "val_acc": best_val_acc,
+        "best_thresh": best_thresh,
         "trial_number": trial.number,
     }, trial_path)
     print(f"Trial {trial.number} checkpoint saved -> {trial_path}")
@@ -552,6 +604,7 @@ def objective(trial):
             "params": trial.params,
             "val_loss": best_val_loss,   # was: val_loss
             "val_acc": best_val_acc,
+            "best_thresh": best_thresh,
             "trial_number": trial.number,
         }, best_path)
         print(f"New best model saved -> {best_path}  (val_acc={best_val_acc:.3f}, trial={trial.number})")
