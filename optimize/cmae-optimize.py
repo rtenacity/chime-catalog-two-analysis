@@ -240,11 +240,12 @@ class SinusoidalPE(nn.Module):
 
 
 class FRBMaskedAutoencoder(nn.Module): 
-    def __init__(self, seq_len, n_freq, embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_heads=2, dim_feedforward=128, n_blocks=2):
+    def __init__(self, seq_len, n_freq, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
         super().__init__()
         self.seq_len = seq_len
         self.n_freq = n_freq
         self.embed_dim = embed_dim
+        self.dec_embed_dim = dec_embed_dim
         self.contrast_dim = contrast_dim
         self.mask_ratio = mask_ratio
 
@@ -252,21 +253,23 @@ class FRBMaskedAutoencoder(nn.Module):
         self.enc_drop = nn.Dropout(dropout)
         self.enc_pe = SinusoidalPE(seq_len + 1, embed_dim)
         self.enc_blocks = nn.ModuleList([
-            nn.TransformerEncoderLayer(embed_dim, nhead=n_heads, dim_feedforward=dim_feedforward,
-                                       batch_first=True, dropout=dropout) for _ in range(n_blocks)
+            nn.TransformerEncoderLayer(embed_dim, nhead=n_enc_heads, dim_feedforward=dim_feedforward_enc,
+                                       batch_first=True, dropout=dropout) for _ in range(n_enc_blocks)
         ])
         self.enc_norm = nn.LayerNorm(embed_dim)
 
         self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
 
-        self.mask_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
-        self.dec_pe = SinusoidalPE(seq_len + 1, embed_dim)
+        self.mask_token = nn.Parameter(torch.zeros(1, 1, dec_embed_dim))
+        
+        self.enc_to_dec = nn.Linear(embed_dim, dec_embed_dim)
+        self.dec_pe = SinusoidalPE(seq_len + 1, dec_embed_dim)
         self.dec_blocks = nn.ModuleList([
-            nn.TransformerEncoderLayer(embed_dim, nhead=n_heads, dim_feedforward=dim_feedforward,
-                                       batch_first=True, dropout=dropout) for _ in range(n_blocks)
+            nn.TransformerEncoderLayer(dec_embed_dim, nhead=n_dec_heads, dim_feedforward=dim_feedforward_dec,
+                                       batch_first=True, dropout=dropout) for _ in range(n_dec_blocks)
         ])
-        self.dec_norm = nn.LayerNorm(embed_dim)
-        self.dec_proj = nn.Linear(embed_dim, n_freq)
+        self.dec_norm = nn.LayerNorm(dec_embed_dim)
+        self.dec_proj = nn.Linear(dec_embed_dim, n_freq)
 
         self.cls_head = nn.Sequential(
             nn.Linear(embed_dim * 2, embed_dim),
@@ -334,11 +337,13 @@ class FRBMaskedAutoencoder(nn.Module):
         T = ids_restore.size(1)
         n_keep = x_enc.size(1) - 1                      
         mask_tokens = self.mask_token.expand(B, T - n_keep, -1)
+        
+        x_enc = self.enc_to_dec(x_enc)
 
         x_no_cls = x_enc[:, 1:, :]
         x_full = torch.cat([x_no_cls, mask_tokens], dim=1)
         x_full = torch.gather(x_full, dim=1,
-                              index=ids_restore.unsqueeze(-1).expand(-1, -1, self.embed_dim))
+                              index=ids_restore.unsqueeze(-1).expand(-1, -1, self.dec_embed_dim))
 
         x_full = x_full + self.dec_pe.pe[1:T + 1]
         cls = x_enc[:, :1, :] + self.dec_pe.pe[0]
@@ -411,6 +416,7 @@ def train_one_epoch(model, loader, optimizer, device, alpha, beta, gamma, pos_we
 
         optimizer.zero_grad()
         loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         optimizer.step()
 
         running_loss  += loss.item()
@@ -510,34 +516,52 @@ best_overall = {"acc": float('-inf')}
 
 def objective(trial):
     lr_patience     = 15
-    es_patience     = 25
-    embed_dim       = trial.suggest_categorical("embed_dim",       [32, 64, 128, 256])
+    es_patience     = 20
+    embed_dim       = trial.suggest_categorical("embed_dim",       [32, 64, 128, 256, 512])
+    dec_emb_frac    = trial.suggest_categorical("dec_emb_frac", [0.25, 0.5, 1.0])
+    dec_emb_dim     = int(embed_dim * dec_emb_frac)
+    
     contrast_dim    = trial.suggest_categorical("contrast_dim",    [16, 32, 64])
     mask_ratio      = trial.suggest_float("mask_ratio",            0.1, 0.75)
     dropout         = trial.suggest_float("dropout",               0.0, 0.5)
-    n_heads         = trial.suggest_categorical("n_heads",         [1, 2, 4])
-    dim_feedforward = trial.suggest_categorical("dim_feedforward", [64, 128, 256, 512])
+    n_enc_heads     = trial.suggest_categorical("n_enc_heads",         [1, 2, 4])
+    n_dec_head_frac     = trial.suggest_categorical("n_dec_frac",         [0.25, 0.5, 1.0])
+    n_dec_heads  = max(1, int(n_enc_heads  * n_dec_head_frac))
+    
+    dim_feedforward_enc = trial.suggest_categorical("dim_feedforward", [64, 128, 256, 512])
+    dim_feedforward_dec_frac = trial.suggest_categorical("dim_feedforward_dec_frac", [0.25, 0.5, 1.0])
+    dim_feedforward_dec = int(dim_feedforward_enc * dim_feedforward_dec_frac)
+
     alpha           = trial.suggest_float("alpha",                 0.1, 5.0)
     beta            = trial.suggest_float("beta",                  0.1, 5.0)
     gamma           = trial.suggest_float("gamma",                 0.01, 1.0, log=True)
     pos_weight      = trial.suggest_float("pos_weight_scalar",     1.0, 5.0)
-    n_blocks        = trial.suggest_categorical("n_blocks",        [2, 4, 6])
+    n_enc_blocks    = trial.suggest_categorical("n_enc_blocks",        [2, 4, 6, 8])
+    n_dec_block_frac = trial.suggest_categorical("n_dec_block_frac",     [0.25, 0.5, 1.0])
+    n_dec_blocks = max(1, int(n_enc_blocks * n_dec_block_frac))
+
+    
+    
     lr = trial.suggest_float("lr",           1e-4, 5e-3, log=True)
     weight_decay = trial.suggest_float("weight_decay", 1e-4, 1e-2, log=True)
 
-    if embed_dim % n_heads != 0:
+    if embed_dim % n_enc_heads != 0 or dec_emb_dim % n_dec_heads != 0:
         raise optuna.exceptions.TrialPruned()
 
     model = FRBMaskedAutoencoder(
         seq_len=TARGET_LENGTH,
         n_freq=256,
         embed_dim=embed_dim,
+        dec_embed_dim=dec_emb_dim,
         contrast_dim=contrast_dim,
         mask_ratio=mask_ratio,
         dropout=dropout,
-        n_heads=n_heads,
-        dim_feedforward=dim_feedforward,
-        n_blocks=n_blocks
+        n_enc_heads=n_enc_heads,
+        n_dec_heads=n_dec_heads,
+        dim_feedforward_enc=dim_feedforward_enc,
+        dim_feedforward_dec=dim_feedforward_dec,
+        n_enc_blocks=n_enc_blocks,
+        n_dec_blocks=n_dec_blocks
     ).to(device)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
@@ -547,6 +571,7 @@ def objective(trial):
 
     best_val_acc = float('-inf')
     best_val_loss = float('inf')
+    best_confusion_matrix = None
 
     best_state = None
     epochs_no_improve = 0
@@ -562,6 +587,8 @@ def objective(trial):
         val_loss, opt_thresh, val_acc, confusion_matrix_global = sweep_threshold(model, val_loader, device,
                             alpha=alpha, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
         
+        
+        
         scheduler.step(val_loss)
         trial.report(val_acc, epoch)
         
@@ -571,6 +598,7 @@ def objective(trial):
         if val_acc > best_val_acc:
             best_val_loss = val_loss
             best_val_acc = val_acc
+            best_confusion_matrix = confusion_matrix_global
             best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
             epochs_no_improve = 0
             best_thresh = opt_thresh
@@ -581,9 +609,9 @@ def objective(trial):
             print(f"Early stopping at epoch {epoch+1}")
             break
         
-    print(f"Trial {trial.number}: Final val_loss={val_loss:.4f}, best_thresh = {opt_thresh:.3f}, val_acc={val_acc:.3f}")
+    print(f"Trial {trial.number}: Final val_loss={best_val_loss:.4f}, best_thresh = {best_thresh:.3f}, val_acc={best_val_acc:.3f}")
     print("  Confusion Matrix:")
-    print(confusion_matrix_global)
+    print(best_confusion_matrix)
 
     trial_path = os.path.join(CHECKPOINT_DIR, f"trial_{trial.number}.pt")
     torch.save({
@@ -593,6 +621,7 @@ def objective(trial):
         "val_acc": best_val_acc,
         "best_thresh": best_thresh,
         "trial_number": trial.number,
+        "confusion_matrix": best_confusion_matrix,
     }, trial_path)
     print(f"Trial {trial.number} checkpoint saved -> {trial_path}")
 
