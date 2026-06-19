@@ -1,0 +1,20 @@
+#!/bin/bash
+#SBATCH --job-name=cmae-optimize
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=12G
+#SBATCH --constraint="intel&gpu40"
+#SBATCH --gres=gpu:1
+#SBATCH --time=12:00:00
+#SBATCH --output=logs/output.txt
+#SBATCH --error=logs/error.txt
+#SBATCH --mail-type=begin,end,fail
+#SBATCH --mail-user=ra0438@princeton.edu
+
+cd ~/chime-catalog-two-analysis/optimize
+
+module load anaconda3/2025.12
+conda activate frb_env
+
+python cmae-optimize-twostage.py
