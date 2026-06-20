@@ -19,52 +19,64 @@ print(torch.cuda.get_device_name(0))
 class CHIMEFRBDataset(Dataset):
     def __init__(self, hdf5_path, catalog_path, target_length):
         self.hdf5_path = hdf5_path
-        self.dt = 0.009830400085775182 * 1000
+        self.dt = 0.009830400085775182*1000
+        self._h5 = None
 
         self.target_length = target_length
         cat = pd.read_csv(catalog_path, low_memory=False)
         cat["repeater_name"] = cat["repeater_name"].fillna("").str.strip()
-        self.repeater_set = set(cat.loc[cat["repeater_name"] != "", "tns_name"].str.strip())
+        self.repeater_set = set(
+            cat.loc[cat["repeater_name"] != "", "tns_name"].str.strip()
+        )
         with h5py.File(hdf5_path, "r") as f:
             self.keys = list(f.keys())
 
+        
     @staticmethod
     def _pad_or_crop(wfall, target_length, center_idx):
         n_freq, n_time = wfall.shape
         half = target_length // 2
         start = center_idx - half
         end = start + target_length
-
+        
         if start >= 0 and end <= n_time:
-            return wfall[:, start:end]
-
+            return wfall[:, start:end]         
+        
         src_start = max(start, 0)
         src_end = min(end, n_time)
         out = np.zeros((n_freq, target_length), dtype=wfall.dtype)
         dst_start = src_start - start
-        out[:, dst_start : dst_start + (src_end - src_start)] = wfall[:, src_start:src_end]
+        out[:, dst_start:dst_start + (src_end - src_start)] = wfall[:, src_start:src_end]
         return out
+    
+    def _get_file(self):
+        if self._h5 is None:
+            self._h5 = h5py.File(self.hdf5_path, "r")
+        return self._h5
 
+    
     def __len__(self):
         return len(self.keys)
-
+    
+    
     def __getitem__(self, idx):
         key = self.keys[idx]
-
-        with h5py.File(self.hdf5_path, "r") as f:
-            wfall = f[key]["wfall_plot"][:]
-            extent = np.array(f[key]["extent"])
-
+        
+        f = self._get_file()
+        wfall = f[key]["wfall_plot"][:]
+        extent = np.array(f[key]["extent"])
+            
         wfall = wfall.astype(np.float32)
         std = wfall.std(axis=1, keepdims=True)
-        std[std == 0] = 1.0
+        std[std == 0] = 1.0          # avoid divide-by-zero for masked channels
         wfall = (wfall - wfall.mean(axis=1, keepdims=True)) / std
+        
 
         peak = round(-extent[0] / self.dt)
         wfall = self._pad_or_crop(wfall, self.target_length, peak)
         tensor = torch.from_numpy(wfall)
         label = torch.tensor(int(key in self.repeater_set), dtype=torch.long)
-
+        
         return tensor, label
 
 
@@ -81,8 +93,8 @@ def make_dataloader(hdf5_path: str, catalog_path: str, target_length: int, batch
     train_ds = Subset(dataset, train_idx)
     val_ds = Subset(dataset, val_idx)
 
-    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers)
-    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)
+    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
 
     n_rep = sum(labels)
     n_rep_train = sum(labels[i] for i in train_idx)
@@ -98,7 +110,7 @@ TARGET_LENGTH = 128
 
 train_loader, val_loader = make_dataloader(hdf5_path="/scratch/gpfs/MLISANTI/ra0438/all_bursts.hdf5", 
                                            catalog_path="/home/ra0438/chime-catalog-two-analysis/chimefrbcat2.csv", 
-                                           target_length=TARGET_LENGTH, batch_size=32, num_workers=4)
+                                           target_length=TARGET_LENGTH, batch_size=64, num_workers=4)
 
 
 for wfall_batch, label_batch in train_loader:
@@ -512,9 +524,7 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
 
     best_preds = (all_probs > best_thresh).astype(int)
     confusion_matrix_global = np.zeros((2, 2), dtype=int)
-    for i in range(len(all_labels)):
-        cf_mat = confusion_matrix([all_labels[i]], [best_preds[i]], labels=[0, 1])
-        confusion_matrix_global += cf_mat
+    confusion_matrix_global = confusion_matrix(all_labels, best_preds, labels=[0, 1])
 
     val_loss = running_loss / len(loader)
 
@@ -525,7 +535,7 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
     return val_loss, best_thresh, best_acc, confusion_matrix_global
 
 
-N_EPOCHS = 150
+N_EPOCHS = 130
 
 
 CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints"
@@ -651,7 +661,13 @@ def objective(trial):
     return best_val_acc
 
 
-study = optuna.create_study(direction="maximize", pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15))
+study = optuna.create_study(
+    study_name="cmae_optimize",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study.db",
+    direction="maximize",
+    pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
+    load_if_exists=True,
+)
 study.optimize(objective, n_trials=100)
 
 print("\nBest trial:")

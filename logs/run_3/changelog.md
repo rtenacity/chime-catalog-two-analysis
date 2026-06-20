@@ -1,0 +1,2 @@
+- Used pretraining/fine-tuning for the model training
+- Only ran through $\approx$ 1/3 of trials
