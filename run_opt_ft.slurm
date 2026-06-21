@@ -2,11 +2,11 @@
 #SBATCH --job-name=cmae-optimize
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem=12G
-#SBATCH --constraint="intel&gpu40"
+#SBATCH --cpus-per-task=6
+#SBATCH --mem=8G
+#SBATCH --constraint="nomig&gpu40"
 #SBATCH --gres=gpu:1
-#SBATCH --time=12:00:00
+#SBATCH --time=10:00:00
 #SBATCH --output=logs/output.txt
 #SBATCH --error=logs/error.txt
 #SBATCH --mail-type=begin,end,fail
