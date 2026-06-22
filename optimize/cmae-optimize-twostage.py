@@ -80,7 +80,7 @@ class CHIMEFRBDataset(Dataset):
         return tensor, label
 
 
-def make_dataloader(hdf5_path: str, catalog_path: str, target_length: int, batch_size: int = 32, shuffle: bool = True, num_workers: int = 0, train_frac: float = 0.8, seed: int = 42):
+def make_dataloader(hdf5_path: str, catalog_path: str, target_length: int, batch_size: int = 32, shuffle: bool = True, num_workers: int = 0, train_frac: float = 0.66, seed: int = 42):
     dataset = CHIMEFRBDataset(hdf5_path, catalog_path, target_length)
     n_total = len(dataset)
 
@@ -535,10 +535,10 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
     return val_loss, best_thresh, best_acc, confusion_matrix_global
 
 
-N_EPOCHS = 130
+N_EPOCHS = 200
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_200e"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 best_overall = {"acc": float("-inf")}
@@ -562,7 +562,7 @@ def objective(trial):
     dim_feedforward_dec_frac = trial.suggest_categorical("dim_feedforward_dec_frac", [0.25, 0.5, 1.0])
     dim_feedforward_dec = int(dim_feedforward_enc * dim_feedforward_dec_frac)
 
-    beta = trial.suggest_float("beta", 0.1, 5.0)
+    beta = trial.suggest_float("beta", 0.1, 10.0)
     gamma = trial.suggest_float("gamma", 0.01, 1.0, log=True)
     pos_weight = trial.suggest_float("pos_weight_scalar", 1.0, 5.0)
     n_enc_blocks = trial.suggest_categorical("n_enc_blocks", [2, 4, 6, 8])
@@ -663,7 +663,7 @@ def objective(trial):
 
 study = optuna.create_study(
     study_name="cmae_optimize",
-    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study.db",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_200e.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
