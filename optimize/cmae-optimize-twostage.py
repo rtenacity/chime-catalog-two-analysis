@@ -10,6 +10,8 @@ import optuna
 import os
 from torch.utils.data import Subset
 from sklearn.model_selection import train_test_split
+#import f1_score
+from sklearn.metrics import f1_score
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
@@ -515,33 +517,44 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
     all_probs = np.array(all_probs)
     all_labels = np.array(all_labels)
 
-    best_thresh, best_acc = 0.5, 0.0
+    best_thresh_acc, best_acc = 0.5, 0.0
     for thresh in np.linspace(0.05, 0.95, 91):
         preds = (all_probs > thresh).astype(int)
         acc = (preds == all_labels).mean()
         if acc > best_acc:
-            best_acc, best_thresh = acc, thresh
+            best_acc, best_thresh_acc = acc, thresh
+            
+            
+    best_thresh_f1, best_f1 = 0.5, 0.0
+    for thresh in np.linspace(0.05, 0.95, 91):
+        preds = (all_probs > thresh).astype(int)
+        f1 = f1_score(all_labels, preds)
+        if f1 > best_f1:
+            best_f1, best_thresh_f1 = f1, thresh
 
-    best_preds = (all_probs > best_thresh).astype(int)
+    best_preds = (all_probs > best_thresh_f1).astype(int)
     confusion_matrix_global = np.zeros((2, 2), dtype=int)
     confusion_matrix_global = confusion_matrix(all_labels, best_preds, labels=[0, 1])
 
     val_loss = running_loss / len(loader)
 
-    print(f"Best threshold : {best_thresh:.2f}")
     print(f"Best val acc   : {best_acc:.4f}")
-    print(f"Confusion matrix:\n{confusion_matrix_global}")
+    print(f"Best threshold : {best_thresh_acc:.2f}")
 
-    return val_loss, best_thresh, best_acc, confusion_matrix_global
+    print(f"Best f1        : {best_f1:.4f}")
+    print(f"Best threshold f1: {best_thresh_f1:.2f}")
+    print(f"Confusion matrix (optimized for f1):\n{confusion_matrix_global}")
+
+    return val_loss, best_thresh_acc, best_acc, best_thresh_f1, best_f1, confusion_matrix_global
 
 
 N_EPOCHS = 200
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_200e"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_f1"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-best_overall = {"acc": float("-inf")}
+best_overall = {"f1": float("-inf")}
 
 
 def objective(trial):
@@ -594,6 +607,7 @@ def objective(trial):
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=lr_patience, min_lr=1e-6)
 
+    best_val_f1 = float("-inf")
     best_val_acc = float("-inf")
     best_val_loss = float("inf")
     best_confusion_matrix = None
@@ -622,21 +636,23 @@ def objective(trial):
     for epoch in range(int(N_EPOCHS * (1 - pretrain_frac))):
         finetune_one_epoch(model, train_loader, optimizer, device, alpha=1.0, pos_weight_scalar=pos_weight)
 
-        val_loss, opt_thresh, val_acc, confusion_matrix_global = sweep_threshold(model, val_loader, device, alpha=1.0, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
+        val_loss, opt_thresh_acc, val_acc, opt_thresh, val_f1, confusion_matrix_global = sweep_threshold(model, val_loader, device, alpha=1.0, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
 
         scheduler.step(val_loss)
-        trial.report(val_acc, epoch)
+        trial.report(val_f1, epoch)
 
         if trial.should_prune():
             raise optuna.exceptions.TrialPruned()
 
-        if val_acc > best_val_acc:
+        if val_f1 > best_val_f1:
             best_val_acc = val_acc
+            best_val_f1 = val_f1
             best_confusion_matrix = confusion_matrix_global
             best_val_loss = val_loss
             best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
             epochs_no_improve = 0
             best_thresh = opt_thresh
+            best_thresh_acc = opt_thresh_acc
         else:
             epochs_no_improve += 1
 
@@ -644,26 +660,26 @@ def objective(trial):
             print(f"Early stopping at epoch {epoch+1}")
             break
 
-    print(f"Trial {trial.number}: Final val_loss={best_val_loss:.4f}, best_thresh = {best_thresh:.3f}, val_acc={best_val_acc:.3f}")
+    print(f"Trial {trial.number}: Final val_loss={best_val_loss:.4f}, best_thresh (for f1) = {best_thresh:.3f}, val_f1={best_val_f1:.3f}, val_acc={best_val_acc:.3f}, best_thresh_acc={best_thresh_acc:.3f}")
     print("  Confusion Matrix:")
     print(best_confusion_matrix)
 
     trial_path = os.path.join(CHECKPOINT_DIR, f"trial_{trial.number}.pt")
-    torch.save({"model_state_dict": best_state, "params": trial.params, "val_loss": best_val_loss, "val_acc": best_val_acc, "best_thresh": best_thresh, "trial_number": trial.number, "confusion_matrix": best_confusion_matrix}, trial_path)  # was: val_loss
+    torch.save({"model_state_dict": best_state, "params": trial.params, "val_loss": best_val_loss, "val_f1": best_val_f1, "best_thresh": best_thresh,  "val_acc": best_val_acc, "best_thresh_acc": best_thresh_acc, "trial_number": trial.number, "confusion_matrix": best_confusion_matrix}, trial_path)  # was: val_loss
     print(f"Trial {trial.number} checkpoint saved -> {trial_path}")
 
-    if best_val_acc > best_overall["acc"]:
-        best_overall["acc"] = best_val_acc
+    if best_val_f1 > best_overall["f1"]:
+        best_overall["f1"] = best_val_f1
         best_path = os.path.join(CHECKPOINT_DIR, "best_model.pt")
-        torch.save({"model_state_dict": best_state, "params": trial.params, "val_loss": best_val_loss, "val_acc": best_val_acc, "best_thresh": best_thresh, "trial_number": trial.number}, best_path)
-        print(f"New best model saved -> {best_path}  (val_acc={best_val_acc:.3f}, trial={trial.number})")
+        torch.save({"model_state_dict": best_state, "params": trial.params, "val_loss": best_val_loss, "val_f1": best_val_f1, "best_thresh": best_thresh, "trial_number": trial.number}, best_path)
+        print(f"New best model saved -> {best_path}  (val_f1={best_val_f1:.3f}, trial={trial.number})")
 
-    return best_val_acc
+    return best_val_f1
 
 
 study = optuna.create_study(
     study_name="cmae_optimize",
-    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_200e.db",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_f1.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
@@ -675,4 +691,4 @@ for k, v in study.best_trial.params.items():
     print(f"  {k}: {v}")
 
 print(f"\nAll checkpoints saved to: {CHECKPOINT_DIR}")
-print(f"Best overall val_acc: {best_overall['acc']:.3f}")
+print(f"Best overall val_f1: {best_overall['f1']:.3f}")

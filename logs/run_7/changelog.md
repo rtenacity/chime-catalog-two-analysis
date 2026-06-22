@@ -1,0 +1,2 @@
+- Made 66/33 val split
+- Used 200 epochs
