@@ -112,7 +112,7 @@ TARGET_LENGTH = 128
 
 train_loader, val_loader = make_dataloader(hdf5_path="/scratch/gpfs/MLISANTI/ra0438/all_bursts.hdf5", 
                                            catalog_path="/home/ra0438/chime-catalog-two-analysis/chimefrbcat2.csv", 
-                                           target_length=TARGET_LENGTH, batch_size=64, num_workers=4)
+                                           train_frac=0.75, target_length=TARGET_LENGTH, batch_size=64, num_workers=5)
 
 
 for wfall_batch, label_batch in train_loader:
@@ -528,7 +528,8 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
     best_thresh_f1, best_f1 = 0.5, 0.0
     for thresh in np.linspace(0.05, 0.95, 91):
         preds = (all_probs > thresh).astype(int)
-        f1 = f1_score(all_labels, preds)
+        # get f1 score on repeater class (label 1)
+        f1 = f1_score(all_labels, preds, pos_label=1)
         if f1 > best_f1:
             best_f1, best_thresh_f1 = f1, thresh
 
@@ -548,10 +549,10 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
     return val_loss, best_thresh_acc, best_acc, best_thresh_f1, best_f1, confusion_matrix_global
 
 
-N_EPOCHS = 200
+N_EPOCHS = 300
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_f1"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_f1_v2"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 best_overall = {"f1": float("-inf")}
@@ -580,7 +581,7 @@ def objective(trial):
     pos_weight = trial.suggest_float("pos_weight_scalar", 1.0, 5.0)
     n_enc_blocks = trial.suggest_categorical("n_enc_blocks", [2, 4, 6, 8])
     n_dec_block_frac = trial.suggest_categorical("n_dec_block_frac", [0.25, 0.5, 1.0])
-    pretrain_frac = trial.suggest_categorical("pretrain_frac", [0.25, 0.5, 0.75])
+    pretrain_frac = trial.suggest_float("pretrain_frac", 0.5, 0.9)
 
     n_dec_blocks = max(1, int(n_enc_blocks * n_dec_block_frac))
 
@@ -679,7 +680,7 @@ def objective(trial):
 
 study = optuna.create_study(
     study_name="cmae_optimize",
-    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_f1.db",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_f1_v2.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
