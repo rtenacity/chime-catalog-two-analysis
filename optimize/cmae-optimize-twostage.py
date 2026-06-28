@@ -179,6 +179,24 @@ class SupConLoss(nn.Module):
         loss = loss.view(anchor_count, batch_size).mean()
 
         return loss
+    
+    
+class FocalLoss(nn.Module):
+    def __init__(self, gamma=0.0, pos_weight=None):
+        super().__init__()
+        self.gamma = gamma
+        self.pos_weight = pos_weight
+        self.eps = 1e-6
+
+    def forward(self, logits, labels):
+        p = torch.sigmoid(logits)
+        p_t = p * labels + (1 - p) * (1 - labels)
+        p_t = p_t.clamp(min=self.eps, max=1 - self.eps)
+        bce = nn.functional.binary_cross_entropy_with_logits(
+            logits, labels, pos_weight=self.pos_weight, reduction="none"
+        )
+        focal_weight = (1 - p_t) ** self.gamma
+        return (focal_weight * bce).mean()
 
 
 class WaterfallAugment(nn.Module):
@@ -403,9 +421,9 @@ def compute_pretrain_loss(x_recon, mask, wfall, proj, labels, beta=1.0, gamma=0.
     return beta * recon_loss + gamma * con_loss, recon_loss, con_loss
 
 
-def compute_finetune_loss(cls_out, labels, pos_weight=None, device="cpu"):
+def compute_finetune_loss(cls_out, labels, pos_weight=None, focal_param=0.0, device="cpu"):
     pw = torch.tensor([pos_weight], dtype=torch.float32, device=device) if pos_weight else None
-    cls_loss = nn.BCEWithLogitsLoss(pos_weight=pw)(cls_out, labels.float())
+    cls_loss = FocalLoss(gamma=focal_param, pos_weight=pw)(cls_out, labels.float())
     return cls_loss
 
 
@@ -432,7 +450,7 @@ def pretrain_one_epoch(model, loader, optimizer, device, beta, gamma, pos_weight
     print(f"  loss={running_loss/n:.4f}  recon={running_recon/n:.4f}  con={running_con/n:.4f}")
 
 
-def finetune_one_epoch(model, loader, optimizer, device, alpha, pos_weight_scalar):
+def finetune_one_epoch(model, loader, optimizer, device, alpha, pos_weight_scalar, focal_param):
     model.train()
     total, correct = 0, 0
     running_loss = 0.0
@@ -441,7 +459,7 @@ def finetune_one_epoch(model, loader, optimizer, device, alpha, pos_weight_scala
         wfall, labels = wfall.to(device), labels.to(device)
 
         cls_out = model.forward_finetune(wfall)
-        loss = compute_finetune_loss(cls_out, labels, pos_weight=pos_weight_scalar, device=device)
+        loss = compute_finetune_loss(cls_out, labels, pos_weight=pos_weight_scalar, focal_param=focal_param, device=device)
 
         optimizer.zero_grad()
         loss.backward()
@@ -475,30 +493,7 @@ def evaluate_pretrain(model, loader, device, beta, gamma, pos_weight_scalar):
 
 
 @torch.no_grad()
-def evaluate_finetune(model, loader, device, alpha, pos_weight_scalar):
-    model.eval()
-    total, correct = 0, 0
-    running_loss = 0.0
-    confusion_matrix_global = np.zeros((2, 2), dtype=int)
-    for wfall, labels in loader:
-        wfall, labels = wfall.to(device), labels.to(device)
-        cls_out = model.forward_finetune(wfall)
-        loss = compute_finetune_loss(cls_out, labels, pos_weight=pos_weight_scalar, device=device)
-        running_loss += loss.item()
-
-        preds = (torch.sigmoid(cls_out) > 0.5).long()
-        cf_mat = confusion_matrix(labels.cpu(), preds.cpu(), labels=[0, 1])
-        confusion_matrix_global += cf_mat
-        correct += (preds == labels).sum().item()
-        total += labels.size(0)
-
-    n = len(loader)
-    print(f"  val_loss={running_loss/n:.4f}  val_acc={correct/total:.3f}")
-    return running_loss / n, correct / total, confusion_matrix_global
-
-
-@torch.no_grad()
-def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar):
+def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar, focal_param):
     model.eval()
     all_probs, all_labels = [], []
     running_loss = 0.0
@@ -507,7 +502,7 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
         wfall, labels = wfall.to(device), labels.to(device)
         cls_out = model.forward_finetune(wfall)
 
-        loss = compute_finetune_loss(cls_out, labels, pos_weight=pos_weight_scalar, device=device)
+        loss = compute_finetune_loss(cls_out, labels, pos_weight=pos_weight_scalar, focal_param=focal_param, device=device)
         running_loss += loss.item()
 
         probs = torch.sigmoid(cls_out).cpu().numpy()
@@ -549,10 +544,10 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
     return val_loss, best_thresh_acc, best_acc, best_thresh_f1, best_f1, confusion_matrix_global
 
 
-N_EPOCHS = 300
+N_EPOCHS = 250
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_f1_v2"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_f1_v3"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 best_overall = {"f1": float("-inf")}
@@ -579,6 +574,7 @@ def objective(trial):
     beta = trial.suggest_float("beta", 0.1, 10.0)
     gamma = trial.suggest_float("gamma", 0.01, 1.0, log=True)
     pos_weight = trial.suggest_float("pos_weight_scalar", 1.0, 5.0)
+    focal_param = trial.suggest_float("focal_gamma", -1.0, 3.0)
     n_enc_blocks = trial.suggest_categorical("n_enc_blocks", [2, 4, 6, 8])
     n_dec_block_frac = trial.suggest_categorical("n_dec_block_frac", [0.25, 0.5, 1.0])
     pretrain_frac = trial.suggest_float("pretrain_frac", 0.5, 0.9)
@@ -635,9 +631,9 @@ def objective(trial):
     scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=lr_patience, min_lr=1e-6)
 
     for epoch in range(int(N_EPOCHS * (1 - pretrain_frac))):
-        finetune_one_epoch(model, train_loader, optimizer, device, alpha=1.0, pos_weight_scalar=pos_weight)
+        finetune_one_epoch(model, train_loader, optimizer, device, alpha=1.0, pos_weight_scalar=pos_weight, focal_param=focal_param)
 
-        val_loss, opt_thresh_acc, val_acc, opt_thresh, val_f1, confusion_matrix_global = sweep_threshold(model, val_loader, device, alpha=1.0, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
+        val_loss, opt_thresh_acc, val_acc, opt_thresh, val_f1, confusion_matrix_global = sweep_threshold(model, val_loader, device, alpha=1.0, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight, focal_param=focal_param)
 
         scheduler.step(val_loss)
         trial.report(val_f1, epoch)
@@ -680,7 +676,7 @@ def objective(trial):
 
 study = optuna.create_study(
     study_name="cmae_optimize",
-    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_f1_v2.db",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_f1_v3.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
