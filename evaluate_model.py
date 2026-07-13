@@ -29,8 +29,6 @@ class CHIMEFRBDataset(Dataset):
         with h5py.File(hdf5_path, "r") as f:
             self.keys = list(f.keys())
 
-        # Precompute labels directly from the catalog/keys -- avoids reading
-        # every waterfall from disk just to build the stratification labels.
         self.labels = np.array([int(k in self.repeater_set) for k in self.keys], dtype=np.int64)
 
     @staticmethod
