@@ -1,72 +1,7 @@
 cuda
-NVIDIA A100-PCIE-40GB
-
-===== Fold 1/5 =====
-Val: 908 | repeaters: 197 (21.7%)
-Best threshold (balanced accuracy): 0.24
-Balanced accuracy : 0.8193
-Accuracy          : 0.8491
-F1                : 0.6879
-Confusion matrix:
-[[620  91]
- [ 46 151]]
-
-===== Fold 2/5 =====
-Val: 907 | repeaters: 196 (21.6%)
-Best threshold (balanced accuracy): 0.39
-Balanced accuracy : 0.8324
-Accuracy          : 0.8820
-F1                : 0.7318
-Confusion matrix:
-[[654  57]
- [ 50 146]]
-
-===== Fold 3/5 =====
-Val: 907 | repeaters: 196 (21.6%)
-Best threshold (balanced accuracy): 0.57
-Balanced accuracy : 0.8241
-Accuracy          : 0.8633
-F1                : 0.7048
-Confusion matrix:
-[[635  76]
- [ 48 148]]
-
-===== Fold 4/5 =====
-Val: 907 | repeaters: 196 (21.6%)
-Best threshold (balanced accuracy): 0.05
-Balanced accuracy : 0.8558
-Accuracy          : 0.8666
-F1                : 0.7305
-Confusion matrix:
-[[622  89]
- [ 32 164]]
-
-===== Fold 5/5 =====
-Val: 907 | repeaters: 196 (21.6%)
-Best threshold (balanced accuracy): 0.19
-Balanced accuracy : 0.7542
-Accuracy          : 0.7189
-F1                : 0.5565
-Confusion matrix:
-[[492 219]
- [ 36 160]]
-
-===== Per-Fold Summary =====
-Fold 1: BalAcc=0.8193  Accuracy=0.8491  F1=0.6879  thresh=0.24
-Fold 2: BalAcc=0.8324  Accuracy=0.8820  F1=0.7318  thresh=0.39
-Fold 3: BalAcc=0.8241  Accuracy=0.8633  F1=0.7048  thresh=0.57
-Fold 4: BalAcc=0.8558  Accuracy=0.8666  F1=0.7305  thresh=0.05
-Fold 5: BalAcc=0.7542  Accuracy=0.7189  F1=0.5565  thresh=0.19
-
-Mean Balanced Accuracy : 0.8171 +/- 0.0339
-Mean Accuracy          : 0.8360 +/- 0.0595
-Mean F1                : 0.6823 +/- 0.0650
-
-===== Global (Pooled Out-of-Fold) Confusion Matrix =====
-[[3023  532]
- [ 212  769]]
-Global Balanced Accuracy : 0.8171
-Global Accuracy          : 0.8360
-Global Precision         : 0.5911
-Global Recall            : 0.7839
-Global F1                : 0.6740
+Full dataset: 4536 | repeaters: 981 (21.6%)
+Excluding fold 5 (907 FRBs)
+Remaining: 3629 | repeaters: 785 (21.6%)
+Loading checkpoint: /scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_5fold/fold_2.pt
+Extracted CLS tokens: (3629, 256)
+Saved plot -> /scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_5fold/cls_pca/cls_pca_fold2_excl_fold5.png
