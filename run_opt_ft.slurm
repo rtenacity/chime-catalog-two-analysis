@@ -17,4 +17,4 @@ cd ~/chime-catalog-two-analysis/optimize
 module load anaconda3/2025.12
 conda activate frb_env
 
-python cmae-optimize-twostage.py
+python cmae-optimize-freq.py
