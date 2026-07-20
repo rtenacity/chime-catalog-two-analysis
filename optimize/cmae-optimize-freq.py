@@ -556,7 +556,7 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
 N_EPOCHS = 250
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_fre"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 best_overall = {"f1": float("-inf")}
@@ -684,7 +684,7 @@ def objective(trial):
 
 
 study = optuna.create_study(
-    study_name="cmae_optimize",
+    study_name="cmae_optimize_freq",
     storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
