@@ -17,4 +17,4 @@ cd ~/chime-catalog-two-analysis
 module load anaconda3/2025.12
 conda activate frb_env
 
-python plot_cls_map.py
+python evaluate_model.py
