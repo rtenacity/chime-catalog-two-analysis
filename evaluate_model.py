@@ -76,7 +76,8 @@ class CHIMEFRBDataset(Dataset):
         return tensor, label
 
 
-TARGET_LENGTH = 128
+TARGET_LENGTH = 128 
+N_FREQ_CHANNELS = 256
 N_SPLITS = 5
 BATCH_SIZE = 64
 NUM_WORKERS = 5
@@ -182,16 +183,19 @@ class WaterfallAugment(nn.Module):
         x = x.clone()
         B, n_freq, seq_len = x.shape
 
+        # Per-sample time masking
         t_mask = max(1, int(seq_len * self.time_mask_frac))
         for i in range(B):
             t0 = torch.randint(0, seq_len - t_mask, (1,)).item()
             x[i, :, t0 : t0 + t_mask] = 0.0
 
+        # Per-sample frequency masking
         f_mask = max(1, int(n_freq * self.freq_mask_frac))
         for i in range(B):
             f0 = torch.randint(0, n_freq - f_mask, (1,)).item()
             x[i, f0 : f0 + f_mask, :] = 0.0
 
+        # Gaussian noise (already per-sample since randn_like is elementwise)
         x = x + torch.randn_like(x) * self.noise_std
 
         return x
@@ -214,6 +218,7 @@ class SinusoidalPE(nn.Module):
 class FRBMaskedAutoencoder(nn.Module):
     def __init__(self, seq_len, n_freq, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
         super().__init__()
+
         self.seq_len = seq_len
         self.n_freq = n_freq
         self.embed_dim = embed_dim
@@ -265,20 +270,20 @@ class FRBMaskedAutoencoder(nn.Module):
         self.augment_fn = WaterfallAugment(time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05)
 
     def mask_input(self, x, shared_noise=None):
-        B, T, F = x.shape
-        len_keep = int(T * (1 - self.mask_ratio))
+        B, F, T = x.shape
+        len_keep = int(F * (1 - self.mask_ratio))
 
         if shared_noise is not None:
             noise = shared_noise
         else:
-            noise = torch.rand(B, T, device=x.device)
+            noise = torch.rand(B, F, device=x.device)
         ids_shuffle = torch.argsort(noise, dim=1)
         ids_restore = torch.argsort(ids_shuffle, dim=1)
 
         ids_keep = ids_shuffle[:, :len_keep]
-        x_masked = torch.gather(x, dim=1, index=ids_keep.unsqueeze(-1).expand(-1, -1, F))
+        x_masked = torch.gather(x, dim=1, index=ids_keep.unsqueeze(-1).expand(-1, -1, T))
 
-        mask = torch.ones(B, T, device=x.device)
+        mask = torch.ones(B, F, device=x.device)
         mask[:, :len_keep] = 0
         mask = torch.gather(mask, dim=1, index=ids_restore)
 
@@ -329,7 +334,7 @@ class FRBMaskedAutoencoder(nn.Module):
         return recon
 
     def forward_pretrain(self, x, augment=True):
-        x_t = x.permute(0, 2, 1)
+        x_t = x
         shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
 
         x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
@@ -341,8 +346,7 @@ class FRBMaskedAutoencoder(nn.Module):
 
         if augment:
             x_aug = self.augment_fn(x)
-            x_aug_t = x_aug.permute(0, 2, 1)
-            x_enc2, _, _ = self.encoder(x_aug_t, shared_noise)
+            x_enc2, _, _ = self.encoder(x_aug, shared_noise)
             cls_token2 = x_enc2[:, 0, :]
             proj2 = nn.functional.normalize(self.proj_head(cls_token2), dim=1)
             proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
@@ -352,8 +356,7 @@ class FRBMaskedAutoencoder(nn.Module):
         return recon, mask, proj
 
     def forward_finetune(self, x):
-
-        x_t = x.permute(0, 2, 1)
+        x_t = x  
         shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
 
         x_enc, _, _ = self.encoder(x_t, shared_noise, mask_input=False)
@@ -373,9 +376,9 @@ SupConLoss_fn = SupConLoss(temperature=0.07, contrast_mode="all")
 
 
 def compute_pretrain_loss(x_recon, mask, wfall, proj, labels, beta=1.0, gamma=0.1):
-    target = wfall.permute(0, 2, 1)
+    target = wfall
     diff = (x_recon - target) ** 2
-    recon_loss = (diff * mask.unsqueeze(-1)).sum() / (mask.sum() * wfall.size(1))
+    recon_loss = (diff * mask.unsqueeze(-1)).sum() / (mask.sum() * target.size(-1))
     con_loss = SupConLoss_fn(proj, labels=labels, mask=None)
     return beta * recon_loss + gamma * con_loss, recon_loss, con_loss
 
@@ -503,29 +506,29 @@ N_EPOCHS = 250
 LR_PATIENCE = 15
 ES_PATIENCE = 20
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_5fold"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-
+SOURCE_TRIAL = 57 
 BEST_PARAMS = {
-    "embed_dim": 256,
-    "dec_emb_frac": 0.25,
-    "contrast_dim": 16,
-    "mask_ratio": 0.5391348878714695,
-    "dropout": 0.37937057675681973,
-    "n_enc_heads": 1,
-    "n_dec_frac": 1.0,
-    "dim_feedforward": 512,
-    "dim_feedforward_dec_frac": 1.0,
-    "beta": 4.948681956867076,
-    "gamma": 0.06190300846556013,
-    "pos_weight_scalar": 1.5981066428870525,
-    "focal_gamma": -0.75780439499738,
-    "n_enc_blocks": 6,
-    "n_dec_block_frac": 0.25,
-    "pretrain_frac": 0.6670128153150723,
-    "lr": 0.0002312605096909245,
-    "weight_decay": 0.008441184860364217,
+    "embed_dim": 64,
+    "dec_emb_frac": 1.0,
+    "contrast_dim": 64,
+    "mask_ratio": 0.41363797052507506,
+    "dropout": 0.24308846333618442,
+    "n_enc_heads": 4,
+    "n_dec_frac": 0.25,
+    "dim_feedforward": 256,
+    "dim_feedforward_dec_frac": 0.25,
+    "beta": 4.875295555739722,
+    "gamma": 0.01205009026966113,
+    "pos_weight_scalar": 1.530956225894752,
+    "focal_gamma": 1.979087072188143,
+    "n_enc_blocks": 8,
+    "n_dec_block_frac": 1.0,
+    "pretrain_frac": 0.6005005490559187,
+    "lr": 0.0008125800628749078,
+    "weight_decay": 0.00011947235079072891,
 }
 
 
@@ -541,8 +544,8 @@ def build_model():
     n_dec_blocks = max(1, int(n_enc_blocks * p["n_dec_block_frac"]))
 
     model = FRBMaskedAutoencoder(
-        seq_len=TARGET_LENGTH,
-        n_freq=256,
+        seq_len=N_FREQ_CHANNELS,
+        n_freq=TARGET_LENGTH,
         embed_dim=embed_dim,
         dec_embed_dim=dec_emb_dim,
         contrast_dim=p["contrast_dim"],

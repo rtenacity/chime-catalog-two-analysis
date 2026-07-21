@@ -208,8 +208,6 @@ class WaterfallAugment(nn.Module):
         self.noise_std = noise_std
 
     def forward(self, x):
-        # x: [B, n_freq, seq_len] raw waterfall layout -- unaffected by whether
-        # the transformer treats frequency or time as the token dimension.
         x = x.clone()
         B, n_freq, seq_len = x.shape
 
@@ -248,11 +246,6 @@ class SinusoidalPE(nn.Module):
 class FRBMaskedAutoencoder(nn.Module):
     def __init__(self, seq_len, n_freq, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
         super().__init__()
-        # seq_len: number of transformer sequence positions. This is now the
-        #          number of *frequency channels* -- masking/slicing happens
-        #          across frequency bands instead of timesteps.
-        # n_freq : per-token feature dimension, i.e. the number of *time
-        #          samples* in each frequency channel's burst window.
         self.seq_len = seq_len
         self.n_freq = n_freq
         self.embed_dim = embed_dim
@@ -304,20 +297,20 @@ class FRBMaskedAutoencoder(nn.Module):
         self.augment_fn = WaterfallAugment(time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05)
 
     def mask_input(self, x, shared_noise=None):
-        B, T, F = x.shape  # T = seq_len (frequency channels), F = n_freq (time samples)
-        len_keep = int(T * (1 - self.mask_ratio))
+        B, F, T = x.shape
+        len_keep = int(F * (1 - self.mask_ratio))
 
         if shared_noise is not None:
             noise = shared_noise
         else:
-            noise = torch.rand(B, T, device=x.device)
+            noise = torch.rand(B, F, device=x.device)
         ids_shuffle = torch.argsort(noise, dim=1)
         ids_restore = torch.argsort(ids_shuffle, dim=1)
 
         ids_keep = ids_shuffle[:, :len_keep]
-        x_masked = torch.gather(x, dim=1, index=ids_keep.unsqueeze(-1).expand(-1, -1, F))
+        x_masked = torch.gather(x, dim=1, index=ids_keep.unsqueeze(-1).expand(-1, -1, T))
 
-        mask = torch.ones(B, T, device=x.device)
+        mask = torch.ones(B, F, device=x.device)
         mask[:, :len_keep] = 0
         mask = torch.gather(mask, dim=1, index=ids_restore)
 
