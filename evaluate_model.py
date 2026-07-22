@@ -216,19 +216,19 @@ class SinusoidalPE(nn.Module):
 
 
 class FRBMaskedAutoencoder(nn.Module):
-    def __init__(self, seq_len, n_freq, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
+    def __init__(self, n_freq, seq_len, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
         super().__init__()
 
-        self.seq_len = seq_len
         self.n_freq = n_freq
+        self.seq_len = seq_len
         self.embed_dim = embed_dim
         self.dec_embed_dim = dec_embed_dim
         self.contrast_dim = contrast_dim
         self.mask_ratio = mask_ratio
 
-        self.enc_proj = nn.Linear(n_freq, embed_dim)
+        self.enc_proj = nn.Linear(seq_len, embed_dim)
         self.enc_drop = nn.Dropout(dropout)
-        self.enc_pe = SinusoidalPE(seq_len + 1, embed_dim)
+        self.enc_pe = SinusoidalPE(n_freq + 1, embed_dim)
         self.enc_blocks = nn.ModuleList([nn.TransformerEncoderLayer(embed_dim,
                                                                     nhead=n_enc_heads,
                                                                     dim_feedforward=dim_feedforward_enc,
@@ -241,14 +241,14 @@ class FRBMaskedAutoencoder(nn.Module):
         self.mask_token = nn.Parameter(torch.zeros(1, 1, dec_embed_dim))
 
         self.enc_to_dec = nn.Linear(embed_dim, dec_embed_dim)
-        self.dec_pe = SinusoidalPE(seq_len + 1, dec_embed_dim)
+        self.dec_pe = SinusoidalPE(n_freq + 1, dec_embed_dim)
         self.dec_blocks = nn.ModuleList([nn.TransformerEncoderLayer(dec_embed_dim,
                                                                     nhead=n_dec_heads,
                                                                     dim_feedforward=dim_feedforward_dec,
                                                                     batch_first=True, dropout=dropout)
                                          for _ in range(n_dec_blocks)])
         self.dec_norm = nn.LayerNorm(dec_embed_dim)
-        self.dec_proj = nn.Linear(dec_embed_dim, n_freq)
+        self.dec_proj = nn.Linear(dec_embed_dim, seq_len)
 
         self.cls_head = nn.Sequential(nn.Linear(embed_dim * 2, embed_dim),
                                       nn.LayerNorm(embed_dim),
@@ -291,7 +291,7 @@ class FRBMaskedAutoencoder(nn.Module):
 
     def encoder(self, x, shared_noise=None, mask_input=True):
         x = self.enc_drop(self.enc_proj(x))
-        x = x + self.enc_pe.pe[1 : self.seq_len + 1]
+        x = x + self.enc_pe.pe[1 : self.n_freq + 1]
 
         if mask_input:
             x_vis, mask, ids_restore, ids_keep = self.mask_input(x, shared_noise)
@@ -335,7 +335,7 @@ class FRBMaskedAutoencoder(nn.Module):
 
     def forward_pretrain(self, x, augment=True):
         x_t = x
-        shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
+        shared_noise = torch.rand(x_t.size(0), self.n_freq, device=x_t.device)
 
         x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
         cls_token = x_enc[:, 0, :]
@@ -357,7 +357,7 @@ class FRBMaskedAutoencoder(nn.Module):
 
     def forward_finetune(self, x):
         x_t = x  
-        shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
+        shared_noise = torch.rand(x_t.size(0), self.n_freq, device=x_t.device)
 
         x_enc, _, _ = self.encoder(x_t, shared_noise, mask_input=False)
 
@@ -544,8 +544,8 @@ def build_model():
     n_dec_blocks = max(1, int(n_enc_blocks * p["n_dec_block_frac"]))
 
     model = FRBMaskedAutoencoder(
-        seq_len=N_FREQ_CHANNELS,
-        n_freq=TARGET_LENGTH,
+        n_freq=N_FREQ_CHANNELS,
+        seq_len=TARGET_LENGTH,
         embed_dim=embed_dim,
         dec_embed_dim=dec_emb_dim,
         contrast_dim=p["contrast_dim"],
