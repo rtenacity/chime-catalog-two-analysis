@@ -6,3 +6,4 @@ vos
 cadcutils
 h5py
 tqdm
+hdbscan
