@@ -12,6 +12,7 @@ from torch.utils.data import Subset
 from sklearn.model_selection import train_test_split
 #import f1_score
 from sklearn.metrics import f1_score
+from scipy.ndimage import gaussian_filter
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
@@ -21,7 +22,7 @@ print(torch.cuda.get_device_name(0))
 class CHIMEFRBDataset(Dataset):
     def __init__(self, hdf5_path, catalog_path, target_length):
         self.hdf5_path = hdf5_path
-        self.dt = 0.009830400085775182*1000
+        self.dt = 0.009830400085775182 * 1000
         self._h5 = None
 
         self.target_length = target_length
@@ -32,55 +33,55 @@ class CHIMEFRBDataset(Dataset):
         )
         with h5py.File(hdf5_path, "r") as f:
             self.keys = list(f.keys())
+        self.labels = np.array([int(k in self.repeater_set) for k in self.keys], dtype=np.int64)
 
-        
     @staticmethod
     def _pad_or_crop(wfall, target_length, center_idx):
         n_freq, n_time = wfall.shape
         half = target_length // 2
         start = center_idx - half
         end = start + target_length
-        
+
         if start >= 0 and end <= n_time:
-            return wfall[:, start:end]         
-        
+            return wfall[:, start:end]
+
         src_start = max(start, 0)
         src_end = min(end, n_time)
         out = np.zeros((n_freq, target_length), dtype=wfall.dtype)
         dst_start = src_start - start
         out[:, dst_start:dst_start + (src_end - src_start)] = wfall[:, src_start:src_end]
         return out
-    
+
     def _get_file(self):
         if self._h5 is None:
             self._h5 = h5py.File(self.hdf5_path, "r")
         return self._h5
 
-    
     def __len__(self):
         return len(self.keys)
     
-    
+    def __gaussian_filter__(self, wfall, sigma):
+        return gaussian_filter(wfall, sigma=sigma, radius=2)
+
     def __getitem__(self, idx):
         key = self.keys[idx]
-        
+
         f = self._get_file()
         wfall = f[key]["wfall_plot"][:]
         extent = np.array(f[key]["extent"])
-            
+        wfall = self.__gaussian_filter__(wfall, sigma=1)
+
         wfall = wfall.astype(np.float32)
         std = wfall.std(axis=1, keepdims=True)
-        std[std == 0] = 1.0          # avoid divide-by-zero for masked channels
+        std[std == 0] = 1.0  # avoid divide-by-zero for masked channels
         wfall = (wfall - wfall.mean(axis=1, keepdims=True)) / std
-        
 
         peak = round(-extent[0] / self.dt)
         wfall = self._pad_or_crop(wfall, self.target_length, peak)
         tensor = torch.from_numpy(wfall)
         label = torch.tensor(int(key in self.repeater_set), dtype=torch.long)
-        
-        return tensor, label
 
+        return tensor, label
 
 def make_dataloader(hdf5_path: str, catalog_path: str, target_length: int, batch_size: int = 32, shuffle: bool = True, num_workers: int = 0, train_frac: float = 0.66, seed: int = 42):
     dataset = CHIMEFRBDataset(hdf5_path, catalog_path, target_length)
@@ -361,9 +362,6 @@ class FRBMaskedAutoencoder(nn.Module):
         return recon
 
     def forward_pretrain(self, x, augment=True):
-        # x: [B, n_freq, seq_len] -- already in the layout we want (frequency
-        # channels as the token/sequence dimension). No permute needed since
-        # masking now happens over frequency bands instead of timesteps.
         x_t = x
         shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
 
@@ -549,7 +547,7 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
 N_EPOCHS = 250
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_gaussian"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 best_overall = {"f1": float("-inf")}
@@ -678,7 +676,7 @@ def objective(trial):
 
 study = optuna.create_study(
     study_name="cmae_optimize_freq",
-    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq.db",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq_gaussian.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
