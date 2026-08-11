@@ -7,6 +7,7 @@ from torch.utils.data import Dataset, DataLoader, Subset
 from sklearn.metrics import confusion_matrix, f1_score
 from sklearn.model_selection import StratifiedKFold
 import os
+from scipy.ndimage import gaussian_filter
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
@@ -28,7 +29,6 @@ class CHIMEFRBDataset(Dataset):
         )
         with h5py.File(hdf5_path, "r") as f:
             self.keys = list(f.keys())
-
         self.labels = np.array([int(k in self.repeater_set) for k in self.keys], dtype=np.int64)
 
     @staticmethod
@@ -55,6 +55,9 @@ class CHIMEFRBDataset(Dataset):
 
     def __len__(self):
         return len(self.keys)
+    
+    def __gaussian_filter__(self, wfall, sigma):
+        return gaussian_filter(wfall, sigma=sigma, radius=2)
 
     def __getitem__(self, idx):
         key = self.keys[idx]
@@ -62,6 +65,7 @@ class CHIMEFRBDataset(Dataset):
         f = self._get_file()
         wfall = f[key]["wfall_plot"][:]
         extent = np.array(f[key]["extent"])
+        wfall = self.__gaussian_filter__(wfall, sigma=1)
 
         wfall = wfall.astype(np.float32)
         std = wfall.std(axis=1, keepdims=True)
@@ -506,7 +510,7 @@ N_EPOCHS = 250
 LR_PATIENCE = 15
 ES_PATIENCE = 20
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_gaussian"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 SOURCE_TRIAL = 57 
