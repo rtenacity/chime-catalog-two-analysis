@@ -60,8 +60,8 @@ class CHIMEFRBDataset(Dataset):
     def __len__(self):
         return len(self.keys)
     
-    def __gaussian_filter__(self, wfall, sigma):
-        return gaussian_filter(wfall, sigma=sigma, radius=2)
+    # def __gaussian_filter__(self, wfall, sigma):
+    #     return gaussian_filter(wfall, sigma=sigma, radius=2)
 
     def __getitem__(self, idx):
         key = self.keys[idx]
@@ -69,7 +69,7 @@ class CHIMEFRBDataset(Dataset):
         f = self._get_file()
         wfall = f[key]["wfall_plot"][:]
         extent = np.array(f[key]["extent"])
-        wfall = self.__gaussian_filter__(wfall, sigma=1)
+        # wfall = self.__gaussian_filter__(wfall, sigma=1)
 
         wfall = wfall.astype(np.float32)
         std = wfall.std(axis=1, keepdims=True)
@@ -202,14 +202,29 @@ class FocalLoss(nn.Module):
 
 
 class WaterfallAugment(nn.Module):
-    def __init__(self, time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05):
+    def __init__(self, time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05, crop_frac_range=(0.7, 1.0)):
         super().__init__()
         self.time_mask_frac = time_mask_frac
         self.freq_mask_frac = freq_mask_frac
         self.noise_std = noise_std
+        self.crop_frac_range = crop_frac_range
+        
+    def _random_time_crop(self, x):
+        # pads with zeroes (ref https://arxiv.org/pdf/2103.01929)
+        B, n_freq, seq_len = x.shape
+        out = torch.zeros_like(x)
+        for i in range(B):
+            frac = float(torch.empty(1).uniform_(*self.crop_frac_range))
+            crop_len = min(seq_len, max(1, int(seq_len * frac))) # choose window size
+            src_start = int(torch.randint(0, seq_len - crop_len + 1, (1,))) # choose where to start copying
+            dst_start = int(torch.randint(0, seq_len - crop_len + 1, (1,))) # choose where to copy into
+            out[i, :, dst_start:dst_start + crop_len] = x[i, :, src_start:src_start + crop_len]
+        return out
 
     def forward(self, x):
         x = x.clone()
+        x = self._random_time_crop(x)
+
         B, n_freq, seq_len = x.shape
 
         # Per-sample time masking
@@ -286,7 +301,7 @@ class FRBMaskedAutoencoder(nn.Module):
                                       nn.ReLU(), nn.Dropout(dropout), 
                                       nn.Linear(embed_dim // 2, 1))
 
-        self.proj_head = nn.Sequential(nn.Linear(embed_dim, embed_dim), 
+        self.proj_head = nn.Sequential(nn.Linear(embed_dim * 2, embed_dim), 
                                        nn.LayerNorm(embed_dim), 
                                        nn.ReLU(), 
                                        nn.Dropout(dropout), 
@@ -364,19 +379,29 @@ class FRBMaskedAutoencoder(nn.Module):
     def forward_pretrain(self, x, augment=True):
         x_t = x
         shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
-
         x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
-        cls_token = x_enc[:, 0, :]
+        cls_token = x_enc[:, 0, :] # 
+        seq_tokens = x_enc[:, 1:, :]
+        mean_pooled = seq_tokens.mean(dim=1)
+        rich_embed = torch.cat([cls_token, mean_pooled], dim=1)
+        rich_embed_norm = nn.functional.normalize(rich_embed, dim=1)
+        proj1 = nn.functional.normalize(self.proj_head(rich_embed_norm), dim=1)
+
 
         recon = self.decoder(x_enc, ids_restore)
 
-        proj1 = nn.functional.normalize(self.proj_head(cls_token), dim=1)
+        
+        # pool tokens
 
         if augment:
             x_aug = self.augment_fn(x)
             x_enc2, _, _ = self.encoder(x_aug, shared_noise)
             cls_token2 = x_enc2[:, 0, :]
-            proj2 = nn.functional.normalize(self.proj_head(cls_token2), dim=1)
+            seq_tokens2 = x_enc2[:, 1:, :]
+            mean_pooled2 = seq_tokens2.mean(dim=1)
+            rich_embed2 = torch.cat([cls_token2, mean_pooled2], dim=1)
+            rich_embed_norm2 = nn.functional.normalize(rich_embed2, dim=1)
+            proj2 = nn.functional.normalize(self.proj_head(rich_embed_norm2), dim=1)
             proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
         else:
             proj = proj1.unsqueeze(1)  # fallback: [B, 1, contrast_dim]
@@ -547,7 +572,7 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
 N_EPOCHS = 250
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_gaussian"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 best_overall = {"f1": float("-inf")}
@@ -676,7 +701,7 @@ def objective(trial):
 
 study = optuna.create_study(
     study_name="cmae_optimize_freq",
-    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq_gaussian.db",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq_expanded.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
