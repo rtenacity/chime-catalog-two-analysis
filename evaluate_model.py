@@ -518,8 +518,8 @@ ES_PATIENCE = 20
 CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-SOURCE_TRIAL = 41 
-BEST_PARAMS = {'embed_dim': 128, 'dec_emb_frac': 1.0, 'contrast_dim': 32, 'mask_ratio': 0.37896575968549495, 'dropout': 0.3541781191602385, 'n_enc_heads': 4, 'n_dec_frac': 0.25, 'dim_feedforward': 128, 'dim_feedforward_dec_frac': 0.25, 'beta': 6.357578254143635, 'gamma': 0.5359123451158972, 'pos_weight_scalar': 4.722503551454023, 'focal_gamma': -0.12002277463789608, 'n_enc_blocks': 2, 'n_dec_block_frac': 1.0, 'pretrain_frac': 0.5589592854075041, 'lr': 0.0009320589785715064, 'weight_decay': 0.00947111909038405}
+SOURCE_TRIAL = 91
+BEST_PARAMS = {'embed_dim': 256, 'dec_emb_frac': 1.0, 'contrast_dim': 32, 'mask_ratio': 0.4820731904335109, 'dropout': 0.24648660625802013, 'n_enc_heads': 2, 'n_dec_frac': 0.25, 'dim_feedforward': 128, 'dim_feedforward_dec_frac': 0.25, 'beta': 6.513504354578434, 'gamma': 0.016487013459320132, 'pos_weight_scalar': 2.781467851765632, 'focal_gamma': 0.5933905321554959, 'n_enc_blocks': 4, 'n_dec_block_frac': 0.5, 'pretrain_frac': 0.539065433450904, 'lr': 0.0006095802498010144, 'weight_decay': 0.008568992880137998}
 
 
 def build_model():
