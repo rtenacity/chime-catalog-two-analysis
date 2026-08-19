@@ -431,7 +431,7 @@ SupConLoss_fn = SupConLoss(temperature=0.07, contrast_mode="all")
 def compute_loss(cls_out, x_recon, mask, wfall, labels, proj, alpha=1.0, beta=1.0, gamma=0.1, pos_weight=None, device="cpu"):
     pw = torch.tensor([pos_weight], dtype=torch.float32, device=device) if pos_weight else None
     cls_loss = nn.BCEWithLogitsLoss(pos_weight=pw)(cls_out, labels.float())
-    target = wfall  # [B, n_freq, seq_len] -- matches x_recon's layout directly now
+    target = wfall # [B, n_freq, seq_len]
     diff = (x_recon - target) ** 2
     recon_loss = (diff * mask.unsqueeze(-1)).sum() / (mask.sum() * target.size(-1))
     con_loss = SupConLoss_fn(proj, labels=labels, mask=None)

@@ -56,8 +56,6 @@ class CHIMEFRBDataset(Dataset):
     def __len__(self):
         return len(self.keys)
     
-    def __gaussian_filter__(self, wfall, sigma):
-        return gaussian_filter(wfall, sigma=sigma, radius=2)
 
     def __getitem__(self, idx):
         key = self.keys[idx]
@@ -65,8 +63,7 @@ class CHIMEFRBDataset(Dataset):
         f = self._get_file()
         wfall = f[key]["wfall_plot"][:]
         extent = np.array(f[key]["extent"])
-        wfall = self.__gaussian_filter__(wfall, sigma=1)
-
+        
         wfall = wfall.astype(np.float32)
         std = wfall.std(axis=1, keepdims=True)
         std[std == 0] = 1.0  # avoid divide-by-zero for masked channels
@@ -220,23 +217,22 @@ class SinusoidalPE(nn.Module):
 
 
 class FRBMaskedAutoencoder(nn.Module):
-    def __init__(self, n_freq, seq_len, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
+    def __init__(self, seq_len, n_freq, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
         super().__init__()
-
-        self.n_freq = n_freq
         self.seq_len = seq_len
+        self.n_freq = n_freq
         self.embed_dim = embed_dim
         self.dec_embed_dim = dec_embed_dim
         self.contrast_dim = contrast_dim
         self.mask_ratio = mask_ratio
 
-        self.enc_proj = nn.Linear(seq_len, embed_dim)
+        self.enc_proj = nn.Linear(n_freq, embed_dim)
         self.enc_drop = nn.Dropout(dropout)
-        self.enc_pe = SinusoidalPE(n_freq + 1, embed_dim)
-        self.enc_blocks = nn.ModuleList([nn.TransformerEncoderLayer(embed_dim,
-                                                                    nhead=n_enc_heads,
-                                                                    dim_feedforward=dim_feedforward_enc,
-                                                                    batch_first=True, dropout=dropout)
+        self.enc_pe = SinusoidalPE(seq_len + 1, embed_dim)
+        self.enc_blocks = nn.ModuleList([nn.TransformerEncoderLayer(embed_dim, 
+                                                                    nhead=n_enc_heads, 
+                                                                    dim_feedforward=dim_feedforward_enc, 
+                                                                    batch_first=True, dropout=dropout) 
                                          for _ in range(n_enc_blocks)])
         self.enc_norm = nn.LayerNorm(embed_dim)
 
@@ -245,27 +241,27 @@ class FRBMaskedAutoencoder(nn.Module):
         self.mask_token = nn.Parameter(torch.zeros(1, 1, dec_embed_dim))
 
         self.enc_to_dec = nn.Linear(embed_dim, dec_embed_dim)
-        self.dec_pe = SinusoidalPE(n_freq + 1, dec_embed_dim)
-        self.dec_blocks = nn.ModuleList([nn.TransformerEncoderLayer(dec_embed_dim,
-                                                                    nhead=n_dec_heads,
-                                                                    dim_feedforward=dim_feedforward_dec,
-                                                                    batch_first=True, dropout=dropout)
+        self.dec_pe = SinusoidalPE(seq_len + 1, dec_embed_dim)
+        self.dec_blocks = nn.ModuleList([nn.TransformerEncoderLayer(dec_embed_dim, 
+                                                                    nhead=n_dec_heads, 
+                                                                    dim_feedforward=dim_feedforward_dec, 
+                                                                    batch_first=True, dropout=dropout) 
                                          for _ in range(n_dec_blocks)])
         self.dec_norm = nn.LayerNorm(dec_embed_dim)
-        self.dec_proj = nn.Linear(dec_embed_dim, seq_len)
+        self.dec_proj = nn.Linear(dec_embed_dim, n_freq)
 
-        self.cls_head = nn.Sequential(nn.Linear(embed_dim * 2, embed_dim),
-                                      nn.LayerNorm(embed_dim),
+        self.cls_head = nn.Sequential(nn.Linear(embed_dim * 2, embed_dim), 
+                                      nn.LayerNorm(embed_dim), 
                                       nn.ReLU(),
-                                      nn.Dropout(dropout),
-                                      nn.Linear(embed_dim, embed_dim // 2),
-                                      nn.ReLU(), nn.Dropout(dropout),
+                                      nn.Dropout(dropout), 
+                                      nn.Linear(embed_dim, embed_dim // 2), 
+                                      nn.ReLU(), nn.Dropout(dropout), 
                                       nn.Linear(embed_dim // 2, 1))
 
-        self.proj_head = nn.Sequential(nn.Linear(embed_dim, embed_dim),
-                                       nn.LayerNorm(embed_dim),
-                                       nn.ReLU(),
-                                       nn.Dropout(dropout),
+        self.proj_head = nn.Sequential(nn.Linear(embed_dim * 2, embed_dim), 
+                                       nn.LayerNorm(embed_dim), 
+                                       nn.ReLU(), 
+                                       nn.Dropout(dropout), 
                                        nn.Linear(embed_dim, contrast_dim))
 
         nn.init.normal_(self.cls_token, std=0.02)
@@ -295,7 +291,7 @@ class FRBMaskedAutoencoder(nn.Module):
 
     def encoder(self, x, shared_noise=None, mask_input=True):
         x = self.enc_drop(self.enc_proj(x))
-        x = x + self.enc_pe.pe[1 : self.n_freq + 1]
+        x = x + self.enc_pe.pe[1 : self.seq_len + 1]
 
         if mask_input:
             x_vis, mask, ids_restore, ids_keep = self.mask_input(x, shared_noise)
@@ -339,20 +335,29 @@ class FRBMaskedAutoencoder(nn.Module):
 
     def forward_pretrain(self, x, augment=True):
         x_t = x
-        shared_noise = torch.rand(x_t.size(0), self.n_freq, device=x_t.device)
-
+        shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
         x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
-        cls_token = x_enc[:, 0, :]
+        cls_token = x_enc[:, 0, :] # 
+        seq_tokens = x_enc[:, 1:, :]
+        mean_pooled = seq_tokens.mean(dim=1)
+        rich_embed = torch.cat([cls_token, mean_pooled], dim=1)
+        rich_embed_norm = nn.functional.normalize(rich_embed, dim=1)
+        proj1 = nn.functional.normalize(self.proj_head(rich_embed_norm), dim=1)
+
 
         recon = self.decoder(x_enc, ids_restore)
 
-        proj1 = nn.functional.normalize(self.proj_head(cls_token), dim=1)
-
+        
+        # pool tokens
         if augment:
             x_aug = self.augment_fn(x)
             x_enc2, _, _ = self.encoder(x_aug, shared_noise)
             cls_token2 = x_enc2[:, 0, :]
-            proj2 = nn.functional.normalize(self.proj_head(cls_token2), dim=1)
+            seq_tokens2 = x_enc2[:, 1:, :]
+            mean_pooled2 = seq_tokens2.mean(dim=1)
+            rich_embed2 = torch.cat([cls_token2, mean_pooled2], dim=1)
+            rich_embed_norm2 = nn.functional.normalize(rich_embed2, dim=1)
+            proj2 = nn.functional.normalize(self.proj_head(rich_embed_norm2), dim=1)
             proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
         else:
             proj = proj1.unsqueeze(1)  # fallback: [B, 1, contrast_dim]
@@ -360,8 +365,8 @@ class FRBMaskedAutoencoder(nn.Module):
         return recon, mask, proj
 
     def forward_finetune(self, x):
-        x_t = x  
-        shared_noise = torch.rand(x_t.size(0), self.n_freq, device=x_t.device)
+        x_t = x  # frequency channels are the token dimension
+        shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
 
         x_enc, _, _ = self.encoder(x_t, shared_noise, mask_input=False)
 
@@ -510,30 +515,11 @@ N_EPOCHS = 250
 LR_PATIENCE = 15
 ES_PATIENCE = 20
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_gaussian"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-SOURCE_TRIAL = 57 
-BEST_PARAMS = {
-    "embed_dim": 64,
-    "dec_emb_frac": 1.0,
-    "contrast_dim": 64,
-    "mask_ratio": 0.41363797052507506,
-    "dropout": 0.24308846333618442,
-    "n_enc_heads": 4,
-    "n_dec_frac": 0.25,
-    "dim_feedforward": 256,
-    "dim_feedforward_dec_frac": 0.25,
-    "beta": 4.875295555739722,
-    "gamma": 0.01205009026966113,
-    "pos_weight_scalar": 1.530956225894752,
-    "focal_gamma": 1.979087072188143,
-    "n_enc_blocks": 8,
-    "n_dec_block_frac": 1.0,
-    "pretrain_frac": 0.6005005490559187,
-    "lr": 0.0008125800628749078,
-    "weight_decay": 0.00011947235079072891,
-}
+SOURCE_TRIAL = 41 
+BEST_PARAMS = {'embed_dim': 128, 'dec_emb_frac': 1.0, 'contrast_dim': 32, 'mask_ratio': 0.37896575968549495, 'dropout': 0.3541781191602385, 'n_enc_heads': 4, 'n_dec_frac': 0.25, 'dim_feedforward': 128, 'dim_feedforward_dec_frac': 0.25, 'beta': 6.357578254143635, 'gamma': 0.5359123451158972, 'pos_weight_scalar': 4.722503551454023, 'focal_gamma': -0.12002277463789608, 'n_enc_blocks': 2, 'n_dec_block_frac': 1.0, 'pretrain_frac': 0.5589592854075041, 'lr': 0.0009320589785715064, 'weight_decay': 0.00947111909038405}
 
 
 def build_model():
@@ -548,8 +534,8 @@ def build_model():
     n_dec_blocks = max(1, int(n_enc_blocks * p["n_dec_block_frac"]))
 
     model = FRBMaskedAutoencoder(
-        n_freq=N_FREQ_CHANNELS,
-        seq_len=TARGET_LENGTH,
+        n_freq=TARGET_LENGTH,
+        seq_len=N_FREQ_CHANNELS,
         embed_dim=embed_dim,
         dec_embed_dim=dec_emb_dim,
         contrast_dim=p["contrast_dim"],
