@@ -1,0 +1,3111 @@
+cuda
+NVIDIA A100-PCIE-40GB
+Dataset: 4536 | repeaters: 981 (21.6%)
+
+===== Fold 1/5 =====
+Train: 3628 | repeaters: 784 (21.6%)
+Val:   908   | repeaters: 197   (21.7%)
+  loss=8.7390  recon=0.9602  con=4.9156
+  val_loss=8.2312  val_recon=0.8960  val_con=4.7303
+Pretrain Epoch 1/139: val_loss=8.2312  val_recon=0.8960  val_con=4.7303
+  loss=8.2625  recon=0.8916  con=4.8409
+  val_loss=8.0721  val_recon=0.8709  val_con=4.7303
+Pretrain Epoch 2/139: val_loss=8.0721  val_recon=0.8709  val_con=4.7303
+  loss=8.0841  recon=0.8636  con=4.8393
+  val_loss=8.0361  val_recon=0.8653  val_con=4.7303
+Pretrain Epoch 3/139: val_loss=8.0361  val_recon=0.8653  val_con=4.7303
+  loss=8.0376  recon=0.8564  con=4.8384
+  val_loss=8.0228  val_recon=0.8632  val_con=4.7303
+Pretrain Epoch 4/139: val_loss=8.0228  val_recon=0.8632  val_con=4.7303
+  loss=8.0135  recon=0.8526  con=4.8381
+  val_loss=8.0380  val_recon=0.8656  val_con=4.7303
+Pretrain Epoch 5/139: val_loss=8.0380  val_recon=0.8656  val_con=4.7303
+  loss=7.9932  recon=0.8495  con=4.8379
+  val_loss=7.9703  val_recon=0.8549  val_con=4.7302
+Pretrain Epoch 6/139: val_loss=7.9703  val_recon=0.8549  val_con=4.7302
+  loss=7.9767  recon=0.8469  con=4.8378
+  val_loss=7.9570  val_recon=0.8528  val_con=4.7302
+Pretrain Epoch 7/139: val_loss=7.9570  val_recon=0.8528  val_con=4.7302
+  loss=7.9658  recon=0.8452  con=4.8378
+  val_loss=7.9675  val_recon=0.8545  val_con=4.7303
+Pretrain Epoch 8/139: val_loss=7.9675  val_recon=0.8545  val_con=4.7303
+  loss=7.9516  recon=0.8429  con=4.8377
+  val_loss=7.9478  val_recon=0.8514  val_con=4.7302
+Pretrain Epoch 9/139: val_loss=7.9478  val_recon=0.8514  val_con=4.7302
+  loss=7.9429  recon=0.8416  con=4.8377
+  val_loss=7.9521  val_recon=0.8521  val_con=4.7302
+Pretrain Epoch 10/139: val_loss=7.9521  val_recon=0.8521  val_con=4.7302
+  loss=7.9369  recon=0.8406  con=4.8377
+  val_loss=7.9384  val_recon=0.8499  val_con=4.7302
+Pretrain Epoch 11/139: val_loss=7.9384  val_recon=0.8499  val_con=4.7302
+  loss=7.9273  recon=0.8391  con=4.8376
+  val_loss=7.9087  val_recon=0.8453  val_con=4.7302
+Pretrain Epoch 12/139: val_loss=7.9087  val_recon=0.8453  val_con=4.7302
+  loss=7.9191  recon=0.8378  con=4.8376
+  val_loss=7.9203  val_recon=0.8471  val_con=4.7302
+Pretrain Epoch 13/139: val_loss=7.9203  val_recon=0.8471  val_con=4.7302
+  loss=7.9060  recon=0.8358  con=4.8375
+  val_loss=7.9051  val_recon=0.8447  val_con=4.7301
+Pretrain Epoch 14/139: val_loss=7.9051  val_recon=0.8447  val_con=4.7301
+  loss=7.9032  recon=0.8353  con=4.8374
+  val_loss=7.8980  val_recon=0.8436  val_con=4.7300
+Pretrain Epoch 15/139: val_loss=7.8980  val_recon=0.8436  val_con=4.7300
+  loss=7.9015  recon=0.8351  con=4.8370
+  val_loss=7.8819  val_recon=0.8412  val_con=4.7286
+Pretrain Epoch 16/139: val_loss=7.8819  val_recon=0.8412  val_con=4.7286
+  loss=7.8930  recon=0.8339  con=4.8350
+  val_loss=7.8902  val_recon=0.8428  val_con=4.7244
+Pretrain Epoch 17/139: val_loss=7.8902  val_recon=0.8428  val_con=4.7244
+  loss=7.8928  recon=0.8345  con=4.8277
+  val_loss=7.8914  val_recon=0.8437  val_con=4.7164
+Pretrain Epoch 18/139: val_loss=7.8914  val_recon=0.8437  val_con=4.7164
+  loss=7.8844  recon=0.8335  con=4.8242
+  val_loss=7.8564  val_recon=0.8386  val_con=4.7116
+Pretrain Epoch 19/139: val_loss=7.8564  val_recon=0.8386  val_con=4.7116
+  loss=7.8749  recon=0.8329  con=4.8140
+  val_loss=7.8715  val_recon=0.8412  val_con=4.7086
+Pretrain Epoch 20/139: val_loss=7.8715  val_recon=0.8412  val_con=4.7086
+  loss=7.8698  recon=0.8327  con=4.8070
+  val_loss=7.8682  val_recon=0.8400  val_con=4.7170
+Pretrain Epoch 21/139: val_loss=7.8682  val_recon=0.8400  val_con=4.7170
+  loss=7.8622  recon=0.8314  con=4.8072
+  val_loss=7.8886  val_recon=0.8431  val_con=4.7176
+Pretrain Epoch 22/139: val_loss=7.8886  val_recon=0.8431  val_con=4.7176
+  loss=7.8603  recon=0.8317  con=4.8004
+  val_loss=7.8666  val_recon=0.8403  val_con=4.7107
+Pretrain Epoch 23/139: val_loss=7.8666  val_recon=0.8403  val_con=4.7107
+  loss=7.8543  recon=0.8314  con=4.7927
+  val_loss=7.8755  val_recon=0.8420  val_con=4.7070
+Pretrain Epoch 24/139: val_loss=7.8755  val_recon=0.8420  val_con=4.7070
+  loss=7.8535  recon=0.8315  con=4.7908
+  val_loss=7.8777  val_recon=0.8409  val_con=4.7235
+Pretrain Epoch 25/139: val_loss=7.8777  val_recon=0.8409  val_con=4.7235
+  loss=7.8520  recon=0.8315  con=4.7880
+  val_loss=7.8720  val_recon=0.8395  val_con=4.7296
+Pretrain Epoch 26/139: val_loss=7.8720  val_recon=0.8395  val_con=4.7296
+  loss=7.8515  recon=0.8317  con=4.7843
+  val_loss=7.8649  val_recon=0.8408  val_con=4.7007
+Pretrain Epoch 27/139: val_loss=7.8649  val_recon=0.8408  val_con=4.7007
+  loss=7.8444  recon=0.8310  con=4.7788
+  val_loss=7.8495  val_recon=0.8383  val_con=4.7026
+Pretrain Epoch 28/139: val_loss=7.8495  val_recon=0.8383  val_con=4.7026
+  loss=7.8396  recon=0.8306  con=4.7750
+  val_loss=7.8565  val_recon=0.8391  val_con=4.7054
+Pretrain Epoch 29/139: val_loss=7.8565  val_recon=0.8391  val_con=4.7054
+  loss=7.8277  recon=0.8297  con=4.7634
+  val_loss=7.8880  val_recon=0.8398  val_con=4.7561
+Pretrain Epoch 30/139: val_loss=7.8880  val_recon=0.8398  val_con=4.7561
+  loss=7.8347  recon=0.8307  con=4.7648
+  val_loss=7.8750  val_recon=0.8415  val_con=4.7120
+Pretrain Epoch 31/139: val_loss=7.8750  val_recon=0.8415  val_con=4.7120
+  loss=7.8256  recon=0.8299  con=4.7568
+  val_loss=7.9066  val_recon=0.8401  val_con=4.7878
+Pretrain Epoch 32/139: val_loss=7.9066  val_recon=0.8401  val_con=4.7878
+  loss=7.8302  recon=0.8304  con=4.7595
+  val_loss=7.8904  val_recon=0.8394  val_con=4.7648
+Pretrain Epoch 33/139: val_loss=7.8904  val_recon=0.8394  val_con=4.7648
+  loss=7.8224  recon=0.8296  con=4.7543
+  val_loss=7.8992  val_recon=0.8393  val_con=4.7826
+Pretrain Epoch 34/139: val_loss=7.8992  val_recon=0.8393  val_con=4.7826
+  loss=7.8244  recon=0.8305  con=4.7473
+  val_loss=7.8800  val_recon=0.8385  val_con=4.7564
+Pretrain Epoch 35/139: val_loss=7.8800  val_recon=0.8385  val_con=4.7564
+  loss=7.8197  recon=0.8295  con=4.7513
+  val_loss=7.8746  val_recon=0.8394  val_con=4.7358
+Pretrain Epoch 36/139: val_loss=7.8746  val_recon=0.8394  val_con=4.7358
+  loss=7.8084  recon=0.8293  con=4.7317
+  val_loss=7.8797  val_recon=0.8372  val_con=4.7712
+Pretrain Epoch 37/139: val_loss=7.8797  val_recon=0.8372  val_con=4.7712
+  loss=7.8263  recon=0.8300  con=4.7573
+  val_loss=7.8872  val_recon=0.8400  val_con=4.7523
+Pretrain Epoch 38/139: val_loss=7.8872  val_recon=0.8400  val_con=4.7523
+  loss=7.8107  recon=0.8291  con=4.7384
+  val_loss=7.8677  val_recon=0.8366  val_con=4.7559
+Pretrain Epoch 39/139: val_loss=7.8677  val_recon=0.8366  val_con=4.7559
+  loss=7.8103  recon=0.8297  con=4.7306
+  val_loss=7.8991  val_recon=0.8391  val_con=4.7846
+Pretrain Epoch 40/139: val_loss=7.8991  val_recon=0.8391  val_con=4.7846
+  loss=7.8036  recon=0.8293  con=4.7233
+  val_loss=7.8905  val_recon=0.8393  val_con=4.7663
+Pretrain Epoch 41/139: val_loss=7.8905  val_recon=0.8393  val_con=4.7663
+  loss=7.8015  recon=0.8291  con=4.7216
+  val_loss=7.8968  val_recon=0.8387  val_con=4.7860
+Pretrain Epoch 42/139: val_loss=7.8968  val_recon=0.8387  val_con=4.7860
+  loss=7.8010  recon=0.8292  con=4.7190
+  val_loss=7.8703  val_recon=0.8389  val_con=4.7342
+Pretrain Epoch 43/139: val_loss=7.8703  val_recon=0.8389  val_con=4.7342
+  loss=7.7975  recon=0.8293  con=4.7115
+  val_loss=7.8944  val_recon=0.8384  val_con=4.7844
+Pretrain Epoch 44/139: val_loss=7.8944  val_recon=0.8384  val_con=4.7844
+  loss=7.7925  recon=0.8286  con=4.7106
+  val_loss=7.8635  val_recon=0.8360  val_con=4.7557
+Pretrain Epoch 45/139: val_loss=7.8635  val_recon=0.8360  val_con=4.7557
+  loss=7.7767  recon=0.8281  con=4.6873
+  val_loss=7.8755  val_recon=0.8354  val_con=4.7851
+Pretrain Epoch 46/139: val_loss=7.8755  val_recon=0.8354  val_con=4.7851
+  loss=7.7708  recon=0.8279  con=4.6788
+  val_loss=7.8709  val_recon=0.8378  val_con=4.7477
+Pretrain Epoch 47/139: val_loss=7.8709  val_recon=0.8378  val_con=4.7477
+  loss=7.7757  recon=0.8286  con=4.6797
+  val_loss=7.8873  val_recon=0.8383  val_con=4.7729
+Pretrain Epoch 48/139: val_loss=7.8873  val_recon=0.8383  val_con=4.7729
+  loss=7.7778  recon=0.8282  con=4.6888
+  val_loss=7.8681  val_recon=0.8373  val_con=4.7489
+Pretrain Epoch 49/139: val_loss=7.8681  val_recon=0.8373  val_con=4.7489
+  loss=7.7593  recon=0.8275  con=4.6624
+  val_loss=7.8988  val_recon=0.8368  val_con=4.8123
+Pretrain Epoch 50/139: val_loss=7.8988  val_recon=0.8368  val_con=4.8123
+  loss=7.7751  recon=0.8280  con=4.6852
+  val_loss=7.8556  val_recon=0.8357  val_con=4.7441
+Pretrain Epoch 51/139: val_loss=7.8556  val_recon=0.8357  val_con=4.7441
+  loss=7.7616  recon=0.8273  con=4.6680
+  val_loss=7.8909  val_recon=0.8377  val_con=4.7863
+Pretrain Epoch 52/139: val_loss=7.8909  val_recon=0.8377  val_con=4.7863
+  loss=7.7581  recon=0.8267  con=4.6697
+  val_loss=7.8774  val_recon=0.8348  val_con=4.7960
+Pretrain Epoch 53/139: val_loss=7.8774  val_recon=0.8348  val_con=4.7960
+  loss=7.7568  recon=0.8268  con=4.6653
+  val_loss=7.8973  val_recon=0.8395  val_con=4.7769
+Pretrain Epoch 54/139: val_loss=7.8973  val_recon=0.8395  val_con=4.7769
+  loss=7.7573  recon=0.8270  con=4.6637
+  val_loss=7.9282  val_recon=0.8386  val_con=4.8456
+Pretrain Epoch 55/139: val_loss=7.9282  val_recon=0.8386  val_con=4.8456
+  loss=7.7528  recon=0.8278  con=4.6467
+  val_loss=7.8998  val_recon=0.8355  val_con=4.8297
+Pretrain Epoch 56/139: val_loss=7.8998  val_recon=0.8355  val_con=4.8297
+  loss=7.7562  recon=0.8277  con=4.6536
+  val_loss=7.8891  val_recon=0.8381  val_con=4.7787
+Pretrain Epoch 57/139: val_loss=7.8891  val_recon=0.8381  val_con=4.7787
+  loss=7.7556  recon=0.8279  con=4.6501
+  val_loss=7.8937  val_recon=0.8388  val_con=4.7785
+Pretrain Epoch 58/139: val_loss=7.8937  val_recon=0.8388  val_con=4.7785
+  loss=7.7570  recon=0.8276  con=4.6565
+  val_loss=7.8947  val_recon=0.8365  val_con=4.8075
+Pretrain Epoch 59/139: val_loss=7.8947  val_recon=0.8365  val_con=4.8075
+  loss=7.7494  recon=0.8278  con=4.6395
+  val_loss=7.9163  val_recon=0.8367  val_con=4.8460
+Pretrain Epoch 60/139: val_loss=7.9163  val_recon=0.8367  val_con=4.8460
+  loss=7.7438  recon=0.8278  con=4.6290
+  val_loss=7.8898  val_recon=0.8363  val_con=4.8009
+Pretrain Epoch 61/139: val_loss=7.8898  val_recon=0.8363  val_con=4.8009
+  loss=7.7443  recon=0.8275  con=4.6344
+  val_loss=7.8975  val_recon=0.8365  val_con=4.8134
+Pretrain Epoch 62/139: val_loss=7.8975  val_recon=0.8365  val_con=4.8134
+  loss=7.7422  recon=0.8272  con=4.6338
+  val_loss=7.9167  val_recon=0.8356  val_con=4.8591
+Pretrain Epoch 63/139: val_loss=7.9167  val_recon=0.8356  val_con=4.8591
+  loss=7.7310  recon=0.8272  con=4.6132
+  val_loss=7.9359  val_recon=0.8372  val_con=4.8767
+Pretrain Epoch 64/139: val_loss=7.9359  val_recon=0.8372  val_con=4.8767
+  loss=7.7385  recon=0.8272  con=4.6264
+  val_loss=7.8826  val_recon=0.8340  val_con=4.8153
+Pretrain Epoch 65/139: val_loss=7.8826  val_recon=0.8340  val_con=4.8153
+  loss=7.7415  recon=0.8272  con=4.6327
+  val_loss=7.8916  val_recon=0.8369  val_con=4.7973
+Pretrain Epoch 66/139: val_loss=7.8916  val_recon=0.8369  val_con=4.7973
+  loss=7.7388  recon=0.8271  con=4.6279
+  val_loss=7.8980  val_recon=0.8378  val_con=4.7989
+Pretrain Epoch 67/139: val_loss=7.8980  val_recon=0.8378  val_con=4.7989
+  loss=7.7428  recon=0.8274  con=4.6323
+  val_loss=7.9123  val_recon=0.8361  val_con=4.8458
+Pretrain Epoch 68/139: val_loss=7.9123  val_recon=0.8361  val_con=4.8458
+  loss=7.7297  recon=0.8267  con=4.6167
+  val_loss=7.8786  val_recon=0.8353  val_con=4.7917
+Pretrain Epoch 69/139: val_loss=7.8786  val_recon=0.8353  val_con=4.7917
+  loss=7.7299  recon=0.8269  con=4.6145
+  val_loss=7.9023  val_recon=0.8366  val_con=4.8212
+Pretrain Epoch 70/139: val_loss=7.9023  val_recon=0.8366  val_con=4.8212
+  loss=7.7227  recon=0.8258  con=4.6135
+  val_loss=7.8984  val_recon=0.8358  val_con=4.8235
+Pretrain Epoch 71/139: val_loss=7.8984  val_recon=0.8358  val_con=4.8235
+  loss=7.7319  recon=0.8270  con=4.6163
+  val_loss=7.8615  val_recon=0.8341  val_con=4.7739
+Pretrain Epoch 72/139: val_loss=7.8615  val_recon=0.8341  val_con=4.7739
+  loss=7.7302  recon=0.8267  con=4.6177
+  val_loss=7.9188  val_recon=0.8343  val_con=4.8791
+Pretrain Epoch 73/139: val_loss=7.9188  val_recon=0.8343  val_con=4.8791
+  loss=7.7321  recon=0.8272  con=4.6147
+  val_loss=7.8819  val_recon=0.8344  val_con=4.8095
+Pretrain Epoch 74/139: val_loss=7.8819  val_recon=0.8344  val_con=4.8095
+  loss=7.7296  recon=0.8279  con=4.6014
+  val_loss=7.9250  val_recon=0.8363  val_con=4.8665
+Pretrain Epoch 75/139: val_loss=7.9250  val_recon=0.8363  val_con=4.8665
+  loss=7.7252  recon=0.8262  con=4.6134
+  val_loss=7.8774  val_recon=0.8344  val_con=4.8009
+Pretrain Epoch 76/139: val_loss=7.8774  val_recon=0.8344  val_con=4.8009
+  loss=7.7204  recon=0.8267  con=4.5993
+  val_loss=7.9167  val_recon=0.8359  val_con=4.8560
+Pretrain Epoch 77/139: val_loss=7.9167  val_recon=0.8359  val_con=4.8560
+  loss=7.7207  recon=0.8268  con=4.5982
+  val_loss=7.9464  val_recon=0.8377  val_con=4.8896
+Pretrain Epoch 78/139: val_loss=7.9464  val_recon=0.8377  val_con=4.8896
+  loss=7.7285  recon=0.8274  con=4.6052
+  val_loss=7.9044  val_recon=0.8357  val_con=4.8355
+Pretrain Epoch 79/139: val_loss=7.9044  val_recon=0.8357  val_con=4.8355
+  loss=7.7101  recon=0.8260  con=4.5877
+  val_loss=7.9354  val_recon=0.8365  val_con=4.8835
+Pretrain Epoch 80/139: val_loss=7.9354  val_recon=0.8365  val_con=4.8835
+  loss=7.7148  recon=0.8265  con=4.5908
+  val_loss=7.9156  val_recon=0.8366  val_con=4.8459
+Pretrain Epoch 81/139: val_loss=7.9156  val_recon=0.8366  val_con=4.8459
+  loss=7.7156  recon=0.8273  con=4.5822
+  val_loss=7.9477  val_recon=0.8384  val_con=4.8844
+Pretrain Epoch 82/139: val_loss=7.9477  val_recon=0.8384  val_con=4.8844
+  loss=7.7124  recon=0.8260  con=4.5921
+  val_loss=7.9181  val_recon=0.8349  val_con=4.8698
+Pretrain Epoch 83/139: val_loss=7.9181  val_recon=0.8349  val_con=4.8698
+  loss=7.7175  recon=0.8266  con=4.5941
+  val_loss=7.9380  val_recon=0.8370  val_con=4.8833
+Pretrain Epoch 84/139: val_loss=7.9380  val_recon=0.8370  val_con=4.8833
+  loss=7.7099  recon=0.8263  con=4.5839
+  val_loss=7.9324  val_recon=0.8355  val_con=4.8904
+Pretrain Epoch 85/139: val_loss=7.9324  val_recon=0.8355  val_con=4.8904
+  loss=7.7193  recon=0.8271  con=4.5917
+  val_loss=7.9238  val_recon=0.8369  val_con=4.8579
+Pretrain Epoch 86/139: val_loss=7.9238  val_recon=0.8369  val_con=4.8579
+  loss=7.7180  recon=0.8272  con=4.5879
+  val_loss=7.9085  val_recon=0.8345  val_con=4.8575
+Pretrain Epoch 87/139: val_loss=7.9085  val_recon=0.8345  val_con=4.8575
+  loss=7.7121  recon=0.8266  con=4.5843
+  val_loss=7.8968  val_recon=0.8360  val_con=4.8172
+Pretrain Epoch 88/139: val_loss=7.8968  val_recon=0.8360  val_con=4.8172
+  loss=7.7078  recon=0.8261  con=4.5825
+  val_loss=7.9079  val_recon=0.8375  val_con=4.8206
+Pretrain Epoch 89/139: val_loss=7.9079  val_recon=0.8375  val_con=4.8206
+  loss=7.7174  recon=0.8277  con=4.5817
+  val_loss=7.9323  val_recon=0.8353  val_con=4.8918
+Pretrain Epoch 90/139: val_loss=7.9323  val_recon=0.8353  val_con=4.8918
+  loss=7.7078  recon=0.8263  con=4.5797
+  val_loss=7.9085  val_recon=0.8354  val_con=4.8467
+Pretrain Epoch 91/139: val_loss=7.9085  val_recon=0.8354  val_con=4.8467
+  loss=7.7128  recon=0.8264  con=4.5886
+  val_loss=7.9089  val_recon=0.8369  val_con=4.8291
+Pretrain Epoch 92/139: val_loss=7.9089  val_recon=0.8369  val_con=4.8291
+  loss=7.7033  recon=0.8260  con=4.5754
+  val_loss=7.9315  val_recon=0.8374  val_con=4.8663
+Pretrain Epoch 93/139: val_loss=7.9315  val_recon=0.8374  val_con=4.8663
+  loss=7.7074  recon=0.8265  con=4.5767
+  val_loss=7.9439  val_recon=0.8378  val_con=4.8838
+Pretrain Epoch 94/139: val_loss=7.9439  val_recon=0.8378  val_con=4.8838
+  loss=7.7085  recon=0.8264  con=4.5798
+  val_loss=7.9117  val_recon=0.8356  val_con=4.8505
+Pretrain Epoch 95/139: val_loss=7.9117  val_recon=0.8356  val_con=4.8505
+  loss=7.7122  recon=0.8262  con=4.5892
+  val_loss=7.9165  val_recon=0.8345  val_con=4.8718
+Pretrain Epoch 96/139: val_loss=7.9165  val_recon=0.8345  val_con=4.8718
+  loss=7.7036  recon=0.8256  con=4.5805
+  val_loss=7.9032  val_recon=0.8352  val_con=4.8397
+Pretrain Epoch 97/139: val_loss=7.9032  val_recon=0.8352  val_con=4.8397
+  loss=7.6961  recon=0.8263  con=4.5584
+  val_loss=7.9265  val_recon=0.8351  val_con=4.8837
+Pretrain Epoch 98/139: val_loss=7.9265  val_recon=0.8351  val_con=4.8837
+  loss=7.7036  recon=0.8263  con=4.5728
+  val_loss=7.9130  val_recon=0.8353  val_con=4.8568
+Pretrain Epoch 99/139: val_loss=7.9130  val_recon=0.8353  val_con=4.8568
+  loss=7.7100  recon=0.8270  con=4.5759
+  val_loss=7.9407  val_recon=0.8357  val_con=4.9037
+Pretrain Epoch 100/139: val_loss=7.9407  val_recon=0.8357  val_con=4.9037
+  loss=7.7022  recon=0.8263  con=4.5695
+  val_loss=7.9587  val_recon=0.8387  val_con=4.9011
+Pretrain Epoch 101/139: val_loss=7.9587  val_recon=0.8387  val_con=4.9011
+  loss=7.7034  recon=0.8252  con=4.5849
+  val_loss=7.9405  val_recon=0.8358  val_con=4.9020
+Pretrain Epoch 102/139: val_loss=7.9405  val_recon=0.8358  val_con=4.9020
+  loss=7.7119  recon=0.8266  con=4.5842
+  val_loss=7.9222  val_recon=0.8361  val_con=4.8644
+Pretrain Epoch 103/139: val_loss=7.9222  val_recon=0.8361  val_con=4.8644
+  loss=7.7070  recon=0.8259  con=4.5839
+  val_loss=7.9262  val_recon=0.8377  val_con=4.8530
+Pretrain Epoch 104/139: val_loss=7.9262  val_recon=0.8377  val_con=4.8530
+  loss=7.7065  recon=0.8261  con=4.5807
+  val_loss=7.9102  val_recon=0.8366  val_con=4.8360
+Pretrain Epoch 105/139: val_loss=7.9102  val_recon=0.8366  val_con=4.8360
+  loss=7.7089  recon=0.8266  con=4.5792
+  val_loss=7.8959  val_recon=0.8356  val_con=4.8209
+Pretrain Epoch 106/139: val_loss=7.8959  val_recon=0.8356  val_con=4.8209
+  loss=7.7034  recon=0.8264  con=4.5702
+  val_loss=7.9172  val_recon=0.8348  val_con=4.8699
+Pretrain Epoch 107/139: val_loss=7.9172  val_recon=0.8348  val_con=4.8699
+  loss=7.6989  recon=0.8259  con=4.5684
+  val_loss=7.9133  val_recon=0.8352  val_con=4.8583
+Pretrain Epoch 108/139: val_loss=7.9133  val_recon=0.8352  val_con=4.8583
+  loss=7.7041  recon=0.8258  con=4.5789
+  val_loss=7.9324  val_recon=0.8361  val_con=4.8832
+Pretrain Epoch 109/139: val_loss=7.9324  val_recon=0.8361  val_con=4.8832
+  loss=7.6960  recon=0.8259  con=4.5624
+  val_loss=7.9336  val_recon=0.8355  val_con=4.8921
+Pretrain Epoch 110/139: val_loss=7.9336  val_recon=0.8355  val_con=4.8921
+  loss=7.7081  recon=0.8263  con=4.5806
+  val_loss=7.9394  val_recon=0.8362  val_con=4.8944
+Pretrain Epoch 111/139: val_loss=7.9394  val_recon=0.8362  val_con=4.8944
+  loss=7.6900  recon=0.8253  con=4.5581
+  val_loss=7.9296  val_recon=0.8368  val_con=4.8693
+Pretrain Epoch 112/139: val_loss=7.9296  val_recon=0.8368  val_con=4.8693
+  loss=7.7013  recon=0.8260  con=4.5714
+  val_loss=7.9188  val_recon=0.8357  val_con=4.8628
+Pretrain Epoch 113/139: val_loss=7.9188  val_recon=0.8357  val_con=4.8628
+  loss=7.7063  recon=0.8259  con=4.5818
+  val_loss=7.9164  val_recon=0.8354  val_con=4.8611
+Pretrain Epoch 114/139: val_loss=7.9164  val_recon=0.8354  val_con=4.8611
+  loss=7.7065  recon=0.8268  con=4.5722
+  val_loss=7.9354  val_recon=0.8357  val_con=4.8938
+Pretrain Epoch 115/139: val_loss=7.9354  val_recon=0.8357  val_con=4.8938
+  loss=7.7111  recon=0.8273  con=4.5743
+  val_loss=7.9310  val_recon=0.8359  val_con=4.8824
+Pretrain Epoch 116/139: val_loss=7.9310  val_recon=0.8359  val_con=4.8824
+  loss=7.7000  recon=0.8265  con=4.5637
+  val_loss=7.9214  val_recon=0.8338  val_con=4.8901
+Pretrain Epoch 117/139: val_loss=7.9214  val_recon=0.8338  val_con=4.8901
+  loss=7.7035  recon=0.8265  con=4.5692
+  val_loss=7.9207  val_recon=0.8347  val_con=4.8776
+Pretrain Epoch 118/139: val_loss=7.9207  val_recon=0.8347  val_con=4.8776
+  loss=7.7081  recon=0.8269  con=4.5730
+  val_loss=7.9299  val_recon=0.8355  val_con=4.8858
+Pretrain Epoch 119/139: val_loss=7.9299  val_recon=0.8355  val_con=4.8858
+  loss=7.7035  recon=0.8261  con=4.5748
+  val_loss=7.9203  val_recon=0.8354  val_con=4.8688
+Pretrain Epoch 120/139: val_loss=7.9203  val_recon=0.8354  val_con=4.8688
+  loss=7.6986  recon=0.8261  con=4.5655
+  val_loss=7.9343  val_recon=0.8361  val_con=4.8863
+Pretrain Epoch 121/139: val_loss=7.9343  val_recon=0.8361  val_con=4.8863
+  loss=7.6967  recon=0.8255  con=4.5683
+  val_loss=7.9483  val_recon=0.8371  val_con=4.9008
+Pretrain Epoch 122/139: val_loss=7.9483  val_recon=0.8371  val_con=4.9008
+  loss=7.7045  recon=0.8268  con=4.5677
+  val_loss=7.9361  val_recon=0.8359  val_con=4.8923
+Pretrain Epoch 123/139: val_loss=7.9361  val_recon=0.8359  val_con=4.8923
+  loss=7.7002  recon=0.8265  con=4.5634
+  val_loss=7.9106  val_recon=0.8324  val_con=4.8861
+Pretrain Epoch 124/139: val_loss=7.9106  val_recon=0.8324  val_con=4.8861
+  loss=7.6929  recon=0.8256  con=4.5602
+  val_loss=7.9287  val_recon=0.8361  val_con=4.8762
+Pretrain Epoch 125/139: val_loss=7.9287  val_recon=0.8361  val_con=4.8762
+  loss=7.6987  recon=0.8264  con=4.5619
+  val_loss=7.9375  val_recon=0.8367  val_con=4.8850
+Pretrain Epoch 126/139: val_loss=7.9375  val_recon=0.8367  val_con=4.8850
+  loss=7.6947  recon=0.8253  con=4.5673
+  val_loss=7.9548  val_recon=0.8361  val_con=4.9243
+Pretrain Epoch 127/139: val_loss=7.9548  val_recon=0.8361  val_con=4.9243
+  loss=7.6978  recon=0.8260  con=4.5655
+  val_loss=7.9161  val_recon=0.8345  val_con=4.8720
+Pretrain Epoch 128/139: val_loss=7.9161  val_recon=0.8345  val_con=4.8720
+  loss=7.6968  recon=0.8264  con=4.5585
+  val_loss=7.9403  val_recon=0.8359  val_con=4.9003
+Pretrain Epoch 129/139: val_loss=7.9403  val_recon=0.8359  val_con=4.9003
+  loss=7.7043  recon=0.8260  con=4.5767
+  val_loss=7.9434  val_recon=0.8358  val_con=4.9065
+Pretrain Epoch 130/139: val_loss=7.9434  val_recon=0.8358  val_con=4.9065
+  loss=7.6979  recon=0.8260  con=4.5656
+  val_loss=7.9169  val_recon=0.8369  val_con=4.8445
+Pretrain Epoch 131/139: val_loss=7.9169  val_recon=0.8369  val_con=4.8445
+  loss=7.6984  recon=0.8259  con=4.5669
+  val_loss=7.9098  val_recon=0.8356  val_con=4.8467
+Pretrain Epoch 132/139: val_loss=7.9098  val_recon=0.8356  val_con=4.8467
+  loss=7.7038  recon=0.8259  con=4.5777
+  val_loss=7.9385  val_recon=0.8361  val_con=4.8939
+Pretrain Epoch 133/139: val_loss=7.9385  val_recon=0.8361  val_con=4.8939
+  loss=7.7043  recon=0.8265  con=4.5712
+  val_loss=7.9433  val_recon=0.8386  val_con=4.8738
+Pretrain Epoch 134/139: val_loss=7.9433  val_recon=0.8386  val_con=4.8738
+  loss=7.7016  recon=0.8264  con=4.5669
+  val_loss=7.9177  val_recon=0.8349  val_con=4.8702
+Pretrain Epoch 135/139: val_loss=7.9177  val_recon=0.8349  val_con=4.8702
+  loss=7.6932  recon=0.8257  con=4.5602
+  val_loss=7.9319  val_recon=0.8346  val_con=4.9001
+Pretrain Epoch 136/139: val_loss=7.9319  val_recon=0.8346  val_con=4.9001
+  loss=7.7039  recon=0.8271  con=4.5632
+  val_loss=7.9446  val_recon=0.8353  val_con=4.9150
+Pretrain Epoch 137/139: val_loss=7.9446  val_recon=0.8353  val_con=4.9150
+  loss=7.6988  recon=0.8264  con=4.5621
+  val_loss=7.9447  val_recon=0.8359  val_con=4.9078
+Pretrain Epoch 138/139: val_loss=7.9447  val_recon=0.8359  val_con=4.9078
+  loss=7.7013  recon=0.8262  con=4.5693
+  val_loss=7.9187  val_recon=0.8364  val_con=4.8543
+Pretrain Epoch 139/139: val_loss=7.9187  val_recon=0.8364  val_con=4.8543
+  loss=0.4888  acc=0.933
+Best val acc   : 0.8678
+Best threshold : 0.95
+Best f1        : 0.6774
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[662  49]
+ [ 71 126]]
+  loss=0.1934  acc=0.989
+Best val acc   : 0.8678
+Best threshold : 0.95
+Best f1        : 0.6739
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[664  47]
+ [ 73 124]]
+  loss=0.1945  acc=0.988
+Best val acc   : 0.8546
+Best threshold : 0.95
+Best f1        : 0.6598
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[648  63]
+ [ 69 128]]
+  loss=0.2017  acc=0.987
+Best val acc   : 0.8348
+Best threshold : 0.94
+Best f1        : 0.6547
+Best threshold f1: 0.86
+Confusion matrix (optimized for f1):
+[[608 103]
+ [ 51 146]]
+  loss=0.1824  acc=0.986
+Best val acc   : 0.8590
+Best threshold : 0.95
+Best f1        : 0.6614
+Best threshold f1: 0.94
+Confusion matrix (optimized for f1):
+[[653  58]
+ [ 71 126]]
+  loss=0.1915  acc=0.986
+Best val acc   : 0.8590
+Best threshold : 0.94
+Best f1        : 0.6596
+Best threshold f1: 0.91
+Confusion matrix (optimized for f1):
+[[654  57]
+ [ 72 125]]
+  loss=0.1847  acc=0.987
+Best val acc   : 0.8535
+Best threshold : 0.93
+Best f1        : 0.6581
+Best threshold f1: 0.93
+Confusion matrix (optimized for f1):
+[[647  64]
+ [ 69 128]]
+  loss=0.1824  acc=0.987
+Best val acc   : 0.8403
+Best threshold : 0.95
+Best f1        : 0.6494
+Best threshold f1: 0.35
+Confusion matrix (optimized for f1):
+[[596 115]
+ [ 47 150]]
+  loss=0.1684  acc=0.988
+Best val acc   : 0.8436
+Best threshold : 0.93
+Best f1        : 0.6522
+Best threshold f1: 0.88
+Confusion matrix (optimized for f1):
+[[629  82]
+ [ 62 135]]
+  loss=0.1853  acc=0.988
+Best val acc   : 0.8425
+Best threshold : 0.95
+Best f1        : 0.6554
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[629  82]
+ [ 61 136]]
+  loss=0.1699  acc=0.988
+Best val acc   : 0.8469
+Best threshold : 0.94
+Best f1        : 0.6618
+Best threshold f1: 0.94
+Confusion matrix (optimized for f1):
+[[633  78]
+ [ 61 136]]
+  loss=0.1733  acc=0.987
+Best val acc   : 0.8403
+Best threshold : 0.95
+Best f1        : 0.6473
+Best threshold f1: 0.47
+Confusion matrix (optimized for f1):
+[[605 106]
+ [ 52 145]]
+  loss=0.1634  acc=0.988
+Best val acc   : 0.8436
+Best threshold : 0.95
+Best f1        : 0.6558
+Best threshold f1: 0.39
+Confusion matrix (optimized for f1):
+[[619  92]
+ [ 56 141]]
+  loss=0.1600  acc=0.988
+Best val acc   : 0.8425
+Best threshold : 0.95
+Best f1        : 0.6521
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[631  80]
+ [ 63 134]]
+  loss=0.1661  acc=0.990
+Best val acc   : 0.8491
+Best threshold : 0.95
+Best f1        : 0.6519
+Best threshold f1: 0.88
+Confusion matrix (optimized for f1):
+[[635  76]
+ [ 65 132]]
+  loss=0.1694  acc=0.989
+Best val acc   : 0.8425
+Best threshold : 0.95
+Best f1        : 0.6558
+Best threshold f1: 0.42
+Confusion matrix (optimized for f1):
+[[619  92]
+ [ 56 141]]
+  loss=0.1569  acc=0.989
+Best val acc   : 0.8381
+Best threshold : 0.95
+Best f1        : 0.6485
+Best threshold f1: 0.35
+Confusion matrix (optimized for f1):
+[[610 101]
+ [ 54 143]]
+  loss=0.1532  acc=0.989
+Best val acc   : 0.8381
+Best threshold : 0.87
+Best f1        : 0.6516
+Best threshold f1: 0.38
+Confusion matrix (optimized for f1):
+[[610 101]
+ [ 53 144]]
+  loss=0.1481  acc=0.989
+Best val acc   : 0.8381
+Best threshold : 0.95
+Best f1        : 0.6498
+Best threshold f1: 0.66
+Confusion matrix (optimized for f1):
+[[615  96]
+ [ 56 141]]
+  loss=0.1405  acc=0.990
+Best val acc   : 0.8491
+Best threshold : 0.94
+Best f1        : 0.6516
+Best threshold f1: 0.92
+Confusion matrix (optimized for f1):
+[[639  72]
+ [ 67 130]]
+  loss=0.1692  acc=0.988
+Best val acc   : 0.8370
+Best threshold : 0.95
+Best f1        : 0.6485
+Best threshold f1: 0.74
+Confusion matrix (optimized for f1):
+[[610 101]
+ [ 54 143]]
+Early stopping at epoch 21
+Fold 1 result: val_loss=1.4073, best_thresh(f1)=0.950, val_f1=0.677, val_acc=0.868, best_thresh_acc=0.950
+  Confusion Matrix:
+[[662  49]
+ [ 71 126]]
+Fold 1 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded/fold_0.pt
+
+===== Fold 2/5 =====
+Train: 3629 | repeaters: 785 (21.6%)
+Val:   907   | repeaters: 196   (21.6%)
+  loss=8.7213  recon=0.9605  con=4.8795
+  val_loss=8.0906  val_recon=0.8744  val_con=4.7241
+Pretrain Epoch 1/139: val_loss=8.0906  val_recon=0.8744  val_con=4.7241
+  loss=8.1769  recon=0.8782  con=4.8401
+  val_loss=8.0088  val_recon=0.8615  val_con=4.7242
+Pretrain Epoch 2/139: val_loss=8.0088  val_recon=0.8615  val_con=4.7242
+  loss=8.0618  recon=0.8601  con=4.8391
+  val_loss=7.9558  val_recon=0.8532  val_con=4.7242
+Pretrain Epoch 3/139: val_loss=7.9558  val_recon=0.8532  val_con=4.7242
+  loss=8.0235  recon=0.8542  con=4.8387
+  val_loss=7.9184  val_recon=0.8473  val_con=4.7242
+Pretrain Epoch 4/139: val_loss=7.9184  val_recon=0.8473  val_con=4.7242
+  loss=7.9947  recon=0.8497  con=4.8384
+  val_loss=7.9148  val_recon=0.8467  val_con=4.7242
+Pretrain Epoch 5/139: val_loss=7.9148  val_recon=0.8467  val_con=4.7242
+  loss=7.9790  recon=0.8472  con=4.8382
+  val_loss=7.9241  val_recon=0.8482  val_con=4.7242
+Pretrain Epoch 6/139: val_loss=7.9241  val_recon=0.8482  val_con=4.7242
+  loss=7.9697  recon=0.8458  con=4.8381
+  val_loss=7.8944  val_recon=0.8435  val_con=4.7242
+Pretrain Epoch 7/139: val_loss=7.8944  val_recon=0.8435  val_con=4.7242
+  loss=7.9613  recon=0.8444  con=4.8381
+  val_loss=7.8968  val_recon=0.8439  val_con=4.7241
+Pretrain Epoch 8/139: val_loss=7.8968  val_recon=0.8439  val_con=4.7241
+  loss=7.9535  recon=0.8432  con=4.8381
+  val_loss=7.8691  val_recon=0.8395  val_con=4.7241
+Pretrain Epoch 9/139: val_loss=7.8691  val_recon=0.8395  val_con=4.7241
+  loss=7.9427  recon=0.8415  con=4.8380
+  val_loss=7.8692  val_recon=0.8396  val_con=4.7240
+Pretrain Epoch 10/139: val_loss=7.8692  val_recon=0.8396  val_con=4.7240
+  loss=7.9351  recon=0.8403  con=4.8380
+  val_loss=7.8599  val_recon=0.8381  val_con=4.7240
+Pretrain Epoch 11/139: val_loss=7.8599  val_recon=0.8381  val_con=4.7240
+  loss=7.9248  recon=0.8387  con=4.8378
+  val_loss=7.8538  val_recon=0.8372  val_con=4.7237
+Pretrain Epoch 12/139: val_loss=7.8538  val_recon=0.8372  val_con=4.7237
+  loss=7.9201  recon=0.8380  con=4.8372
+  val_loss=7.8504  val_recon=0.8369  val_con=4.7200
+Pretrain Epoch 13/139: val_loss=7.8504  val_recon=0.8369  val_con=4.7200
+  loss=7.9135  recon=0.8372  con=4.8352
+  val_loss=7.8290  val_recon=0.8337  val_con=4.7180
+Pretrain Epoch 14/139: val_loss=7.8290  val_recon=0.8337  val_con=4.7180
+  loss=7.9092  recon=0.8368  con=4.8317
+  val_loss=7.8152  val_recon=0.8328  val_con=4.7032
+Pretrain Epoch 15/139: val_loss=7.8152  val_recon=0.8328  val_con=4.7032
+  loss=7.8981  recon=0.8358  con=4.8227
+  val_loss=7.8354  val_recon=0.8364  val_con=4.6983
+Pretrain Epoch 16/139: val_loss=7.8354  val_recon=0.8364  val_con=4.6983
+  loss=7.8955  recon=0.8357  con=4.8189
+  val_loss=7.8355  val_recon=0.8368  val_con=4.6938
+Pretrain Epoch 17/139: val_loss=7.8355  val_recon=0.8368  val_con=4.6938
+  loss=7.8931  recon=0.8357  con=4.8148
+  val_loss=7.8124  val_recon=0.8334  val_con=4.6910
+Pretrain Epoch 18/139: val_loss=7.8124  val_recon=0.8334  val_con=4.6910
+  loss=7.8883  recon=0.8342  con=4.8231
+  val_loss=7.8229  val_recon=0.8343  val_con=4.7005
+Pretrain Epoch 19/139: val_loss=7.8229  val_recon=0.8343  val_con=4.7005
+  loss=7.8805  recon=0.8341  con=4.8097
+  val_loss=7.7859  val_recon=0.8297  val_con=4.6854
+Pretrain Epoch 20/139: val_loss=7.7859  val_recon=0.8297  val_con=4.6854
+  loss=7.8709  recon=0.8332  con=4.8025
+  val_loss=7.8369  val_recon=0.8354  val_con=4.7134
+Pretrain Epoch 21/139: val_loss=7.8369  val_recon=0.8354  val_con=4.7134
+  loss=7.8867  recon=0.8341  con=4.8211
+  val_loss=7.8031  val_recon=0.8295  val_con=4.7202
+Pretrain Epoch 22/139: val_loss=7.8031  val_recon=0.8295  val_con=4.7202
+  loss=7.8669  recon=0.8323  con=4.8060
+  val_loss=7.8049  val_recon=0.8329  val_con=4.6831
+Pretrain Epoch 23/139: val_loss=7.8049  val_recon=0.8329  val_con=4.6831
+  loss=7.8598  recon=0.8320  con=4.7964
+  val_loss=7.8030  val_recon=0.8322  val_con=4.6874
+Pretrain Epoch 24/139: val_loss=7.8030  val_recon=0.8322  val_con=4.6874
+  loss=7.8615  recon=0.8330  con=4.7876
+  val_loss=7.8126  val_recon=0.8300  val_con=4.7322
+Pretrain Epoch 25/139: val_loss=7.8126  val_recon=0.8300  val_con=4.7322
+  loss=7.8612  recon=0.8324  con=4.7939
+  val_loss=7.7953  val_recon=0.8314  val_con=4.6829
+Pretrain Epoch 26/139: val_loss=7.7953  val_recon=0.8314  val_con=4.6829
+  loss=7.8534  recon=0.8324  con=4.7793
+  val_loss=7.8138  val_recon=0.8302  val_con=4.7316
+Pretrain Epoch 27/139: val_loss=7.8138  val_recon=0.8302  val_con=4.7316
+  loss=7.8506  recon=0.8325  con=4.7732
+  val_loss=7.8001  val_recon=0.8302  val_con=4.7055
+Pretrain Epoch 28/139: val_loss=7.8001  val_recon=0.8302  val_con=4.7055
+  loss=7.8531  recon=0.8329  con=4.7733
+  val_loss=7.8146  val_recon=0.8323  val_con=4.7077
+Pretrain Epoch 29/139: val_loss=7.8146  val_recon=0.8323  val_con=4.7077
+  loss=7.8484  recon=0.8321  con=4.7733
+  val_loss=7.8093  val_recon=0.8312  val_con=4.7111
+Pretrain Epoch 30/139: val_loss=7.8093  val_recon=0.8312  val_con=4.7111
+  loss=7.8627  recon=0.8326  con=4.7944
+  val_loss=7.7963  val_recon=0.8298  val_con=4.7041
+Pretrain Epoch 31/139: val_loss=7.7963  val_recon=0.8298  val_con=4.7041
+  loss=7.8467  recon=0.8322  con=4.7694
+  val_loss=7.7780  val_recon=0.8290  val_con=4.6790
+Pretrain Epoch 32/139: val_loss=7.7780  val_recon=0.8290  val_con=4.6790
+  loss=7.8431  recon=0.8318  con=4.7673
+  val_loss=7.7791  val_recon=0.8295  val_con=4.6756
+Pretrain Epoch 33/139: val_loss=7.7791  val_recon=0.8295  val_con=4.6756
+  loss=7.8321  recon=0.8313  con=4.7529
+  val_loss=7.8007  val_recon=0.8315  val_con=4.6922
+Pretrain Epoch 34/139: val_loss=7.8007  val_recon=0.8315  val_con=4.6922
+  loss=7.8381  recon=0.8316  con=4.7602
+  val_loss=7.8075  val_recon=0.8309  val_con=4.7114
+Pretrain Epoch 35/139: val_loss=7.8075  val_recon=0.8309  val_con=4.7114
+  loss=7.8357  recon=0.8317  con=4.7549
+  val_loss=7.7955  val_recon=0.8297  val_con=4.7029
+Pretrain Epoch 36/139: val_loss=7.7955  val_recon=0.8297  val_con=4.7029
+  loss=7.8351  recon=0.8323  con=4.7461
+  val_loss=7.8044  val_recon=0.8321  val_con=4.6917
+Pretrain Epoch 37/139: val_loss=7.8044  val_recon=0.8321  val_con=4.6917
+  loss=7.8297  recon=0.8319  con=4.7411
+  val_loss=7.8192  val_recon=0.8317  val_con=4.7239
+Pretrain Epoch 38/139: val_loss=7.8192  val_recon=0.8317  val_con=4.7239
+  loss=7.8200  recon=0.8310  con=4.7341
+  val_loss=7.7889  val_recon=0.8291  val_con=4.6980
+Pretrain Epoch 39/139: val_loss=7.7889  val_recon=0.8291  val_con=4.6980
+  loss=7.8216  recon=0.8312  con=4.7337
+  val_loss=7.7801  val_recon=0.8282  val_con=4.6921
+Pretrain Epoch 40/139: val_loss=7.7801  val_recon=0.8282  val_con=4.6921
+  loss=7.8243  recon=0.8312  con=4.7398
+  val_loss=7.8037  val_recon=0.8303  val_con=4.7113
+Pretrain Epoch 41/139: val_loss=7.8037  val_recon=0.8303  val_con=4.7113
+  loss=7.8137  recon=0.8303  con=4.7305
+  val_loss=7.7883  val_recon=0.8257  val_con=4.7370
+Pretrain Epoch 42/139: val_loss=7.7883  val_recon=0.8257  val_con=4.7370
+  loss=7.8140  recon=0.8311  con=4.7219
+  val_loss=7.7896  val_recon=0.8293  val_con=4.6973
+Pretrain Epoch 43/139: val_loss=7.7896  val_recon=0.8293  val_con=4.6973
+  loss=7.8136  recon=0.8313  con=4.7178
+  val_loss=7.7899  val_recon=0.8286  val_con=4.7060
+Pretrain Epoch 44/139: val_loss=7.7899  val_recon=0.8286  val_con=4.7060
+  loss=7.8104  recon=0.8307  con=4.7189
+  val_loss=7.7917  val_recon=0.8282  val_con=4.7141
+Pretrain Epoch 45/139: val_loss=7.7917  val_recon=0.8282  val_con=4.7141
+  loss=7.8066  recon=0.8300  con=4.7205
+  val_loss=7.8048  val_recon=0.8268  val_con=4.7554
+Pretrain Epoch 46/139: val_loss=7.8048  val_recon=0.8268  val_con=4.7554
+  loss=7.8040  recon=0.8305  con=4.7099
+  val_loss=7.7919  val_recon=0.8296  val_con=4.6982
+Pretrain Epoch 47/139: val_loss=7.7919  val_recon=0.8296  val_con=4.6982
+  loss=7.8015  recon=0.8302  con=4.7091
+  val_loss=7.8068  val_recon=0.8293  val_con=4.7294
+Pretrain Epoch 48/139: val_loss=7.8068  val_recon=0.8293  val_con=4.7294
+  loss=7.7893  recon=0.8298  con=4.6903
+  val_loss=7.8069  val_recon=0.8281  val_con=4.7435
+Pretrain Epoch 49/139: val_loss=7.8069  val_recon=0.8281  val_con=4.7435
+  loss=7.7797  recon=0.8292  con=4.6798
+  val_loss=7.7837  val_recon=0.8265  val_con=4.7197
+Pretrain Epoch 50/139: val_loss=7.7837  val_recon=0.8265  val_con=4.7197
+  loss=7.7810  recon=0.8294  con=4.6797
+  val_loss=7.7948  val_recon=0.8297  val_con=4.7020
+Pretrain Epoch 51/139: val_loss=7.7948  val_recon=0.8297  val_con=4.7020
+  loss=7.7774  recon=0.8300  con=4.6663
+  val_loss=7.8041  val_recon=0.8293  val_con=4.7245
+Pretrain Epoch 52/139: val_loss=7.8041  val_recon=0.8293  val_con=4.7245
+  loss=7.7713  recon=0.8293  con=4.6625
+  val_loss=7.8120  val_recon=0.8279  val_con=4.7559
+Pretrain Epoch 53/139: val_loss=7.8120  val_recon=0.8279  val_con=4.7559
+  loss=7.7807  recon=0.8299  con=4.6739
+  val_loss=7.8127  val_recon=0.8293  val_con=4.7400
+Pretrain Epoch 54/139: val_loss=7.8127  val_recon=0.8293  val_con=4.7400
+  loss=7.7732  recon=0.8294  con=4.6655
+  val_loss=7.7937  val_recon=0.8264  val_con=4.7399
+Pretrain Epoch 55/139: val_loss=7.7937  val_recon=0.8264  val_con=4.7399
+  loss=7.7798  recon=0.8299  con=4.6721
+  val_loss=7.8176  val_recon=0.8295  val_con=4.7472
+Pretrain Epoch 56/139: val_loss=7.8176  val_recon=0.8295  val_con=4.7472
+  loss=7.7679  recon=0.8289  con=4.6613
+  val_loss=7.7756  val_recon=0.8271  val_con=4.6976
+Pretrain Epoch 57/139: val_loss=7.7756  val_recon=0.8271  val_con=4.6976
+  loss=7.7642  recon=0.8284  con=4.6600
+  val_loss=7.8233  val_recon=0.8260  val_con=4.7990
+Pretrain Epoch 58/139: val_loss=7.8233  val_recon=0.8260  val_con=4.7990
+  loss=7.7562  recon=0.8288  con=4.6414
+  val_loss=7.8097  val_recon=0.8257  val_con=4.7770
+Pretrain Epoch 59/139: val_loss=7.8097  val_recon=0.8257  val_con=4.7770
+  loss=7.7584  recon=0.8288  con=4.6455
+  val_loss=7.8199  val_recon=0.8254  val_con=4.8002
+Pretrain Epoch 60/139: val_loss=7.8199  val_recon=0.8254  val_con=4.8002
+  loss=7.7519  recon=0.8284  con=4.6372
+  val_loss=7.7920  val_recon=0.8269  val_con=4.7298
+Pretrain Epoch 61/139: val_loss=7.7920  val_recon=0.8269  val_con=4.7298
+  loss=7.7637  recon=0.8290  con=4.6525
+  val_loss=7.8180  val_recon=0.8283  val_con=4.7617
+Pretrain Epoch 62/139: val_loss=7.8180  val_recon=0.8283  val_con=4.7617
+  loss=7.7598  recon=0.8293  con=4.6422
+  val_loss=7.7938  val_recon=0.8252  val_con=4.7540
+Pretrain Epoch 63/139: val_loss=7.7938  val_recon=0.8252  val_con=4.7540
+  loss=7.7553  recon=0.8286  con=4.6419
+  val_loss=7.8060  val_recon=0.8271  val_con=4.7539
+Pretrain Epoch 64/139: val_loss=7.8060  val_recon=0.8271  val_con=4.7539
+  loss=7.7528  recon=0.8287  con=4.6360
+  val_loss=7.8177  val_recon=0.8276  val_con=4.7695
+Pretrain Epoch 65/139: val_loss=7.8177  val_recon=0.8276  val_con=4.7695
+  loss=7.7473  recon=0.8281  con=4.6321
+  val_loss=7.8456  val_recon=0.8301  val_con=4.7919
+Pretrain Epoch 66/139: val_loss=7.8456  val_recon=0.8301  val_con=4.7919
+  loss=7.7547  recon=0.8291  con=4.6346
+  val_loss=7.8370  val_recon=0.8258  val_con=4.8272
+Pretrain Epoch 67/139: val_loss=7.8370  val_recon=0.8258  val_con=4.8272
+  loss=7.7482  recon=0.8286  con=4.6283
+  val_loss=7.8218  val_recon=0.8250  val_con=4.8088
+Pretrain Epoch 68/139: val_loss=7.8218  val_recon=0.8250  val_con=4.8088
+  loss=7.7531  recon=0.8291  con=4.6311
+  val_loss=7.8180  val_recon=0.8267  val_con=4.7809
+Pretrain Epoch 69/139: val_loss=7.8180  val_recon=0.8267  val_con=4.7809
+  loss=7.7486  recon=0.8288  con=4.6266
+  val_loss=7.8209  val_recon=0.8276  val_con=4.7761
+Pretrain Epoch 70/139: val_loss=7.8209  val_recon=0.8276  val_con=4.7761
+  loss=7.7571  recon=0.8292  con=4.6375
+  val_loss=7.8203  val_recon=0.8274  val_con=4.7767
+Pretrain Epoch 71/139: val_loss=7.8203  val_recon=0.8274  val_con=4.7767
+  loss=7.7410  recon=0.8283  con=4.6181
+  val_loss=7.8482  val_recon=0.8275  val_con=4.8277
+Pretrain Epoch 72/139: val_loss=7.8482  val_recon=0.8275  val_con=4.8277
+  loss=7.7426  recon=0.8285  con=4.6185
+  val_loss=7.8314  val_recon=0.8280  val_con=4.7901
+Pretrain Epoch 73/139: val_loss=7.8314  val_recon=0.8280  val_con=4.7901
+  loss=7.7316  recon=0.8283  con=4.6005
+  val_loss=7.8217  val_recon=0.8265  val_con=4.7909
+Pretrain Epoch 74/139: val_loss=7.8217  val_recon=0.8265  val_con=4.7909
+  loss=7.7316  recon=0.8295  con=4.5871
+  val_loss=7.8243  val_recon=0.8280  val_con=4.7774
+Pretrain Epoch 75/139: val_loss=7.8243  val_recon=0.8280  val_con=4.7774
+  loss=7.7253  recon=0.8277  con=4.5957
+  val_loss=7.8331  val_recon=0.8268  val_con=4.8074
+Pretrain Epoch 76/139: val_loss=7.8331  val_recon=0.8268  val_con=4.8074
+  loss=7.7315  recon=0.8282  con=4.6020
+  val_loss=7.7955  val_recon=0.8247  val_con=4.7630
+Pretrain Epoch 77/139: val_loss=7.7955  val_recon=0.8247  val_con=4.7630
+  loss=7.7304  recon=0.8278  con=4.6050
+  val_loss=7.8138  val_recon=0.8252  val_con=4.7912
+Pretrain Epoch 78/139: val_loss=7.8138  val_recon=0.8252  val_con=4.7912
+  loss=7.7236  recon=0.8281  con=4.5880
+  val_loss=7.8187  val_recon=0.8241  val_con=4.8130
+Pretrain Epoch 79/139: val_loss=7.8187  val_recon=0.8241  val_con=4.8130
+  loss=7.7241  recon=0.8283  con=4.5868
+  val_loss=7.8782  val_recon=0.8269  val_con=4.8907
+Pretrain Epoch 80/139: val_loss=7.8782  val_recon=0.8269  val_con=4.8907
+  loss=7.7245  recon=0.8279  con=4.5926
+  val_loss=7.8564  val_recon=0.8279  val_con=4.8388
+Pretrain Epoch 81/139: val_loss=7.8564  val_recon=0.8279  val_con=4.8388
+  loss=7.7325  recon=0.8286  con=4.5986
+  val_loss=7.8052  val_recon=0.8250  val_con=4.7775
+Pretrain Epoch 82/139: val_loss=7.8052  val_recon=0.8250  val_con=4.7775
+  loss=7.7182  recon=0.8277  con=4.5828
+  val_loss=7.7922  val_recon=0.8256  val_con=4.7463
+Pretrain Epoch 83/139: val_loss=7.7922  val_recon=0.8256  val_con=4.7463
+  loss=7.7225  recon=0.8280  con=4.5868
+  val_loss=7.8440  val_recon=0.8271  val_con=4.8249
+Pretrain Epoch 84/139: val_loss=7.8440  val_recon=0.8271  val_con=4.8249
+  loss=7.7153  recon=0.8278  con=4.5759
+  val_loss=7.8390  val_recon=0.8251  val_con=4.8394
+Pretrain Epoch 85/139: val_loss=7.8390  val_recon=0.8251  val_con=4.8394
+  loss=7.7260  recon=0.8285  con=4.5876
+  val_loss=7.8353  val_recon=0.8261  val_con=4.8209
+Pretrain Epoch 86/139: val_loss=7.8353  val_recon=0.8261  val_con=4.8209
+  loss=7.7217  recon=0.8283  con=4.5822
+  val_loss=7.8180  val_recon=0.8259  val_con=4.7908
+Pretrain Epoch 87/139: val_loss=7.8180  val_recon=0.8259  val_con=4.7908
+  loss=7.7123  recon=0.8284  con=4.5637
+  val_loss=7.8484  val_recon=0.8267  val_con=4.8381
+Pretrain Epoch 88/139: val_loss=7.8484  val_recon=0.8267  val_con=4.8381
+  loss=7.7151  recon=0.8275  con=4.5791
+  val_loss=7.8209  val_recon=0.8265  val_con=4.7892
+Pretrain Epoch 89/139: val_loss=7.8209  val_recon=0.8265  val_con=4.7892
+  loss=7.7153  recon=0.8278  con=4.5765
+  val_loss=7.8296  val_recon=0.8243  val_con=4.8311
+Pretrain Epoch 90/139: val_loss=7.8296  val_recon=0.8243  val_con=4.8311
+  loss=7.7139  recon=0.8281  con=4.5697
+  val_loss=7.8229  val_recon=0.8274  val_con=4.7812
+Pretrain Epoch 91/139: val_loss=7.8229  val_recon=0.8274  val_con=4.7812
+  loss=7.7149  recon=0.8285  con=4.5676
+  val_loss=7.8550  val_recon=0.8254  val_con=4.8654
+Pretrain Epoch 92/139: val_loss=7.8550  val_recon=0.8254  val_con=4.8654
+  loss=7.7150  recon=0.8281  con=4.5722
+  val_loss=7.8212  val_recon=0.8256  val_con=4.7995
+Pretrain Epoch 93/139: val_loss=7.8212  val_recon=0.8256  val_con=4.7995
+  loss=7.7077  recon=0.8278  con=4.5621
+  val_loss=7.8221  val_recon=0.8265  val_con=4.7908
+Pretrain Epoch 94/139: val_loss=7.8221  val_recon=0.8265  val_con=4.7908
+  loss=7.7106  recon=0.8276  con=4.5700
+  val_loss=7.8503  val_recon=0.8286  val_con=4.8193
+Pretrain Epoch 95/139: val_loss=7.8503  val_recon=0.8286  val_con=4.8193
+  loss=7.7067  recon=0.8274  con=4.5657
+  val_loss=7.8440  val_recon=0.8242  val_con=4.8590
+Pretrain Epoch 96/139: val_loss=7.8440  val_recon=0.8242  val_con=4.8590
+  loss=7.7140  recon=0.8283  con=4.5674
+  val_loss=7.8327  val_recon=0.8291  val_con=4.7798
+Pretrain Epoch 97/139: val_loss=7.8327  val_recon=0.8291  val_con=4.7798
+  loss=7.7081  recon=0.8283  con=4.5564
+  val_loss=7.8586  val_recon=0.8251  val_con=4.8762
+Pretrain Epoch 98/139: val_loss=7.8586  val_recon=0.8251  val_con=4.8762
+  loss=7.7073  recon=0.8277  con=4.5630
+  val_loss=7.8403  val_recon=0.8244  val_con=4.8497
+Pretrain Epoch 99/139: val_loss=7.8403  val_recon=0.8244  val_con=4.8497
+  loss=7.7050  recon=0.8264  con=4.5730
+  val_loss=7.8318  val_recon=0.8260  val_con=4.8156
+Pretrain Epoch 100/139: val_loss=7.8318  val_recon=0.8260  val_con=4.8156
+  loss=7.7109  recon=0.8280  con=4.5659
+  val_loss=7.8725  val_recon=0.8258  val_con=4.8932
+Pretrain Epoch 101/139: val_loss=7.8725  val_recon=0.8258  val_con=4.8932
+  loss=7.7139  recon=0.8281  con=4.5701
+  val_loss=7.8302  val_recon=0.8244  val_con=4.8306
+Pretrain Epoch 102/139: val_loss=7.8302  val_recon=0.8244  val_con=4.8306
+  loss=7.7183  recon=0.8280  con=4.5799
+  val_loss=7.8194  val_recon=0.8260  val_con=4.7925
+Pretrain Epoch 103/139: val_loss=7.8194  val_recon=0.8260  val_con=4.7925
+  loss=7.7178  recon=0.8291  con=4.5649
+  val_loss=7.8393  val_recon=0.8253  val_con=4.8368
+Pretrain Epoch 104/139: val_loss=7.8393  val_recon=0.8253  val_con=4.8368
+  loss=7.7072  recon=0.8278  con=4.5609
+  val_loss=7.8511  val_recon=0.8251  val_con=4.8619
+Pretrain Epoch 105/139: val_loss=7.8511  val_recon=0.8251  val_con=4.8619
+  loss=7.7038  recon=0.8280  con=4.5524
+  val_loss=7.8368  val_recon=0.8261  val_con=4.8231
+Pretrain Epoch 106/139: val_loss=7.8368  val_recon=0.8261  val_con=4.8231
+  loss=7.7066  recon=0.8282  con=4.5554
+  val_loss=7.8558  val_recon=0.8258  val_con=4.8622
+Pretrain Epoch 107/139: val_loss=7.8558  val_recon=0.8258  val_con=4.8622
+  loss=7.6963  recon=0.8274  con=4.5459
+  val_loss=7.8447  val_recon=0.8247  val_con=4.8550
+Pretrain Epoch 108/139: val_loss=7.8447  val_recon=0.8247  val_con=4.8550
+  loss=7.7011  recon=0.8272  con=4.5571
+  val_loss=7.8471  val_recon=0.8264  val_con=4.8392
+Pretrain Epoch 109/139: val_loss=7.8471  val_recon=0.8264  val_con=4.8392
+  loss=7.7049  recon=0.8283  con=4.5506
+  val_loss=7.8384  val_recon=0.8269  val_con=4.8165
+Pretrain Epoch 110/139: val_loss=7.8384  val_recon=0.8269  val_con=4.8165
+  loss=7.7050  recon=0.8274  con=4.5620
+  val_loss=7.8628  val_recon=0.8280  val_con=4.8489
+Pretrain Epoch 111/139: val_loss=7.8628  val_recon=0.8280  val_con=4.8489
+  loss=7.7032  recon=0.8273  con=4.5597
+  val_loss=7.8843  val_recon=0.8276  val_con=4.8937
+Pretrain Epoch 112/139: val_loss=7.8843  val_recon=0.8276  val_con=4.8937
+  loss=7.7029  recon=0.8274  con=4.5580
+  val_loss=7.8280  val_recon=0.8240  val_con=4.8320
+Pretrain Epoch 113/139: val_loss=7.8280  val_recon=0.8240  val_con=4.8320
+  loss=7.7045  recon=0.8281  con=4.5530
+  val_loss=7.8383  val_recon=0.8253  val_con=4.8358
+Pretrain Epoch 114/139: val_loss=7.8383  val_recon=0.8253  val_con=4.8358
+  loss=7.7034  recon=0.8276  con=4.5564
+  val_loss=7.8496  val_recon=0.8235  val_con=4.8774
+Pretrain Epoch 115/139: val_loss=7.8496  val_recon=0.8235  val_con=4.8774
+  loss=7.7034  recon=0.8277  con=4.5553
+  val_loss=7.8162  val_recon=0.8252  val_con=4.7958
+Pretrain Epoch 116/139: val_loss=7.8162  val_recon=0.8252  val_con=4.7958
+  loss=7.7002  recon=0.8278  con=4.5476
+  val_loss=7.8263  val_recon=0.8239  val_con=4.8299
+Pretrain Epoch 117/139: val_loss=7.8263  val_recon=0.8239  val_con=4.8299
+  loss=7.6976  recon=0.8277  con=4.5450
+  val_loss=7.8581  val_recon=0.8261  val_con=4.8630
+Pretrain Epoch 118/139: val_loss=7.8581  val_recon=0.8261  val_con=4.8630
+  loss=7.7097  recon=0.8281  con=4.5618
+  val_loss=7.8498  val_recon=0.8259  val_con=4.8495
+Pretrain Epoch 119/139: val_loss=7.8498  val_recon=0.8259  val_con=4.8495
+  loss=7.6974  recon=0.8276  con=4.5455
+  val_loss=7.8313  val_recon=0.8257  val_con=4.8172
+Pretrain Epoch 120/139: val_loss=7.8313  val_recon=0.8257  val_con=4.8172
+  loss=7.7053  recon=0.8275  con=4.5615
+  val_loss=7.8195  val_recon=0.8256  val_con=4.7965
+Pretrain Epoch 121/139: val_loss=7.8195  val_recon=0.8256  val_con=4.7965
+  loss=7.7034  recon=0.8276  con=4.5561
+  val_loss=7.8384  val_recon=0.8268  val_con=4.8176
+Pretrain Epoch 122/139: val_loss=7.8384  val_recon=0.8268  val_con=4.8176
+  loss=7.7014  recon=0.8270  con=4.5593
+  val_loss=7.8461  val_recon=0.8268  val_con=4.8323
+Pretrain Epoch 123/139: val_loss=7.8461  val_recon=0.8268  val_con=4.8323
+  loss=7.6982  recon=0.8271  con=4.5521
+  val_loss=7.8593  val_recon=0.8272  val_con=4.8526
+Pretrain Epoch 124/139: val_loss=7.8593  val_recon=0.8272  val_con=4.8526
+  loss=7.7028  recon=0.8276  con=4.5558
+  val_loss=7.8407  val_recon=0.8276  val_con=4.8128
+Pretrain Epoch 125/139: val_loss=7.8407  val_recon=0.8276  val_con=4.8128
+  loss=7.6951  recon=0.8276  con=4.5409
+  val_loss=7.8291  val_recon=0.8256  val_con=4.8144
+Pretrain Epoch 126/139: val_loss=7.8291  val_recon=0.8256  val_con=4.8144
+  loss=7.6935  recon=0.8267  con=4.5490
+  val_loss=7.8448  val_recon=0.8249  val_con=4.8528
+Pretrain Epoch 127/139: val_loss=7.8448  val_recon=0.8249  val_con=4.8528
+  loss=7.6955  recon=0.8275  con=4.5432
+  val_loss=7.8382  val_recon=0.8271  val_con=4.8136
+Pretrain Epoch 128/139: val_loss=7.8382  val_recon=0.8271  val_con=4.8136
+  loss=7.6950  recon=0.8281  con=4.5344
+  val_loss=7.8330  val_recon=0.8241  val_con=4.8402
+Pretrain Epoch 129/139: val_loss=7.8330  val_recon=0.8241  val_con=4.8402
+  loss=7.6905  recon=0.8271  con=4.5386
+  val_loss=7.8550  val_recon=0.8247  val_con=4.8741
+Pretrain Epoch 130/139: val_loss=7.8550  val_recon=0.8247  val_con=4.8741
+  loss=7.7040  recon=0.8278  con=4.5553
+  val_loss=7.8369  val_recon=0.8241  val_con=4.8466
+Pretrain Epoch 131/139: val_loss=7.8369  val_recon=0.8241  val_con=4.8466
+  loss=7.6966  recon=0.8269  con=4.5524
+  val_loss=7.8248  val_recon=0.8248  val_con=4.8161
+Pretrain Epoch 132/139: val_loss=7.8248  val_recon=0.8248  val_con=4.8161
+  loss=7.6998  recon=0.8280  con=4.5450
+  val_loss=7.8232  val_recon=0.8254  val_con=4.8066
+Pretrain Epoch 133/139: val_loss=7.8232  val_recon=0.8254  val_con=4.8066
+  loss=7.7005  recon=0.8277  con=4.5500
+  val_loss=7.8239  val_recon=0.8259  val_con=4.8014
+Pretrain Epoch 134/139: val_loss=7.8239  val_recon=0.8259  val_con=4.8014
+  loss=7.6968  recon=0.8268  con=4.5539
+  val_loss=7.8473  val_recon=0.8255  val_con=4.8497
+Pretrain Epoch 135/139: val_loss=7.8473  val_recon=0.8255  val_con=4.8497
+  loss=7.6923  recon=0.8271  con=4.5417
+  val_loss=7.8434  val_recon=0.8245  val_con=4.8540
+Pretrain Epoch 136/139: val_loss=7.8434  val_recon=0.8245  val_con=4.8540
+  loss=7.7040  recon=0.8278  con=4.5556
+  val_loss=7.8462  val_recon=0.8254  val_con=4.8487
+Pretrain Epoch 137/139: val_loss=7.8462  val_recon=0.8254  val_con=4.8487
+  loss=7.6968  recon=0.8268  con=4.5531
+  val_loss=7.8502  val_recon=0.8243  val_con=4.8697
+Pretrain Epoch 138/139: val_loss=7.8502  val_recon=0.8243  val_con=4.8697
+  loss=7.7017  recon=0.8282  con=4.5467
+  val_loss=7.8244  val_recon=0.8243  val_con=4.8208
+Pretrain Epoch 139/139: val_loss=7.8244  val_recon=0.8243  val_con=4.8208
+  loss=0.5241  acc=0.934
+Best val acc   : 0.8611
+Best threshold : 0.94
+Best f1        : 0.6938
+Best threshold f1: 0.89
+Confusion matrix (optimized for f1):
+[[634  77]
+ [ 51 145]]
+  loss=0.1703  acc=0.989
+Best val acc   : 0.8732
+Best threshold : 0.93
+Best f1        : 0.7122
+Best threshold f1: 0.68
+Confusion matrix (optimized for f1):
+[[643  68]
+ [ 50 146]]
+  loss=0.1778  acc=0.990
+Best val acc   : 0.8732
+Best threshold : 0.94
+Best f1        : 0.7089
+Best threshold f1: 0.94
+Confusion matrix (optimized for f1):
+[[652  59]
+ [ 56 140]]
+  loss=0.1472  acc=0.989
+Best val acc   : 0.8677
+Best threshold : 0.80
+Best f1        : 0.6985
+Best threshold f1: 0.80
+Confusion matrix (optimized for f1):
+[[648  63]
+ [ 57 139]]
+  loss=0.1443  acc=0.990
+Best val acc   : 0.8545
+Best threshold : 0.95
+Best f1        : 0.6943
+Best threshold f1: 0.89
+Confusion matrix (optimized for f1):
+[[623  88]
+ [ 45 151]]
+  loss=0.1545  acc=0.989
+Best val acc   : 0.8732
+Best threshold : 0.90
+Best f1        : 0.7146
+Best threshold f1: 0.90
+Confusion matrix (optimized for f1):
+[[648  63]
+ [ 52 144]]
+  loss=0.1462  acc=0.991
+Best val acc   : 0.8655
+Best threshold : 0.85
+Best f1        : 0.6950
+Best threshold f1: 0.85
+Confusion matrix (optimized for f1):
+[[646  65]
+ [ 57 139]]
+  loss=0.1468  acc=0.989
+Best val acc   : 0.8677
+Best threshold : 0.94
+Best f1        : 0.6875
+Best threshold f1: 0.94
+Confusion matrix (optimized for f1):
+[[655  56]
+ [ 64 132]]
+  loss=0.1447  acc=0.991
+Best val acc   : 0.8600
+Best threshold : 0.95
+Best f1        : 0.6860
+Best threshold f1: 0.91
+Confusion matrix (optimized for f1):
+[[635  76]
+ [ 54 142]]
+  loss=0.1341  acc=0.992
+Best val acc   : 0.8633
+Best threshold : 0.92
+Best f1        : 0.6915
+Best threshold f1: 0.92
+Confusion matrix (optimized for f1):
+[[644  67]
+ [ 57 139]]
+  loss=0.1358  acc=0.991
+Best val acc   : 0.8567
+Best threshold : 0.92
+Best f1        : 0.6890
+Best threshold f1: 0.92
+Confusion matrix (optimized for f1):
+[[633  78]
+ [ 52 144]]
+  loss=0.1396  acc=0.991
+Best val acc   : 0.8545
+Best threshold : 0.94
+Best f1        : 0.6868
+Best threshold f1: 0.68
+Confusion matrix (optimized for f1):
+[[624  87]
+ [ 48 148]]
+  loss=0.1423  acc=0.989
+Best val acc   : 0.8622
+Best threshold : 0.93
+Best f1        : 0.6867
+Best threshold f1: 0.93
+Confusion matrix (optimized for f1):
+[[645  66]
+ [ 59 137]]
+  loss=0.1353  acc=0.991
+Best val acc   : 0.8578
+Best threshold : 0.83
+Best f1        : 0.6877
+Best threshold f1: 0.83
+Confusion matrix (optimized for f1):
+[[636  75]
+ [ 54 142]]
+  loss=0.1490  acc=0.990
+Best val acc   : 0.8567
+Best threshold : 0.95
+Best f1        : 0.6766
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[641  70]
+ [ 60 136]]
+  loss=0.1360  acc=0.991
+Best val acc   : 0.8699
+Best threshold : 0.94
+Best f1        : 0.6983
+Best threshold f1: 0.64
+Confusion matrix (optimized for f1):
+[[646  65]
+ [ 56 140]]
+  loss=0.1373  acc=0.992
+Best val acc   : 0.8545
+Best threshold : 0.95
+Best f1        : 0.6812
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[634  77]
+ [ 55 141]]
+  loss=0.1238  acc=0.990
+Best val acc   : 0.8501
+Best threshold : 0.92
+Best f1        : 0.6807
+Best threshold f1: 0.67
+Confusion matrix (optimized for f1):
+[[624  87]
+ [ 50 146]]
+  loss=0.1251  acc=0.990
+Best val acc   : 0.8567
+Best threshold : 0.95
+Best f1        : 0.6766
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[641  70]
+ [ 60 136]]
+  loss=0.1209  acc=0.992
+Best val acc   : 0.8600
+Best threshold : 0.95
+Best f1        : 0.6830
+Best threshold f1: 0.85
+Confusion matrix (optimized for f1):
+[[639  72]
+ [ 57 139]]
+  loss=0.1352  acc=0.991
+Best val acc   : 0.8633
+Best threshold : 0.95
+Best f1        : 0.6869
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[647  64]
+ [ 60 136]]
+  loss=0.1184  acc=0.992
+Best val acc   : 0.8556
+Best threshold : 0.93
+Best f1        : 0.6882
+Best threshold f1: 0.64
+Confusion matrix (optimized for f1):
+[[623  88]
+ [ 47 149]]
+  loss=0.1207  acc=0.992
+Best val acc   : 0.8633
+Best threshold : 0.95
+Best f1        : 0.6942
+Best threshold f1: 0.85
+Confusion matrix (optimized for f1):
+[[638  73]
+ [ 53 143]]
+  loss=0.1252  acc=0.992
+Best val acc   : 0.8556
+Best threshold : 0.95
+Best f1        : 0.6856
+Best threshold f1: 0.73
+Confusion matrix (optimized for f1):
+[[629  82]
+ [ 51 145]]
+  loss=0.1355  acc=0.990
+Best val acc   : 0.8556
+Best threshold : 0.85
+Best f1        : 0.6903
+Best threshold f1: 0.85
+Confusion matrix (optimized for f1):
+[[630  81]
+ [ 50 146]]
+  loss=0.1130  acc=0.992
+Best val acc   : 0.8677
+Best threshold : 0.86
+Best f1        : 0.6985
+Best threshold f1: 0.86
+Confusion matrix (optimized for f1):
+[[648  63]
+ [ 57 139]]
+Early stopping at epoch 26
+Fold 2 result: val_loss=1.8380, best_thresh(f1)=0.900, val_f1=0.715, val_acc=0.873, best_thresh_acc=0.900
+  Confusion Matrix:
+[[648  63]
+ [ 52 144]]
+Fold 2 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded/fold_1.pt
+
+===== Fold 3/5 =====
+Train: 3629 | repeaters: 785 (21.6%)
+Val:   907   | repeaters: 196   (21.6%)
+  loss=8.7390  recon=0.9633  con=4.8787
+  val_loss=8.1760  val_recon=0.8878  val_con=4.7242
+Pretrain Epoch 1/139: val_loss=8.1760  val_recon=0.8878  val_con=4.7242
+  loss=8.1754  recon=0.8779  con=4.8404
+  val_loss=7.9894  val_recon=0.8584  val_con=4.7242
+Pretrain Epoch 2/139: val_loss=7.9894  val_recon=0.8584  val_con=4.7242
+  loss=8.0471  recon=0.8578  con=4.8392
+  val_loss=7.9214  val_recon=0.8477  val_con=4.7242
+Pretrain Epoch 3/139: val_loss=7.9214  val_recon=0.8477  val_con=4.7242
+  loss=8.0029  recon=0.8509  con=4.8386
+  val_loss=7.9431  val_recon=0.8512  val_con=4.7242
+Pretrain Epoch 4/139: val_loss=7.9431  val_recon=0.8512  val_con=4.7242
+  loss=7.9830  recon=0.8478  con=4.8385
+  val_loss=7.8959  val_recon=0.8437  val_con=4.7242
+Pretrain Epoch 5/139: val_loss=7.8959  val_recon=0.8437  val_con=4.7242
+  loss=7.9618  recon=0.8445  con=4.8383
+  val_loss=7.8821  val_recon=0.8416  val_con=4.7242
+Pretrain Epoch 6/139: val_loss=7.8821  val_recon=0.8416  val_con=4.7242
+  loss=7.9446  recon=0.8418  con=4.8382
+  val_loss=7.8761  val_recon=0.8406  val_con=4.7242
+Pretrain Epoch 7/139: val_loss=7.8761  val_recon=0.8406  val_con=4.7242
+  loss=7.9461  recon=0.8420  con=4.8381
+  val_loss=7.8788  val_recon=0.8411  val_con=4.7242
+Pretrain Epoch 8/139: val_loss=7.8788  val_recon=0.8411  val_con=4.7242
+  loss=7.9374  recon=0.8407  con=4.8381
+  val_loss=7.8813  val_recon=0.8414  val_con=4.7242
+Pretrain Epoch 9/139: val_loss=7.8813  val_recon=0.8414  val_con=4.7242
+  loss=7.9251  recon=0.8387  con=4.8380
+  val_loss=7.8796  val_recon=0.8412  val_con=4.7242
+Pretrain Epoch 10/139: val_loss=7.8796  val_recon=0.8412  val_con=4.7242
+  loss=7.9234  recon=0.8385  con=4.8380
+  val_loss=7.8576  val_recon=0.8377  val_con=4.7241
+Pretrain Epoch 11/139: val_loss=7.8576  val_recon=0.8377  val_con=4.7241
+  loss=7.9086  recon=0.8362  con=4.8378
+  val_loss=7.8452  val_recon=0.8358  val_con=4.7237
+Pretrain Epoch 12/139: val_loss=7.8452  val_recon=0.8358  val_con=4.7237
+  loss=7.9082  recon=0.8362  con=4.8368
+  val_loss=7.8506  val_recon=0.8369  val_con=4.7212
+Pretrain Epoch 13/139: val_loss=7.8506  val_recon=0.8369  val_con=4.7212
+  loss=7.8980  recon=0.8348  con=4.8342
+  val_loss=7.8390  val_recon=0.8352  val_con=4.7197
+Pretrain Epoch 14/139: val_loss=7.8390  val_recon=0.8352  val_con=4.7197
+  loss=7.8960  recon=0.8348  con=4.8304
+  val_loss=7.8248  val_recon=0.8331  val_con=4.7178
+Pretrain Epoch 15/139: val_loss=7.8248  val_recon=0.8331  val_con=4.7178
+  loss=7.8927  recon=0.8349  con=4.8231
+  val_loss=7.8531  val_recon=0.8369  val_con=4.7254
+Pretrain Epoch 16/139: val_loss=7.8531  val_recon=0.8369  val_con=4.7254
+  loss=7.8816  recon=0.8337  con=4.8165
+  val_loss=7.8224  val_recon=0.8332  val_con=4.7122
+Pretrain Epoch 17/139: val_loss=7.8224  val_recon=0.8332  val_con=4.7122
+  loss=7.8805  recon=0.8339  con=4.8123
+  val_loss=7.8281  val_recon=0.8341  val_con=4.7126
+Pretrain Epoch 18/139: val_loss=7.8281  val_recon=0.8341  val_con=4.7126
+  loss=7.8738  recon=0.8333  con=4.8068
+  val_loss=7.8302  val_recon=0.8338  val_con=4.7200
+Pretrain Epoch 19/139: val_loss=7.8302  val_recon=0.8338  val_con=4.7200
+  loss=7.8678  recon=0.8328  con=4.8018
+  val_loss=7.8357  val_recon=0.8348  val_con=4.7174
+Pretrain Epoch 20/139: val_loss=7.8357  val_recon=0.8348  val_con=4.7174
+  loss=7.8695  recon=0.8334  con=4.7972
+  val_loss=7.8467  val_recon=0.8348  val_con=4.7381
+Pretrain Epoch 21/139: val_loss=7.8467  val_recon=0.8348  val_con=4.7381
+  loss=7.8675  recon=0.8331  con=4.7969
+  val_loss=7.8298  val_recon=0.8347  val_con=4.7086
+Pretrain Epoch 22/139: val_loss=7.8298  val_recon=0.8347  val_con=4.7086
+  loss=7.8583  recon=0.8324  con=4.7892
+  val_loss=7.8279  val_recon=0.8338  val_con=4.7151
+Pretrain Epoch 23/139: val_loss=7.8279  val_recon=0.8338  val_con=4.7151
+  loss=7.8530  recon=0.8325  con=4.7775
+  val_loss=7.8322  val_recon=0.8338  val_con=4.7231
+Pretrain Epoch 24/139: val_loss=7.8322  val_recon=0.8338  val_con=4.7231
+  loss=7.8580  recon=0.8329  con=4.7822
+  val_loss=7.8212  val_recon=0.8327  val_con=4.7155
+Pretrain Epoch 25/139: val_loss=7.8212  val_recon=0.8327  val_con=4.7155
+  loss=7.8500  recon=0.8322  con=4.7757
+  val_loss=7.8187  val_recon=0.8317  val_con=4.7227
+Pretrain Epoch 26/139: val_loss=7.8187  val_recon=0.8317  val_con=4.7227
+  loss=7.8479  recon=0.8323  con=4.7709
+  val_loss=7.8360  val_recon=0.8334  val_con=4.7351
+Pretrain Epoch 27/139: val_loss=7.8360  val_recon=0.8334  val_con=4.7351
+  loss=7.8452  recon=0.8324  con=4.7646
+  val_loss=7.8268  val_recon=0.8333  val_con=4.7191
+Pretrain Epoch 28/139: val_loss=7.8268  val_recon=0.8333  val_con=4.7191
+  loss=7.8431  recon=0.8325  con=4.7595
+  val_loss=7.8379  val_recon=0.8323  val_con=4.7518
+Pretrain Epoch 29/139: val_loss=7.8379  val_recon=0.8323  val_con=4.7518
+  loss=7.8346  recon=0.8315  con=4.7548
+  val_loss=7.8353  val_recon=0.8338  val_con=4.7285
+Pretrain Epoch 30/139: val_loss=7.8353  val_recon=0.8338  val_con=4.7285
+  loss=7.8349  recon=0.8313  con=4.7575
+  val_loss=7.8351  val_recon=0.8337  val_con=4.7296
+Pretrain Epoch 31/139: val_loss=7.8351  val_recon=0.8337  val_con=4.7296
+  loss=7.8277  recon=0.8316  con=4.7404
+  val_loss=7.8297  val_recon=0.8318  val_con=4.7420
+Pretrain Epoch 32/139: val_loss=7.8297  val_recon=0.8318  val_con=4.7420
+  loss=7.8362  recon=0.8326  con=4.7445
+  val_loss=7.8153  val_recon=0.8311  val_con=4.7234
+Pretrain Epoch 33/139: val_loss=7.8153  val_recon=0.8311  val_con=4.7234
+  loss=7.8251  recon=0.8312  con=4.7403
+  val_loss=7.8351  val_recon=0.8328  val_con=4.7409
+Pretrain Epoch 34/139: val_loss=7.8351  val_recon=0.8328  val_con=4.7409
+  loss=7.8262  recon=0.8314  con=4.7404
+  val_loss=7.8153  val_recon=0.8308  val_con=4.7275
+Pretrain Epoch 35/139: val_loss=7.8153  val_recon=0.8308  val_con=4.7275
+  loss=7.8238  recon=0.8317  con=4.7330
+  val_loss=7.8518  val_recon=0.8342  val_con=4.7553
+Pretrain Epoch 36/139: val_loss=7.8518  val_recon=0.8342  val_con=4.7553
+  loss=7.8213  recon=0.8311  con=4.7350
+  val_loss=7.8536  val_recon=0.8365  val_con=4.7305
+Pretrain Epoch 37/139: val_loss=7.8536  val_recon=0.8365  val_con=4.7305
+  loss=7.8118  recon=0.8310  con=4.7185
+  val_loss=7.8622  val_recon=0.8352  val_con=4.7631
+Pretrain Epoch 38/139: val_loss=7.8622  val_recon=0.8352  val_con=4.7631
+  loss=7.8086  recon=0.8311  con=4.7113
+  val_loss=7.8819  val_recon=0.8322  val_con=4.8346
+Pretrain Epoch 39/139: val_loss=7.8819  val_recon=0.8322  val_con=4.8346
+  loss=7.8211  recon=0.8314  con=4.7311
+  val_loss=7.8161  val_recon=0.8313  val_con=4.7228
+Pretrain Epoch 40/139: val_loss=7.8161  val_recon=0.8313  val_con=4.7228
+  loss=7.8035  recon=0.8310  con=4.7029
+  val_loss=7.8228  val_recon=0.8301  val_con=4.7490
+Pretrain Epoch 41/139: val_loss=7.8228  val_recon=0.8301  val_con=4.7490
+  loss=7.8005  recon=0.8300  con=4.7092
+  val_loss=7.8587  val_recon=0.8335  val_con=4.7767
+Pretrain Epoch 42/139: val_loss=7.8587  val_recon=0.8335  val_con=4.7767
+  loss=7.8083  recon=0.8317  con=4.7037
+  val_loss=7.8498  val_recon=0.8321  val_con=4.7765
+Pretrain Epoch 43/139: val_loss=7.8498  val_recon=0.8321  val_con=4.7765
+  loss=7.8014  recon=0.8310  con=4.6993
+  val_loss=7.8728  val_recon=0.8316  val_con=4.8249
+Pretrain Epoch 44/139: val_loss=7.8728  val_recon=0.8316  val_con=4.8249
+  loss=7.7966  recon=0.8306  con=4.6954
+  val_loss=7.8424  val_recon=0.8310  val_con=4.7756
+Pretrain Epoch 45/139: val_loss=7.8424  val_recon=0.8310  val_con=4.7756
+  loss=7.7975  recon=0.8310  con=4.6912
+  val_loss=7.8435  val_recon=0.8305  val_con=4.7831
+Pretrain Epoch 46/139: val_loss=7.8435  val_recon=0.8305  val_con=4.7831
+  loss=7.7888  recon=0.8289  con=4.6998
+  val_loss=7.8403  val_recon=0.8345  val_con=4.7297
+Pretrain Epoch 47/139: val_loss=7.8403  val_recon=0.8345  val_con=4.7297
+  loss=7.7976  recon=0.8306  con=4.6966
+  val_loss=7.8590  val_recon=0.8325  val_con=4.7885
+Pretrain Epoch 48/139: val_loss=7.8590  val_recon=0.8325  val_con=4.7885
+  loss=7.7938  recon=0.8298  con=4.6990
+  val_loss=7.8630  val_recon=0.8315  val_con=4.8085
+Pretrain Epoch 49/139: val_loss=7.8630  val_recon=0.8315  val_con=4.8085
+  loss=7.7817  recon=0.8300  con=4.6739
+  val_loss=7.8392  val_recon=0.8300  val_con=4.7810
+Pretrain Epoch 50/139: val_loss=7.8392  val_recon=0.8300  val_con=4.7810
+  loss=7.7720  recon=0.8299  con=4.6569
+  val_loss=7.8858  val_recon=0.8314  val_con=4.8518
+Pretrain Epoch 51/139: val_loss=7.8858  val_recon=0.8314  val_con=4.8518
+  loss=7.7731  recon=0.8297  con=4.6621
+  val_loss=7.8494  val_recon=0.8299  val_con=4.8017
+Pretrain Epoch 52/139: val_loss=7.8494  val_recon=0.8299  val_con=4.8017
+  loss=7.7645  recon=0.8288  con=4.6558
+  val_loss=7.8695  val_recon=0.8313  val_con=4.8222
+Pretrain Epoch 53/139: val_loss=7.8695  val_recon=0.8313  val_con=4.8222
+  loss=7.7673  recon=0.8301  con=4.6459
+  val_loss=7.8384  val_recon=0.8300  val_con=4.7796
+Pretrain Epoch 54/139: val_loss=7.8384  val_recon=0.8300  val_con=4.7796
+  loss=7.7644  recon=0.8296  con=4.6465
+  val_loss=7.8674  val_recon=0.8329  val_con=4.7995
+Pretrain Epoch 55/139: val_loss=7.8674  val_recon=0.8329  val_con=4.7995
+  loss=7.7556  recon=0.8289  con=4.6388
+  val_loss=7.8627  val_recon=0.8304  val_con=4.8208
+Pretrain Epoch 56/139: val_loss=7.8627  val_recon=0.8304  val_con=4.8208
+  loss=7.7592  recon=0.8294  con=4.6388
+  val_loss=7.8555  val_recon=0.8307  val_con=4.8031
+Pretrain Epoch 57/139: val_loss=7.8555  val_recon=0.8307  val_con=4.8031
+  loss=7.7713  recon=0.8299  con=4.6559
+  val_loss=7.8168  val_recon=0.8287  val_con=4.7545
+Pretrain Epoch 58/139: val_loss=7.8168  val_recon=0.8287  val_con=4.7545
+  loss=7.7585  recon=0.8295  con=4.6373
+  val_loss=7.8648  val_recon=0.8296  val_con=4.8345
+Pretrain Epoch 59/139: val_loss=7.8648  val_recon=0.8296  val_con=4.8345
+  loss=7.7524  recon=0.8290  con=4.6312
+  val_loss=7.8601  val_recon=0.8320  val_con=4.7966
+Pretrain Epoch 60/139: val_loss=7.8601  val_recon=0.8320  val_con=4.7966
+  loss=7.7559  recon=0.8288  con=4.6403
+  val_loss=7.8806  val_recon=0.8324  val_con=4.8306
+Pretrain Epoch 61/139: val_loss=7.8806  val_recon=0.8324  val_con=4.8306
+  loss=7.7489  recon=0.8294  con=4.6200
+  val_loss=7.8529  val_recon=0.8269  val_con=4.8434
+Pretrain Epoch 62/139: val_loss=7.8529  val_recon=0.8269  val_con=4.8434
+  loss=7.7487  recon=0.8290  con=4.6247
+  val_loss=7.8455  val_recon=0.8272  val_con=4.8263
+Pretrain Epoch 63/139: val_loss=7.8455  val_recon=0.8272  val_con=4.8263
+  loss=7.7492  recon=0.8284  con=4.6321
+  val_loss=7.9037  val_recon=0.8310  val_con=4.8899
+Pretrain Epoch 64/139: val_loss=7.9037  val_recon=0.8310  val_con=4.8899
+  loss=7.7514  recon=0.8291  con=4.6284
+  val_loss=7.8527  val_recon=0.8313  val_con=4.7912
+Pretrain Epoch 65/139: val_loss=7.8527  val_recon=0.8313  val_con=4.7912
+  loss=7.7405  recon=0.8287  con=4.6131
+  val_loss=7.8609  val_recon=0.8294  val_con=4.8286
+Pretrain Epoch 66/139: val_loss=7.8609  val_recon=0.8294  val_con=4.8286
+  loss=7.7333  recon=0.8282  con=4.6057
+  val_loss=7.8475  val_recon=0.8296  val_con=4.8019
+Pretrain Epoch 67/139: val_loss=7.8475  val_recon=0.8296  val_con=4.8019
+  loss=7.7278  recon=0.8278  con=4.5997
+  val_loss=7.8548  val_recon=0.8290  val_con=4.8219
+Pretrain Epoch 68/139: val_loss=7.8548  val_recon=0.8290  val_con=4.8219
+  loss=7.7398  recon=0.8290  con=4.6076
+  val_loss=7.8666  val_recon=0.8321  val_con=4.8076
+Pretrain Epoch 69/139: val_loss=7.8666  val_recon=0.8321  val_con=4.8076
+  loss=7.7270  recon=0.8285  con=4.5896
+  val_loss=7.8575  val_recon=0.8284  val_con=4.8350
+Pretrain Epoch 70/139: val_loss=7.8575  val_recon=0.8284  val_con=4.8350
+  loss=7.7293  recon=0.8282  con=4.5978
+  val_loss=7.8727  val_recon=0.8302  val_con=4.8417
+Pretrain Epoch 71/139: val_loss=7.8727  val_recon=0.8302  val_con=4.8417
+  loss=7.7251  recon=0.8279  con=4.5931
+  val_loss=7.8786  val_recon=0.8293  val_con=4.8635
+Pretrain Epoch 72/139: val_loss=7.8786  val_recon=0.8293  val_con=4.8635
+  loss=7.7288  recon=0.8284  con=4.5946
+  val_loss=7.8750  val_recon=0.8304  val_con=4.8440
+Pretrain Epoch 73/139: val_loss=7.8750  val_recon=0.8304  val_con=4.8440
+  loss=7.7229  recon=0.8280  con=4.5878
+  val_loss=7.8714  val_recon=0.8278  val_con=4.8678
+Pretrain Epoch 74/139: val_loss=7.8714  val_recon=0.8278  val_con=4.8678
+  loss=7.7282  recon=0.8287  con=4.5894
+  val_loss=7.8876  val_recon=0.8299  val_con=4.8724
+Pretrain Epoch 75/139: val_loss=7.8876  val_recon=0.8299  val_con=4.8724
+  loss=7.7230  recon=0.8282  con=4.5862
+  val_loss=7.8609  val_recon=0.8283  val_con=4.8419
+Pretrain Epoch 76/139: val_loss=7.8609  val_recon=0.8283  val_con=4.8419
+  loss=7.7150  recon=0.8282  con=4.5712
+  val_loss=7.8943  val_recon=0.8291  val_con=4.8947
+Pretrain Epoch 77/139: val_loss=7.8943  val_recon=0.8291  val_con=4.8947
+  loss=7.7183  recon=0.8284  con=4.5751
+  val_loss=7.8596  val_recon=0.8292  val_con=4.8287
+Pretrain Epoch 78/139: val_loss=7.8596  val_recon=0.8292  val_con=4.8287
+  loss=7.7262  recon=0.8284  con=4.5895
+  val_loss=7.8519  val_recon=0.8292  val_con=4.8142
+Pretrain Epoch 79/139: val_loss=7.8519  val_recon=0.8292  val_con=4.8142
+  loss=7.7206  recon=0.8282  con=4.5819
+  val_loss=7.8807  val_recon=0.8315  val_con=4.8411
+Pretrain Epoch 80/139: val_loss=7.8807  val_recon=0.8315  val_con=4.8411
+  loss=7.7263  recon=0.8289  con=4.5843
+  val_loss=7.8758  val_recon=0.8292  val_con=4.8587
+Pretrain Epoch 81/139: val_loss=7.8758  val_recon=0.8292  val_con=4.8587
+  loss=7.7255  recon=0.8285  con=4.5864
+  val_loss=7.8867  val_recon=0.8288  val_con=4.8838
+Pretrain Epoch 82/139: val_loss=7.8867  val_recon=0.8288  val_con=4.8838
+  loss=7.7142  recon=0.8281  con=4.5710
+  val_loss=7.8873  val_recon=0.8305  val_con=4.8654
+Pretrain Epoch 83/139: val_loss=7.8873  val_recon=0.8305  val_con=4.8654
+  loss=7.7150  recon=0.8279  con=4.5740
+  val_loss=7.8686  val_recon=0.8286  val_con=4.8530
+Pretrain Epoch 84/139: val_loss=7.8686  val_recon=0.8286  val_con=4.8530
+  loss=7.7035  recon=0.8273  con=4.5607
+  val_loss=7.8561  val_recon=0.8271  val_con=4.8473
+Pretrain Epoch 85/139: val_loss=7.8561  val_recon=0.8271  val_con=4.8473
+  loss=7.7164  recon=0.8282  con=4.5741
+  val_loss=7.8789  val_recon=0.8296  val_con=4.8597
+Pretrain Epoch 86/139: val_loss=7.8789  val_recon=0.8296  val_con=4.8597
+  loss=7.7106  recon=0.8275  con=4.5708
+  val_loss=7.8939  val_recon=0.8301  val_con=4.8817
+Pretrain Epoch 87/139: val_loss=7.8939  val_recon=0.8301  val_con=4.8817
+  loss=7.7244  recon=0.8290  con=4.5794
+  val_loss=7.8795  val_recon=0.8295  val_con=4.8621
+Pretrain Epoch 88/139: val_loss=7.8795  val_recon=0.8295  val_con=4.8621
+  loss=7.7084  recon=0.8279  con=4.5624
+  val_loss=7.8874  val_recon=0.8284  val_con=4.8908
+Pretrain Epoch 89/139: val_loss=7.8874  val_recon=0.8284  val_con=4.8908
+  loss=7.7100  recon=0.8282  con=4.5618
+  val_loss=7.8746  val_recon=0.8299  val_con=4.8486
+Pretrain Epoch 90/139: val_loss=7.8746  val_recon=0.8299  val_con=4.8486
+  loss=7.7089  recon=0.8278  con=4.5643
+  val_loss=7.8811  val_recon=0.8272  val_con=4.8925
+Pretrain Epoch 91/139: val_loss=7.8811  val_recon=0.8272  val_con=4.8925
+  loss=7.7120  recon=0.8279  con=4.5687
+  val_loss=7.8870  val_recon=0.8303  val_con=4.8673
+Pretrain Epoch 92/139: val_loss=7.8870  val_recon=0.8303  val_con=4.8673
+  loss=7.7082  recon=0.8281  con=4.5599
+  val_loss=7.9053  val_recon=0.8298  val_con=4.9075
+Pretrain Epoch 93/139: val_loss=7.9053  val_recon=0.8298  val_con=4.9075
+  loss=7.7063  recon=0.8279  con=4.5583
+  val_loss=7.8724  val_recon=0.8283  val_con=4.8640
+Pretrain Epoch 94/139: val_loss=7.8724  val_recon=0.8283  val_con=4.8640
+  loss=7.7090  recon=0.8273  con=4.5700
+  val_loss=7.8745  val_recon=0.8297  val_con=4.8512
+Pretrain Epoch 95/139: val_loss=7.8745  val_recon=0.8297  val_con=4.8512
+  loss=7.7075  recon=0.8275  con=4.5657
+  val_loss=7.9063  val_recon=0.8304  val_con=4.9018
+Pretrain Epoch 96/139: val_loss=7.9063  val_recon=0.8304  val_con=4.9018
+  loss=7.7086  recon=0.8280  con=4.5617
+  val_loss=7.8649  val_recon=0.8272  val_con=4.8624
+Pretrain Epoch 97/139: val_loss=7.8649  val_recon=0.8272  val_con=4.8624
+  loss=7.7139  recon=0.8284  con=4.5664
+  val_loss=7.8982  val_recon=0.8280  val_con=4.9148
+Pretrain Epoch 98/139: val_loss=7.8982  val_recon=0.8280  val_con=4.9148
+  loss=7.7071  recon=0.8278  con=4.5611
+  val_loss=7.8994  val_recon=0.8295  val_con=4.8996
+Pretrain Epoch 99/139: val_loss=7.8994  val_recon=0.8295  val_con=4.8996
+  loss=7.7042  recon=0.8274  con=4.5600
+  val_loss=7.8925  val_recon=0.8305  val_con=4.8755
+Pretrain Epoch 100/139: val_loss=7.8925  val_recon=0.8305  val_con=4.8755
+  loss=7.7054  recon=0.8277  con=4.5596
+  val_loss=7.8957  val_recon=0.8296  val_con=4.8917
+Pretrain Epoch 101/139: val_loss=7.8957  val_recon=0.8296  val_con=4.8917
+  loss=7.7035  recon=0.8281  con=4.5506
+  val_loss=7.9190  val_recon=0.8308  val_con=4.9212
+Pretrain Epoch 102/139: val_loss=7.9190  val_recon=0.8308  val_con=4.9212
+  loss=7.7100  recon=0.8281  con=4.5626
+  val_loss=7.9008  val_recon=0.8283  val_con=4.9161
+Pretrain Epoch 103/139: val_loss=7.9008  val_recon=0.8283  val_con=4.9161
+  loss=7.7000  recon=0.8278  con=4.5477
+  val_loss=7.8875  val_recon=0.8296  val_con=4.8764
+Pretrain Epoch 104/139: val_loss=7.8875  val_recon=0.8296  val_con=4.8764
+  loss=7.7088  recon=0.8277  con=4.5656
+  val_loss=7.9016  val_recon=0.8307  val_con=4.8894
+Pretrain Epoch 105/139: val_loss=7.9016  val_recon=0.8307  val_con=4.8894
+  loss=7.7032  recon=0.8273  con=4.5598
+  val_loss=7.8939  val_recon=0.8283  val_con=4.9039
+Pretrain Epoch 106/139: val_loss=7.8939  val_recon=0.8283  val_con=4.9039
+  loss=7.6998  recon=0.8267  con=4.5601
+  val_loss=7.8797  val_recon=0.8298  val_con=4.8593
+Pretrain Epoch 107/139: val_loss=7.8797  val_recon=0.8298  val_con=4.8593
+  loss=7.7091  recon=0.8286  con=4.5556
+  val_loss=7.9138  val_recon=0.8307  val_con=4.9128
+Pretrain Epoch 108/139: val_loss=7.9138  val_recon=0.8307  val_con=4.9128
+  loss=7.7043  recon=0.8279  con=4.5547
+  val_loss=7.9192  val_recon=0.8311  val_con=4.9171
+Pretrain Epoch 109/139: val_loss=7.9192  val_recon=0.8311  val_con=4.9171
+  loss=7.7058  recon=0.8271  con=4.5672
+  val_loss=7.8828  val_recon=0.8284  val_con=4.8816
+Pretrain Epoch 110/139: val_loss=7.8828  val_recon=0.8284  val_con=4.8816
+  loss=7.7093  recon=0.8282  con=4.5606
+  val_loss=7.8846  val_recon=0.8275  val_con=4.8960
+Pretrain Epoch 111/139: val_loss=7.8846  val_recon=0.8275  val_con=4.8960
+  loss=7.6978  recon=0.8276  con=4.5456
+  val_loss=7.8899  val_recon=0.8273  val_con=4.9078
+Pretrain Epoch 112/139: val_loss=7.8899  val_recon=0.8273  val_con=4.9078
+  loss=7.7023  recon=0.8274  con=4.5567
+  val_loss=7.8564  val_recon=0.8262  val_con=4.8583
+Pretrain Epoch 113/139: val_loss=7.8564  val_recon=0.8262  val_con=4.8583
+  loss=7.7066  recon=0.8279  con=4.5586
+  val_loss=7.9038  val_recon=0.8291  val_con=4.9130
+Pretrain Epoch 114/139: val_loss=7.9038  val_recon=0.8291  val_con=4.9130
+  loss=7.7014  recon=0.8275  con=4.5542
+  val_loss=7.8740  val_recon=0.8273  val_con=4.8789
+Pretrain Epoch 115/139: val_loss=7.8740  val_recon=0.8273  val_con=4.8789
+  loss=7.6945  recon=0.8272  con=4.5443
+  val_loss=7.8972  val_recon=0.8268  val_con=4.9275
+Pretrain Epoch 116/139: val_loss=7.8972  val_recon=0.8268  val_con=4.9275
+  loss=7.7033  recon=0.8279  con=4.5524
+  val_loss=7.9169  val_recon=0.8290  val_con=4.9388
+Pretrain Epoch 117/139: val_loss=7.9169  val_recon=0.8290  val_con=4.9388
+  loss=7.7019  recon=0.8279  con=4.5496
+  val_loss=7.9000  val_recon=0.8288  val_con=4.9087
+Pretrain Epoch 118/139: val_loss=7.9000  val_recon=0.8288  val_con=4.9087
+  loss=7.7110  recon=0.8285  con=4.5597
+  val_loss=7.9083  val_recon=0.8277  val_con=4.9375
+Pretrain Epoch 119/139: val_loss=7.9083  val_recon=0.8277  val_con=4.9375
+  loss=7.6958  recon=0.8280  con=4.5379
+  val_loss=7.8958  val_recon=0.8282  val_con=4.9080
+Pretrain Epoch 120/139: val_loss=7.8958  val_recon=0.8282  val_con=4.9080
+  loss=7.6972  recon=0.8271  con=4.5509
+  val_loss=7.8794  val_recon=0.8258  val_con=4.9059
+Pretrain Epoch 121/139: val_loss=7.8794  val_recon=0.8258  val_con=4.9059
+  loss=7.7037  recon=0.8277  con=4.5556
+  val_loss=7.9113  val_recon=0.8265  val_con=4.9571
+Pretrain Epoch 122/139: val_loss=7.9113  val_recon=0.8265  val_con=4.9571
+  loss=7.7075  recon=0.8280  con=4.5596
+  val_loss=7.8707  val_recon=0.8290  val_con=4.8525
+Pretrain Epoch 123/139: val_loss=7.8707  val_recon=0.8290  val_con=4.8525
+  loss=7.6922  recon=0.8278  con=4.5330
+  val_loss=7.9086  val_recon=0.8290  val_con=4.9224
+Pretrain Epoch 124/139: val_loss=7.9086  val_recon=0.8290  val_con=4.9224
+  loss=7.6978  recon=0.8271  con=4.5516
+  val_loss=7.9085  val_recon=0.8294  val_con=4.9175
+Pretrain Epoch 125/139: val_loss=7.9085  val_recon=0.8294  val_con=4.9175
+  loss=7.6984  recon=0.8269  con=4.5559
+  val_loss=7.9094  val_recon=0.8287  val_con=4.9273
+Pretrain Epoch 126/139: val_loss=7.9094  val_recon=0.8287  val_con=4.9273
+  loss=7.7096  recon=0.8289  con=4.5521
+  val_loss=7.8865  val_recon=0.8279  val_con=4.8942
+Pretrain Epoch 127/139: val_loss=7.8865  val_recon=0.8279  val_con=4.8942
+  loss=7.6908  recon=0.8272  con=4.5373
+  val_loss=7.9093  val_recon=0.8321  val_con=4.8868
+Pretrain Epoch 128/139: val_loss=7.9093  val_recon=0.8321  val_con=4.8868
+  loss=7.6951  recon=0.8278  con=4.5382
+  val_loss=7.9162  val_recon=0.8276  val_con=4.9535
+Pretrain Epoch 129/139: val_loss=7.9162  val_recon=0.8276  val_con=4.9535
+  loss=7.6990  recon=0.8279  con=4.5447
+  val_loss=7.9201  val_recon=0.8297  val_con=4.9361
+Pretrain Epoch 130/139: val_loss=7.9201  val_recon=0.8297  val_con=4.9361
+  loss=7.6981  recon=0.8272  con=4.5510
+  val_loss=7.8866  val_recon=0.8272  val_con=4.9025
+Pretrain Epoch 131/139: val_loss=7.8866  val_recon=0.8272  val_con=4.9025
+  loss=7.6981  recon=0.8277  con=4.5455
+  val_loss=7.8878  val_recon=0.8281  val_con=4.8950
+Pretrain Epoch 132/139: val_loss=7.8878  val_recon=0.8281  val_con=4.8950
+  loss=7.6926  recon=0.8269  con=4.5449
+  val_loss=7.8913  val_recon=0.8287  val_con=4.8941
+Pretrain Epoch 133/139: val_loss=7.8913  val_recon=0.8287  val_con=4.8941
+  loss=7.7041  recon=0.8283  con=4.5491
+  val_loss=7.8831  val_recon=0.8281  val_con=4.8862
+Pretrain Epoch 134/139: val_loss=7.8831  val_recon=0.8281  val_con=4.8862
+  loss=7.6985  recon=0.8274  con=4.5492
+  val_loss=7.8929  val_recon=0.8278  val_con=4.9074
+Pretrain Epoch 135/139: val_loss=7.8929  val_recon=0.8278  val_con=4.9074
+  loss=7.6936  recon=0.8272  con=4.5433
+  val_loss=7.8990  val_recon=0.8272  val_con=4.9260
+Pretrain Epoch 136/139: val_loss=7.8990  val_recon=0.8272  val_con=4.9260
+  loss=7.6988  recon=0.8276  con=4.5484
+  val_loss=7.8809  val_recon=0.8267  val_con=4.8982
+Pretrain Epoch 137/139: val_loss=7.8809  val_recon=0.8267  val_con=4.8982
+  loss=7.6982  recon=0.8270  con=4.5534
+  val_loss=7.8958  val_recon=0.8303  val_con=4.8830
+Pretrain Epoch 138/139: val_loss=7.8958  val_recon=0.8303  val_con=4.8830
+  loss=7.6993  recon=0.8276  con=4.5486
+  val_loss=7.9075  val_recon=0.8290  val_con=4.9208
+Pretrain Epoch 139/139: val_loss=7.9075  val_recon=0.8290  val_con=4.9208
+  loss=0.4889  acc=0.934
+Best val acc   : 0.8578
+Best threshold : 0.95
+Best f1        : 0.6830
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[639  72]
+ [ 57 139]]
+  loss=0.1470  acc=0.991
+Best val acc   : 0.8710
+Best threshold : 0.91
+Best f1        : 0.7038
+Best threshold f1: 0.91
+Confusion matrix (optimized for f1):
+[[651  60]
+ [ 57 139]]
+  loss=0.1549  acc=0.990
+Best val acc   : 0.8633
+Best threshold : 0.92
+Best f1        : 0.6883
+Best threshold f1: 0.84
+Confusion matrix (optimized for f1):
+[[644  67]
+ [ 58 138]]
+  loss=0.1289  acc=0.991
+Best val acc   : 0.8589
+Best threshold : 0.92
+Best f1        : 0.6816
+Best threshold f1: 0.92
+Confusion matrix (optimized for f1):
+[[642  69]
+ [ 59 137]]
+  loss=0.1438  acc=0.989
+Best val acc   : 0.8655
+Best threshold : 0.93
+Best f1        : 0.6895
+Best threshold f1: 0.62
+Confusion matrix (optimized for f1):
+[[639  72]
+ [ 55 141]]
+  loss=0.1181  acc=0.992
+Best val acc   : 0.8688
+Best threshold : 0.95
+Best f1        : 0.6914
+Best threshold f1: 0.40
+Confusion matrix (optimized for f1):
+[[642  69]
+ [ 56 140]]
+  loss=0.1241  acc=0.991
+Best val acc   : 0.8677
+Best threshold : 0.88
+Best f1        : 0.6954
+Best threshold f1: 0.88
+Confusion matrix (optimized for f1):
+[[650  61]
+ [ 59 137]]
+  loss=0.1265  acc=0.991
+Best val acc   : 0.8688
+Best threshold : 0.93
+Best f1        : 0.6937
+Best threshold f1: 0.76
+Confusion matrix (optimized for f1):
+[[649  62]
+ [ 59 137]]
+  loss=0.1267  acc=0.992
+Best val acc   : 0.8710
+Best threshold : 0.95
+Best f1        : 0.6952
+Best threshold f1: 0.86
+Confusion matrix (optimized for f1):
+[[648  63]
+ [ 58 138]]
+  loss=0.1298  acc=0.990
+Best val acc   : 0.8633
+Best threshold : 0.85
+Best f1        : 0.6946
+Best threshold f1: 0.85
+Confusion matrix (optimized for f1):
+[[642  69]
+ [ 55 141]]
+  loss=0.1240  acc=0.991
+Best val acc   : 0.8655
+Best threshold : 0.89
+Best f1        : 0.6935
+Best threshold f1: 0.89
+Confusion matrix (optimized for f1):
+[[647  64]
+ [ 58 138]]
+  loss=0.1270  acc=0.988
+Best val acc   : 0.8589
+Best threshold : 0.95
+Best f1        : 0.6798
+Best threshold f1: 0.92
+Confusion matrix (optimized for f1):
+[[639  72]
+ [ 58 138]]
+  loss=0.1156  acc=0.990
+Best val acc   : 0.8589
+Best threshold : 0.95
+Best f1        : 0.6779
+Best threshold f1: 0.60
+Confusion matrix (optimized for f1):
+[[632  79]
+ [ 55 141]]
+  loss=0.1162  acc=0.990
+Best val acc   : 0.8633
+Best threshold : 0.92
+Best f1        : 0.6821
+Best threshold f1: 0.92
+Confusion matrix (optimized for f1):
+[[650  61]
+ [ 63 133]]
+  loss=0.1109  acc=0.991
+Best val acc   : 0.8677
+Best threshold : 0.89
+Best f1        : 0.6859
+Best threshold f1: 0.89
+Confusion matrix (optimized for f1):
+[[656  55]
+ [ 65 131]]
+  loss=0.1250  acc=0.990
+Best val acc   : 0.8666
+Best threshold : 0.59
+Best f1        : 0.6824
+Best threshold f1: 0.59
+Confusion matrix (optimized for f1):
+[[656  55]
+ [ 66 130]]
+  loss=0.1134  acc=0.991
+Best val acc   : 0.8578
+Best threshold : 0.93
+Best f1        : 0.6815
+Best threshold f1: 0.93
+Confusion matrix (optimized for f1):
+[[640  71]
+ [ 58 138]]
+  loss=0.0980  acc=0.992
+Best val acc   : 0.8688
+Best threshold : 0.95
+Best f1        : 0.6877
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[657  54]
+ [ 65 131]]
+  loss=0.1156  acc=0.991
+Best val acc   : 0.8556
+Best threshold : 0.94
+Best f1        : 0.6828
+Best threshold f1: 0.94
+Confusion matrix (optimized for f1):
+[[635  76]
+ [ 55 141]]
+  loss=0.1132  acc=0.991
+Best val acc   : 0.8622
+Best threshold : 0.94
+Best f1        : 0.6883
+Best threshold f1: 0.94
+Confusion matrix (optimized for f1):
+[[644  67]
+ [ 58 138]]
+  loss=0.1080  acc=0.992
+Best val acc   : 0.8589
+Best threshold : 0.95
+Best f1        : 0.6847
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[640  71]
+ [ 57 139]]
+  loss=0.1036  acc=0.993
+Best val acc   : 0.8666
+Best threshold : 0.94
+Best f1        : 0.6883
+Best threshold f1: 0.65
+Confusion matrix (optimized for f1):
+[[644  67]
+ [ 58 138]]
+Early stopping at epoch 22
+Fold 3 result: val_loss=1.8910, best_thresh(f1)=0.910, val_f1=0.704, val_acc=0.871, best_thresh_acc=0.910
+  Confusion Matrix:
+[[651  60]
+ [ 57 139]]
+Fold 3 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded/fold_2.pt
+
+===== Fold 4/5 =====
+Train: 3629 | repeaters: 785 (21.6%)
+Val:   907   | repeaters: 196   (21.6%)
+  loss=8.7343  recon=0.9630  con=4.8733
+  val_loss=8.1075  val_recon=0.8770  val_con=4.7242
+Pretrain Epoch 1/139: val_loss=8.1075  val_recon=0.8770  val_con=4.7242
+  loss=8.2033  recon=0.8823  con=4.8399
+  val_loss=8.0168  val_recon=0.8628  val_con=4.7242
+Pretrain Epoch 2/139: val_loss=8.0168  val_recon=0.8628  val_con=4.7242
+  loss=8.0816  recon=0.8633  con=4.8389
+  val_loss=7.9182  val_recon=0.8473  val_con=4.7242
+Pretrain Epoch 3/139: val_loss=7.9182  val_recon=0.8473  val_con=4.7242
+  loss=8.0203  recon=0.8537  con=4.8386
+  val_loss=7.8841  val_recon=0.8419  val_con=4.7242
+Pretrain Epoch 4/139: val_loss=7.8841  val_recon=0.8419  val_con=4.7242
+  loss=7.9951  recon=0.8497  con=4.8384
+  val_loss=7.8538  val_recon=0.8371  val_con=4.7242
+Pretrain Epoch 5/139: val_loss=7.8538  val_recon=0.8371  val_con=4.7242
+  loss=7.9771  recon=0.8469  con=4.8383
+  val_loss=7.8790  val_recon=0.8411  val_con=4.7242
+Pretrain Epoch 6/139: val_loss=7.8790  val_recon=0.8411  val_con=4.7242
+  loss=7.9598  recon=0.8442  con=4.8382
+  val_loss=7.8913  val_recon=0.8430  val_con=4.7242
+Pretrain Epoch 7/139: val_loss=7.8913  val_recon=0.8430  val_con=4.7242
+  loss=7.9484  recon=0.8424  con=4.8381
+  val_loss=7.8669  val_recon=0.8392  val_con=4.7242
+Pretrain Epoch 8/139: val_loss=7.8669  val_recon=0.8392  val_con=4.7242
+  loss=7.9474  recon=0.8422  con=4.8381
+  val_loss=7.8514  val_recon=0.8367  val_con=4.7241
+Pretrain Epoch 9/139: val_loss=7.8514  val_recon=0.8367  val_con=4.7241
+  loss=7.9367  recon=0.8406  con=4.8380
+  val_loss=7.8316  val_recon=0.8336  val_con=4.7241
+Pretrain Epoch 10/139: val_loss=7.8316  val_recon=0.8336  val_con=4.7241
+  loss=7.9324  recon=0.8399  con=4.8378
+  val_loss=7.8394  val_recon=0.8349  val_con=4.7237
+Pretrain Epoch 11/139: val_loss=7.8394  val_recon=0.8349  val_con=4.7237
+  loss=7.9218  recon=0.8383  con=4.8370
+  val_loss=7.8315  val_recon=0.8340  val_con=4.7196
+Pretrain Epoch 12/139: val_loss=7.8315  val_recon=0.8340  val_con=4.7196
+  loss=7.9234  recon=0.8388  con=4.8341
+  val_loss=7.8189  val_recon=0.8326  val_con=4.7130
+Pretrain Epoch 13/139: val_loss=7.8189  val_recon=0.8326  val_con=4.7130
+  loss=7.9174  recon=0.8385  con=4.8263
+  val_loss=7.8158  val_recon=0.8327  val_con=4.7052
+Pretrain Epoch 14/139: val_loss=7.8158  val_recon=0.8327  val_con=4.7052
+  loss=7.9087  recon=0.8375  con=4.8227
+  val_loss=7.8085  val_recon=0.8314  val_con=4.7080
+Pretrain Epoch 15/139: val_loss=7.8085  val_recon=0.8314  val_con=4.7080
+  loss=7.8983  recon=0.8362  con=4.8178
+  val_loss=7.8327  val_recon=0.8358  val_con=4.7007
+Pretrain Epoch 16/139: val_loss=7.8327  val_recon=0.8358  val_con=4.7007
+  loss=7.8929  recon=0.8359  con=4.8120
+  val_loss=7.8024  val_recon=0.8303  val_con=4.7088
+Pretrain Epoch 17/139: val_loss=7.8024  val_recon=0.8303  val_con=4.7088
+  loss=7.8916  recon=0.8356  con=4.8123
+  val_loss=7.7867  val_recon=0.8293  val_con=4.6917
+Pretrain Epoch 18/139: val_loss=7.7867  val_recon=0.8293  val_con=4.6917
+  loss=7.8790  recon=0.8348  con=4.7988
+  val_loss=7.7952  val_recon=0.8298  val_con=4.7021
+Pretrain Epoch 19/139: val_loss=7.7952  val_recon=0.8298  val_con=4.7021
+  loss=7.8856  recon=0.8360  con=4.7973
+  val_loss=7.7986  val_recon=0.8291  val_con=4.7170
+Pretrain Epoch 20/139: val_loss=7.7986  val_recon=0.8291  val_con=4.7170
+  loss=7.8803  recon=0.8354  con=4.7940
+  val_loss=7.8105  val_recon=0.8327  val_con=4.6955
+Pretrain Epoch 21/139: val_loss=7.8105  val_recon=0.8327  val_con=4.6955
+  loss=7.8742  recon=0.8348  con=4.7902
+  val_loss=7.7982  val_recon=0.8315  val_con=4.6867
+Pretrain Epoch 22/139: val_loss=7.7982  val_recon=0.8315  val_con=4.6867
+  loss=7.8683  recon=0.8344  con=4.7835
+  val_loss=7.7952  val_recon=0.8309  val_con=4.6889
+Pretrain Epoch 23/139: val_loss=7.7952  val_recon=0.8309  val_con=4.6889
+  loss=7.8691  recon=0.8345  con=4.7843
+  val_loss=7.7984  val_recon=0.8306  val_con=4.6985
+Pretrain Epoch 24/139: val_loss=7.7984  val_recon=0.8306  val_con=4.6985
+  loss=7.8620  recon=0.8342  con=4.7745
+  val_loss=7.7662  val_recon=0.8269  val_con=4.6817
+Pretrain Epoch 25/139: val_loss=7.7662  val_recon=0.8269  val_con=4.6817
+  loss=7.8684  recon=0.8346  con=4.7816
+  val_loss=7.7785  val_recon=0.8264  val_con=4.7112
+Pretrain Epoch 26/139: val_loss=7.7785  val_recon=0.8264  val_con=4.7112
+  loss=7.8570  recon=0.8341  con=4.7660
+  val_loss=7.7808  val_recon=0.8290  val_con=4.6839
+Pretrain Epoch 27/139: val_loss=7.7808  val_recon=0.8290  val_con=4.6839
+  loss=7.8492  recon=0.8328  con=4.7666
+  val_loss=7.8047  val_recon=0.8291  val_con=4.7272
+Pretrain Epoch 28/139: val_loss=7.8047  val_recon=0.8291  val_con=4.7272
+  loss=7.8539  recon=0.8342  con=4.7586
+  val_loss=7.7770  val_recon=0.8255  val_con=4.7192
+Pretrain Epoch 29/139: val_loss=7.7770  val_recon=0.8255  val_con=4.7192
+  loss=7.8454  recon=0.8329  con=4.7583
+  val_loss=7.7874  val_recon=0.8293  val_con=4.6935
+Pretrain Epoch 30/139: val_loss=7.7874  val_recon=0.8293  val_con=4.6935
+  loss=7.8452  recon=0.8336  con=4.7495
+  val_loss=7.7872  val_recon=0.8271  val_con=4.7188
+Pretrain Epoch 31/139: val_loss=7.7872  val_recon=0.8271  val_con=4.7188
+  loss=7.8450  recon=0.8335  con=4.7507
+  val_loss=7.8134  val_recon=0.8325  val_con=4.7034
+Pretrain Epoch 32/139: val_loss=7.8134  val_recon=0.8325  val_con=4.7034
+  loss=7.8457  recon=0.8338  con=4.7483
+  val_loss=7.8191  val_recon=0.8283  val_con=4.7636
+Pretrain Epoch 33/139: val_loss=7.8191  val_recon=0.8283  val_con=4.7636
+  loss=7.8448  recon=0.8337  con=4.7481
+  val_loss=7.8179  val_recon=0.8321  val_con=4.7169
+Pretrain Epoch 34/139: val_loss=7.8179  val_recon=0.8321  val_con=4.7169
+  loss=7.8343  recon=0.8326  con=4.7409
+  val_loss=7.8042  val_recon=0.8299  val_con=4.7173
+Pretrain Epoch 35/139: val_loss=7.8042  val_recon=0.8299  val_con=4.7173
+  loss=7.8410  recon=0.8340  con=4.7375
+  val_loss=7.7996  val_recon=0.8303  val_con=4.7041
+Pretrain Epoch 36/139: val_loss=7.7996  val_recon=0.8303  val_con=4.7041
+  loss=7.8315  recon=0.8331  con=4.7300
+  val_loss=7.7996  val_recon=0.8276  val_con=4.7359
+Pretrain Epoch 37/139: val_loss=7.7996  val_recon=0.8276  val_con=4.7359
+  loss=7.8289  recon=0.8331  con=4.7258
+  val_loss=7.8124  val_recon=0.8286  val_con=4.7481
+Pretrain Epoch 38/139: val_loss=7.8124  val_recon=0.8286  val_con=4.7481
+  loss=7.8347  recon=0.8336  con=4.7303
+  val_loss=7.7850  val_recon=0.8282  val_con=4.7022
+Pretrain Epoch 39/139: val_loss=7.7850  val_recon=0.8282  val_con=4.7022
+  loss=7.8285  recon=0.8333  con=4.7219
+  val_loss=7.7901  val_recon=0.8272  val_con=4.7234
+Pretrain Epoch 40/139: val_loss=7.7901  val_recon=0.8272  val_con=4.7234
+  loss=7.8143  recon=0.8318  con=4.7136
+  val_loss=7.7911  val_recon=0.8261  val_con=4.7375
+Pretrain Epoch 41/139: val_loss=7.7911  val_recon=0.8261  val_con=4.7375
+  loss=7.8082  recon=0.8325  con=4.6943
+  val_loss=7.8178  val_recon=0.8275  val_con=4.7714
+Pretrain Epoch 42/139: val_loss=7.8178  val_recon=0.8275  val_con=4.7714
+  loss=7.8002  recon=0.8318  con=4.6878
+  val_loss=7.7934  val_recon=0.8265  val_con=4.7368
+Pretrain Epoch 43/139: val_loss=7.7934  val_recon=0.8265  val_con=4.7368
+  loss=7.8011  recon=0.8325  con=4.6802
+  val_loss=7.7976  val_recon=0.8256  val_con=4.7566
+Pretrain Epoch 44/139: val_loss=7.7976  val_recon=0.8256  val_con=4.7566
+  loss=7.7875  recon=0.8310  con=4.6733
+  val_loss=7.8199  val_recon=0.8268  val_con=4.7831
+Pretrain Epoch 45/139: val_loss=7.8199  val_recon=0.8268  val_con=4.7831
+  loss=7.7910  recon=0.8313  con=4.6755
+  val_loss=7.7966  val_recon=0.8243  val_con=4.7690
+Pretrain Epoch 46/139: val_loss=7.7966  val_recon=0.8243  val_con=4.7690
+  loss=7.7917  recon=0.8310  con=4.6803
+  val_loss=7.7799  val_recon=0.8250  val_con=4.7301
+Pretrain Epoch 47/139: val_loss=7.7799  val_recon=0.8250  val_con=4.7301
+  loss=7.7884  recon=0.8308  con=4.6772
+  val_loss=7.8123  val_recon=0.8294  val_con=4.7382
+Pretrain Epoch 48/139: val_loss=7.8123  val_recon=0.8294  val_con=4.7382
+  loss=7.7902  recon=0.8315  con=4.6727
+  val_loss=7.7842  val_recon=0.8256  val_con=4.7306
+Pretrain Epoch 49/139: val_loss=7.7842  val_recon=0.8256  val_con=4.7306
+  loss=7.7834  recon=0.8316  con=4.6580
+  val_loss=7.8285  val_recon=0.8269  val_con=4.7977
+Pretrain Epoch 50/139: val_loss=7.8285  val_recon=0.8269  val_con=4.7977
+  loss=7.7846  recon=0.8319  con=4.6569
+  val_loss=7.8161  val_recon=0.8257  val_con=4.7888
+Pretrain Epoch 51/139: val_loss=7.8161  val_recon=0.8257  val_con=4.7888
+  loss=7.7733  recon=0.8306  con=4.6511
+  val_loss=7.8148  val_recon=0.8274  val_con=4.7662
+Pretrain Epoch 52/139: val_loss=7.8148  val_recon=0.8274  val_con=4.7662
+  loss=7.7842  recon=0.8314  con=4.6619
+  val_loss=7.8113  val_recon=0.8261  val_con=4.7757
+Pretrain Epoch 53/139: val_loss=7.8113  val_recon=0.8261  val_con=4.7757
+  loss=7.7835  recon=0.8315  con=4.6594
+  val_loss=7.8013  val_recon=0.8251  val_con=4.7689
+Pretrain Epoch 54/139: val_loss=7.8013  val_recon=0.8251  val_con=4.7689
+  loss=7.7800  recon=0.8314  con=4.6538
+  val_loss=7.8260  val_recon=0.8269  val_con=4.7937
+Pretrain Epoch 55/139: val_loss=7.8260  val_recon=0.8269  val_con=4.7937
+  loss=7.7664  recon=0.8308  con=4.6362
+  val_loss=7.8100  val_recon=0.8276  val_con=4.7554
+Pretrain Epoch 56/139: val_loss=7.8100  val_recon=0.8276  val_con=4.7554
+  loss=7.7740  recon=0.8310  con=4.6476
+  val_loss=7.8603  val_recon=0.8272  val_con=4.8540
+Pretrain Epoch 57/139: val_loss=7.8603  val_recon=0.8272  val_con=4.8540
+  loss=7.7708  recon=0.8316  con=4.6347
+  val_loss=7.8042  val_recon=0.8260  val_con=4.7637
+Pretrain Epoch 58/139: val_loss=7.8042  val_recon=0.8260  val_con=4.7637
+  loss=7.7616  recon=0.8312  con=4.6226
+  val_loss=7.8453  val_recon=0.8271  val_con=4.8276
+Pretrain Epoch 59/139: val_loss=7.8453  val_recon=0.8271  val_con=4.8276
+  loss=7.7546  recon=0.8306  con=4.6158
+  val_loss=7.7980  val_recon=0.8245  val_con=4.7692
+Pretrain Epoch 60/139: val_loss=7.7980  val_recon=0.8245  val_con=4.7692
+  loss=7.7646  recon=0.8314  con=4.6257
+  val_loss=7.8133  val_recon=0.8269  val_con=4.7697
+Pretrain Epoch 61/139: val_loss=7.8133  val_recon=0.8269  val_con=4.7697
+  loss=7.7676  recon=0.8308  con=4.6387
+  val_loss=7.8186  val_recon=0.8258  val_con=4.7931
+Pretrain Epoch 62/139: val_loss=7.8186  val_recon=0.8258  val_con=4.7931
+  loss=7.7600  recon=0.8315  con=4.6163
+  val_loss=7.8262  val_recon=0.8267  val_con=4.7962
+Pretrain Epoch 63/139: val_loss=7.8262  val_recon=0.8267  val_con=4.7962
+  loss=7.7570  recon=0.8309  con=4.6176
+  val_loss=7.7941  val_recon=0.8254  val_con=4.7519
+Pretrain Epoch 64/139: val_loss=7.7941  val_recon=0.8254  val_con=4.7519
+  loss=7.7557  recon=0.8311  con=4.6131
+  val_loss=7.8184  val_recon=0.8256  val_con=4.7943
+Pretrain Epoch 65/139: val_loss=7.8184  val_recon=0.8256  val_con=4.7943
+  loss=7.7575  recon=0.8308  con=4.6196
+  val_loss=7.7989  val_recon=0.8254  val_con=4.7605
+Pretrain Epoch 66/139: val_loss=7.7989  val_recon=0.8254  val_con=4.7605
+  loss=7.7464  recon=0.8304  con=4.6040
+  val_loss=7.8290  val_recon=0.8276  val_con=4.7903
+Pretrain Epoch 67/139: val_loss=7.8290  val_recon=0.8276  val_con=4.7903
+  loss=7.7473  recon=0.8299  con=4.6108
+  val_loss=7.8319  val_recon=0.8258  val_con=4.8181
+Pretrain Epoch 68/139: val_loss=7.8319  val_recon=0.8258  val_con=4.8181
+  loss=7.7571  recon=0.8302  con=4.6259
+  val_loss=7.8245  val_recon=0.8254  val_con=4.8084
+Pretrain Epoch 69/139: val_loss=7.8245  val_recon=0.8254  val_con=4.8084
+  loss=7.7522  recon=0.8308  con=4.6096
+  val_loss=7.8242  val_recon=0.8255  val_con=4.8064
+Pretrain Epoch 70/139: val_loss=7.8242  val_recon=0.8255  val_con=4.8064
+  loss=7.7409  recon=0.8302  con=4.5950
+  val_loss=7.8170  val_recon=0.8253  val_con=4.7960
+Pretrain Epoch 71/139: val_loss=7.8170  val_recon=0.8253  val_con=4.7960
+  loss=7.7583  recon=0.8310  con=4.6191
+  val_loss=7.8397  val_recon=0.8273  val_con=4.8138
+Pretrain Epoch 72/139: val_loss=7.8397  val_recon=0.8273  val_con=4.8138
+  loss=7.7402  recon=0.8299  con=4.5979
+  val_loss=7.8409  val_recon=0.8275  val_con=4.8141
+Pretrain Epoch 73/139: val_loss=7.8409  val_recon=0.8275  val_con=4.8141
+  loss=7.7452  recon=0.8295  con=4.6118
+  val_loss=7.8277  val_recon=0.8270  val_con=4.7953
+Pretrain Epoch 74/139: val_loss=7.8277  val_recon=0.8270  val_con=4.7953
+  loss=7.7452  recon=0.8308  con=4.5965
+  val_loss=7.7973  val_recon=0.8238  val_con=4.7761
+Pretrain Epoch 75/139: val_loss=7.7973  val_recon=0.8238  val_con=4.7761
+  loss=7.7487  recon=0.8302  con=4.6101
+  val_loss=7.8108  val_recon=0.8247  val_con=4.7909
+Pretrain Epoch 76/139: val_loss=7.8108  val_recon=0.8247  val_con=4.7909
+  loss=7.7492  recon=0.8312  con=4.5996
+  val_loss=7.8048  val_recon=0.8247  val_con=4.7805
+Pretrain Epoch 77/139: val_loss=7.8048  val_recon=0.8247  val_con=4.7805
+  loss=7.7392  recon=0.8303  con=4.5908
+  val_loss=7.8299  val_recon=0.8280  val_con=4.7880
+Pretrain Epoch 78/139: val_loss=7.8299  val_recon=0.8280  val_con=4.7880
+  loss=7.7351  recon=0.8300  con=4.5876
+  val_loss=7.8221  val_recon=0.8281  val_con=4.7723
+Pretrain Epoch 79/139: val_loss=7.8221  val_recon=0.8281  val_con=4.7723
+  loss=7.7423  recon=0.8302  con=4.5979
+  val_loss=7.8336  val_recon=0.8261  val_con=4.8177
+Pretrain Epoch 80/139: val_loss=7.8336  val_recon=0.8261  val_con=4.8177
+  loss=7.7376  recon=0.8295  con=4.5977
+  val_loss=7.8279  val_recon=0.8261  val_con=4.8070
+Pretrain Epoch 81/139: val_loss=7.8279  val_recon=0.8261  val_con=4.8070
+  loss=7.7433  recon=0.8309  con=4.5911
+  val_loss=7.8007  val_recon=0.8233  val_con=4.7889
+Pretrain Epoch 82/139: val_loss=7.8007  val_recon=0.8233  val_con=4.7889
+  loss=7.7356  recon=0.8303  con=4.5840
+  val_loss=7.8055  val_recon=0.8236  val_con=4.7949
+Pretrain Epoch 83/139: val_loss=7.8055  val_recon=0.8236  val_con=4.7949
+  loss=7.7308  recon=0.8290  con=4.5905
+  val_loss=7.8479  val_recon=0.8250  val_con=4.8567
+Pretrain Epoch 84/139: val_loss=7.8479  val_recon=0.8250  val_con=4.8567
+  loss=7.7326  recon=0.8297  con=4.5862
+  val_loss=7.8290  val_recon=0.8254  val_con=4.8165
+Pretrain Epoch 85/139: val_loss=7.8290  val_recon=0.8254  val_con=4.8165
+  loss=7.7389  recon=0.8311  con=4.5812
+  val_loss=7.8051  val_recon=0.8245  val_con=4.7835
+Pretrain Epoch 86/139: val_loss=7.8051  val_recon=0.8245  val_con=4.7835
+  loss=7.7294  recon=0.8296  con=4.5808
+  val_loss=7.8251  val_recon=0.8272  val_con=4.7887
+Pretrain Epoch 87/139: val_loss=7.8251  val_recon=0.8272  val_con=4.7887
+  loss=7.7339  recon=0.8303  con=4.5815
+  val_loss=7.8342  val_recon=0.8261  val_con=4.8186
+Pretrain Epoch 88/139: val_loss=7.8342  val_recon=0.8261  val_con=4.8186
+  loss=7.7303  recon=0.8296  con=4.5828
+  val_loss=7.8087  val_recon=0.8247  val_con=4.7873
+Pretrain Epoch 89/139: val_loss=7.8087  val_recon=0.8247  val_con=4.7873
+  loss=7.7242  recon=0.8301  con=4.5663
+  val_loss=7.8363  val_recon=0.8263  val_con=4.8196
+Pretrain Epoch 90/139: val_loss=7.8363  val_recon=0.8263  val_con=4.8196
+  loss=7.7308  recon=0.8306  con=4.5715
+  val_loss=7.8232  val_recon=0.8244  val_con=4.8185
+Pretrain Epoch 91/139: val_loss=7.8232  val_recon=0.8244  val_con=4.8185
+  loss=7.7275  recon=0.8294  con=4.5803
+  val_loss=7.8483  val_recon=0.8277  val_con=4.8256
+Pretrain Epoch 92/139: val_loss=7.8483  val_recon=0.8277  val_con=4.8256
+  loss=7.7250  recon=0.8298  con=4.5705
+  val_loss=7.8326  val_recon=0.8251  val_con=4.8268
+Pretrain Epoch 93/139: val_loss=7.8326  val_recon=0.8251  val_con=4.8268
+  loss=7.7318  recon=0.8297  con=4.5850
+  val_loss=7.8336  val_recon=0.8254  val_con=4.8252
+Pretrain Epoch 94/139: val_loss=7.8336  val_recon=0.8254  val_con=4.8252
+  loss=7.7349  recon=0.8296  con=4.5911
+  val_loss=7.8255  val_recon=0.8246  val_con=4.8200
+Pretrain Epoch 95/139: val_loss=7.8255  val_recon=0.8246  val_con=4.8200
+  loss=7.7333  recon=0.8299  con=4.5846
+  val_loss=7.8062  val_recon=0.8227  val_con=4.8064
+Pretrain Epoch 96/139: val_loss=7.8062  val_recon=0.8227  val_con=4.8064
+  loss=7.7290  recon=0.8300  con=4.5753
+  val_loss=7.8293  val_recon=0.8254  val_con=4.8177
+Pretrain Epoch 97/139: val_loss=7.8293  val_recon=0.8254  val_con=4.8177
+  loss=7.7324  recon=0.8302  con=4.5798
+  val_loss=7.8404  val_recon=0.8264  val_con=4.8258
+Pretrain Epoch 98/139: val_loss=7.8404  val_recon=0.8264  val_con=4.8258
+  loss=7.7342  recon=0.8300  con=4.5861
+  val_loss=7.8408  val_recon=0.8258  val_con=4.8337
+Pretrain Epoch 99/139: val_loss=7.8408  val_recon=0.8258  val_con=4.8337
+  loss=7.7291  recon=0.8301  con=4.5749
+  val_loss=7.8295  val_recon=0.8256  val_con=4.8156
+Pretrain Epoch 100/139: val_loss=7.8295  val_recon=0.8256  val_con=4.8156
+  loss=7.7335  recon=0.8302  con=4.5816
+  val_loss=7.8438  val_recon=0.8265  val_con=4.8317
+Pretrain Epoch 101/139: val_loss=7.8438  val_recon=0.8265  val_con=4.8317
+  loss=7.7279  recon=0.8301  con=4.5721
+  val_loss=7.8297  val_recon=0.8265  val_con=4.8055
+Pretrain Epoch 102/139: val_loss=7.8297  val_recon=0.8265  val_con=4.8055
+  loss=7.7303  recon=0.8301  con=4.5771
+  val_loss=7.8399  val_recon=0.8237  val_con=4.8579
+Pretrain Epoch 103/139: val_loss=7.8399  val_recon=0.8237  val_con=4.8579
+  loss=7.7257  recon=0.8299  con=4.5707
+  val_loss=7.8448  val_recon=0.8258  val_con=4.8411
+Pretrain Epoch 104/139: val_loss=7.8448  val_recon=0.8258  val_con=4.8411
+  loss=7.7247  recon=0.8295  con=4.5742
+  val_loss=7.8292  val_recon=0.8241  val_con=4.8328
+Pretrain Epoch 105/139: val_loss=7.8292  val_recon=0.8241  val_con=4.8328
+  loss=7.7193  recon=0.8290  con=4.5692
+  val_loss=7.8366  val_recon=0.8259  val_con=4.8249
+Pretrain Epoch 106/139: val_loss=7.8366  val_recon=0.8259  val_con=4.8249
+  loss=7.7293  recon=0.8300  con=4.5764
+  val_loss=7.8331  val_recon=0.8251  val_con=4.8278
+Pretrain Epoch 107/139: val_loss=7.8331  val_recon=0.8251  val_con=4.8278
+  loss=7.7287  recon=0.8302  con=4.5729
+  val_loss=7.8173  val_recon=0.8254  val_con=4.7947
+Pretrain Epoch 108/139: val_loss=7.8173  val_recon=0.8254  val_con=4.7947
+  loss=7.7177  recon=0.8290  con=4.5664
+  val_loss=7.8243  val_recon=0.8257  val_con=4.8042
+Pretrain Epoch 109/139: val_loss=7.8243  val_recon=0.8257  val_con=4.8042
+  loss=7.7265  recon=0.8301  con=4.5698
+  val_loss=7.8120  val_recon=0.8248  val_con=4.7926
+Pretrain Epoch 110/139: val_loss=7.8120  val_recon=0.8248  val_con=4.7926
+  loss=7.7230  recon=0.8297  con=4.5685
+  val_loss=7.8318  val_recon=0.8259  val_con=4.8168
+Pretrain Epoch 111/139: val_loss=7.8318  val_recon=0.8259  val_con=4.8168
+  loss=7.7256  recon=0.8295  con=4.5753
+  val_loss=7.8185  val_recon=0.8225  val_con=4.8321
+Pretrain Epoch 112/139: val_loss=7.8185  val_recon=0.8225  val_con=4.8321
+  loss=7.7267  recon=0.8301  con=4.5706
+  val_loss=7.8217  val_recon=0.8248  val_con=4.8102
+Pretrain Epoch 113/139: val_loss=7.8217  val_recon=0.8248  val_con=4.8102
+  loss=7.7210  recon=0.8295  con=4.5667
+  val_loss=7.8395  val_recon=0.8245  val_con=4.8468
+Pretrain Epoch 114/139: val_loss=7.8395  val_recon=0.8245  val_con=4.8468
+  loss=7.7286  recon=0.8303  con=4.5719
+  val_loss=7.8347  val_recon=0.8240  val_con=4.8439
+Pretrain Epoch 115/139: val_loss=7.8347  val_recon=0.8240  val_con=4.8439
+  loss=7.7175  recon=0.8294  con=4.5617
+  val_loss=7.8301  val_recon=0.8247  val_con=4.8276
+Pretrain Epoch 116/139: val_loss=7.8301  val_recon=0.8247  val_con=4.8276
+  loss=7.7174  recon=0.8294  con=4.5618
+  val_loss=7.8460  val_recon=0.8254  val_con=4.8482
+Pretrain Epoch 117/139: val_loss=7.8460  val_recon=0.8254  val_con=4.8482
+  loss=7.7260  recon=0.8295  con=4.5760
+  val_loss=7.8225  val_recon=0.8241  val_con=4.8197
+Pretrain Epoch 118/139: val_loss=7.8225  val_recon=0.8241  val_con=4.8197
+  loss=7.7277  recon=0.8300  con=4.5738
+  val_loss=7.8296  val_recon=0.8256  val_con=4.8155
+Pretrain Epoch 119/139: val_loss=7.8296  val_recon=0.8256  val_con=4.8155
+  loss=7.7275  recon=0.8304  con=4.5683
+  val_loss=7.8300  val_recon=0.8235  val_con=4.8416
+Pretrain Epoch 120/139: val_loss=7.8300  val_recon=0.8235  val_con=4.8416
+  loss=7.7191  recon=0.8294  con=4.5639
+  val_loss=7.8275  val_recon=0.8231  val_con=4.8409
+Pretrain Epoch 121/139: val_loss=7.8275  val_recon=0.8231  val_con=4.8409
+  loss=7.7268  recon=0.8300  con=4.5721
+  val_loss=7.8545  val_recon=0.8263  val_con=4.8540
+Pretrain Epoch 122/139: val_loss=7.8545  val_recon=0.8263  val_con=4.8540
+  loss=7.7241  recon=0.8295  con=4.5720
+  val_loss=7.8211  val_recon=0.8229  val_con=4.8315
+Pretrain Epoch 123/139: val_loss=7.8211  val_recon=0.8229  val_con=4.8315
+  loss=7.7241  recon=0.8295  con=4.5731
+  val_loss=7.8283  val_recon=0.8253  val_con=4.8172
+Pretrain Epoch 124/139: val_loss=7.8283  val_recon=0.8253  val_con=4.8172
+  loss=7.7262  recon=0.8296  con=4.5753
+  val_loss=7.8409  val_recon=0.8250  val_con=4.8441
+Pretrain Epoch 125/139: val_loss=7.8409  val_recon=0.8250  val_con=4.8441
+  loss=7.7288  recon=0.8299  con=4.5770
+  val_loss=7.8338  val_recon=0.8261  val_con=4.8176
+Pretrain Epoch 126/139: val_loss=7.8338  val_recon=0.8261  val_con=4.8176
+  loss=7.7288  recon=0.8301  con=4.5739
+  val_loss=7.8425  val_recon=0.8264  val_con=4.8305
+Pretrain Epoch 127/139: val_loss=7.8425  val_recon=0.8264  val_con=4.8305
+  loss=7.7219  recon=0.8295  con=4.5684
+  val_loss=7.8030  val_recon=0.8236  val_con=4.7895
+Pretrain Epoch 128/139: val_loss=7.8030  val_recon=0.8236  val_con=4.7895
+  loss=7.7177  recon=0.8288  con=4.5693
+  val_loss=7.8401  val_recon=0.8271  val_con=4.8172
+Pretrain Epoch 129/139: val_loss=7.8401  val_recon=0.8271  val_con=4.8172
+  loss=7.7307  recon=0.8304  con=4.5747
+  val_loss=7.8370  val_recon=0.8270  val_con=4.8124
+Pretrain Epoch 130/139: val_loss=7.8370  val_recon=0.8270  val_con=4.8124
+  loss=7.7194  recon=0.8288  con=4.5718
+  val_loss=7.8573  val_recon=0.8258  val_con=4.8651
+Pretrain Epoch 131/139: val_loss=7.8573  val_recon=0.8258  val_con=4.8651
+  loss=7.7238  recon=0.8301  con=4.5646
+  val_loss=7.8083  val_recon=0.8237  val_con=4.7987
+Pretrain Epoch 132/139: val_loss=7.8083  val_recon=0.8237  val_con=4.7987
+  loss=7.7193  recon=0.8292  con=4.5669
+  val_loss=7.8495  val_recon=0.8252  val_con=4.8578
+Pretrain Epoch 133/139: val_loss=7.8495  val_recon=0.8252  val_con=4.8578
+  loss=7.7223  recon=0.8294  con=4.5702
+  val_loss=7.8398  val_recon=0.8264  val_con=4.8250
+Pretrain Epoch 134/139: val_loss=7.8398  val_recon=0.8264  val_con=4.8250
+  loss=7.7215  recon=0.8295  con=4.5681
+  val_loss=7.8155  val_recon=0.8238  val_con=4.8109
+Pretrain Epoch 135/139: val_loss=7.8155  val_recon=0.8238  val_con=4.8109
+  loss=7.7193  recon=0.8294  con=4.5651
+  val_loss=7.8321  val_recon=0.8260  val_con=4.8152
+Pretrain Epoch 136/139: val_loss=7.8321  val_recon=0.8260  val_con=4.8152
+  loss=7.7134  recon=0.8295  con=4.5524
+  val_loss=7.8398  val_recon=0.8262  val_con=4.8275
+Pretrain Epoch 137/139: val_loss=7.8398  val_recon=0.8262  val_con=4.8275
+  loss=7.7260  recon=0.8301  con=4.5697
+  val_loss=7.8253  val_recon=0.8255  val_con=4.8094
+Pretrain Epoch 138/139: val_loss=7.8253  val_recon=0.8255  val_con=4.8094
+  loss=7.7233  recon=0.8304  con=4.5610
+  val_loss=7.8187  val_recon=0.8248  val_con=4.8047
+Pretrain Epoch 139/139: val_loss=7.8187  val_recon=0.8248  val_con=4.8047
+  loss=0.5415  acc=0.902
+Best val acc   : 0.8611
+Best threshold : 0.89
+Best f1        : 0.6916
+Best threshold f1: 0.43
+Confusion matrix (optimized for f1):
+[[627  84]
+ [ 48 148]]
+  loss=0.2097  acc=0.986
+Best val acc   : 0.8633
+Best threshold : 0.35
+Best f1        : 0.6908
+Best threshold f1: 0.18
+Confusion matrix (optimized for f1):
+[[636  75]
+ [ 53 143]]
+  loss=0.2218  acc=0.986
+Best val acc   : 0.8644
+Best threshold : 0.82
+Best f1        : 0.6872
+Best threshold f1: 0.19
+Confusion matrix (optimized for f1):
+[[630  81]
+ [ 51 145]]
+  loss=0.1891  acc=0.988
+Best val acc   : 0.8633
+Best threshold : 0.93
+Best f1        : 0.7017
+Best threshold f1: 0.68
+Confusion matrix (optimized for f1):
+[[635  76]
+ [ 49 147]]
+  loss=0.1814  acc=0.989
+Best val acc   : 0.8655
+Best threshold : 0.90
+Best f1        : 0.7019
+Best threshold f1: 0.46
+Confusion matrix (optimized for f1):
+[[637  74]
+ [ 50 146]]
+  loss=0.1809  acc=0.988
+Best val acc   : 0.8666
+Best threshold : 0.75
+Best f1        : 0.6895
+Best threshold f1: 0.29
+Confusion matrix (optimized for f1):
+[[639  72]
+ [ 55 141]]
+  loss=0.2168  acc=0.985
+Best val acc   : 0.8644
+Best threshold : 0.92
+Best f1        : 0.6938
+Best threshold f1: 0.60
+Confusion matrix (optimized for f1):
+[[634  77]
+ [ 51 145]]
+  loss=0.1904  acc=0.987
+Best val acc   : 0.8688
+Best threshold : 0.95
+Best f1        : 0.6940
+Best threshold f1: 0.68
+Confusion matrix (optimized for f1):
+[[636  75]
+ [ 52 144]]
+  loss=0.1847  acc=0.989
+Best val acc   : 0.8578
+Best threshold : 0.95
+Best f1        : 0.6905
+Best threshold f1: 0.86
+Confusion matrix (optimized for f1):
+[[632  79]
+ [ 51 145]]
+  loss=0.1875  acc=0.988
+Best val acc   : 0.8644
+Best threshold : 0.95
+Best f1        : 0.6928
+Best threshold f1: 0.27
+Confusion matrix (optimized for f1):
+[[624  87]
+ [ 46 150]]
+  loss=0.1844  acc=0.986
+Best val acc   : 0.8699
+Best threshold : 0.90
+Best f1        : 0.6943
+Best threshold f1: 0.90
+Confusion matrix (optimized for f1):
+[[655  56]
+ [ 62 134]]
+  loss=0.1886  acc=0.988
+Best val acc   : 0.8611
+Best threshold : 0.94
+Best f1        : 0.6898
+Best threshold f1: 0.28
+Confusion matrix (optimized for f1):
+[[624  87]
+ [ 47 149]]
+  loss=0.1732  acc=0.988
+Best val acc   : 0.8666
+Best threshold : 0.95
+Best f1        : 0.6888
+Best threshold f1: 0.94
+Confusion matrix (optimized for f1):
+[[650  61]
+ [ 61 135]]
+  loss=0.1719  acc=0.989
+Best val acc   : 0.8545
+Best threshold : 0.70
+Best f1        : 0.6916
+Best threshold f1: 0.70
+Confusion matrix (optimized for f1):
+[[627  84]
+ [ 48 148]]
+  loss=0.1852  acc=0.987
+Best val acc   : 0.8677
+Best threshold : 0.95
+Best f1        : 0.6939
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[651  60]
+ [ 60 136]]
+  loss=0.1863  acc=0.986
+Best val acc   : 0.8666
+Best threshold : 0.81
+Best f1        : 0.6952
+Best threshold f1: 0.81
+Confusion matrix (optimized for f1):
+[[648  63]
+ [ 58 138]]
+  loss=0.1699  acc=0.990
+Best val acc   : 0.8666
+Best threshold : 0.67
+Best f1        : 0.6948
+Best threshold f1: 0.31
+Confusion matrix (optimized for f1):
+[[644  67]
+ [ 56 140]]
+  loss=0.1585  acc=0.988
+Best val acc   : 0.8677
+Best threshold : 0.92
+Best f1        : 0.6929
+Best threshold f1: 0.69
+Confusion matrix (optimized for f1):
+[[641  70]
+ [ 55 141]]
+  loss=0.1709  acc=0.988
+Best val acc   : 0.8622
+Best threshold : 0.82
+Best f1        : 0.6959
+Best threshold f1: 0.82
+Confusion matrix (optimized for f1):
+[[639  72]
+ [ 53 143]]
+  loss=0.1647  acc=0.989
+Best val acc   : 0.8677
+Best threshold : 0.90
+Best f1        : 0.6952
+Best threshold f1: 0.31
+Confusion matrix (optimized for f1):
+[[633  78]
+ [ 50 146]]
+  loss=0.1582  acc=0.990
+Best val acc   : 0.8699
+Best threshold : 0.80
+Best f1        : 0.6923
+Best threshold f1: 0.66
+Confusion matrix (optimized for f1):
+[[652  59]
+ [ 61 135]]
+  loss=0.1590  acc=0.988
+Best val acc   : 0.8688
+Best threshold : 0.89
+Best f1        : 0.6923
+Best threshold f1: 0.79
+Confusion matrix (optimized for f1):
+[[652  59]
+ [ 61 135]]
+  loss=0.1528  acc=0.988
+Best val acc   : 0.8688
+Best threshold : 0.72
+Best f1        : 0.6925
+Best threshold f1: 0.72
+Confusion matrix (optimized for f1):
+[[654  57]
+ [ 62 134]]
+  loss=0.1572  acc=0.990
+Best val acc   : 0.8644
+Best threshold : 0.95
+Best f1        : 0.6900
+Best threshold f1: 0.93
+Confusion matrix (optimized for f1):
+[[645  66]
+ [ 58 138]]
+  loss=0.1468  acc=0.989
+Best val acc   : 0.8600
+Best threshold : 0.91
+Best f1        : 0.6952
+Best threshold f1: 0.72
+Confusion matrix (optimized for f1):
+[[633  78]
+ [ 50 146]]
+Early stopping at epoch 25
+Fold 4 result: val_loss=1.4929, best_thresh(f1)=0.460, val_f1=0.702, val_acc=0.865, best_thresh_acc=0.900
+  Confusion Matrix:
+[[637  74]
+ [ 50 146]]
+Fold 4 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded/fold_3.pt
+
+===== Fold 5/5 =====
+Train: 3629 | repeaters: 785 (21.6%)
+Val:   907   | repeaters: 196   (21.6%)
+  loss=8.7797  recon=0.9688  con=4.8896
+  val_loss=8.2362  val_recon=0.8973  val_con=4.7242
+Pretrain Epoch 1/139: val_loss=8.2362  val_recon=0.8973  val_con=4.7242
+  loss=8.2206  recon=0.8850  con=4.8403
+  val_loss=7.9909  val_recon=0.8587  val_con=4.7242
+Pretrain Epoch 2/139: val_loss=7.9909  val_recon=0.8587  val_con=4.7242
+  loss=8.0850  recon=0.8638  con=4.8391
+  val_loss=7.9634  val_recon=0.8544  val_con=4.7242
+Pretrain Epoch 3/139: val_loss=7.9634  val_recon=0.8544  val_con=4.7242
+  loss=8.0569  recon=0.8594  con=4.8387
+  val_loss=7.9329  val_recon=0.8496  val_con=4.7242
+Pretrain Epoch 4/139: val_loss=7.9329  val_recon=0.8496  val_con=4.7242
+  loss=8.0267  recon=0.8547  con=4.8384
+  val_loss=7.9061  val_recon=0.8453  val_con=4.7242
+Pretrain Epoch 5/139: val_loss=7.9061  val_recon=0.8453  val_con=4.7242
+  loss=7.9997  recon=0.8504  con=4.8383
+  val_loss=7.8872  val_recon=0.8424  val_con=4.7242
+Pretrain Epoch 6/139: val_loss=7.8872  val_recon=0.8424  val_con=4.7242
+  loss=7.9826  recon=0.8478  con=4.8382
+  val_loss=7.8840  val_recon=0.8419  val_con=4.7242
+Pretrain Epoch 7/139: val_loss=7.8840  val_recon=0.8419  val_con=4.7242
+  loss=7.9674  recon=0.8454  con=4.8381
+  val_loss=7.8613  val_recon=0.8383  val_con=4.7242
+Pretrain Epoch 8/139: val_loss=7.8613  val_recon=0.8383  val_con=4.7242
+  loss=7.9576  recon=0.8438  con=4.8380
+  val_loss=7.8697  val_recon=0.8396  val_con=4.7242
+Pretrain Epoch 9/139: val_loss=7.8697  val_recon=0.8396  val_con=4.7242
+  loss=7.9516  recon=0.8429  con=4.8380
+  val_loss=7.8648  val_recon=0.8389  val_con=4.7241
+Pretrain Epoch 10/139: val_loss=7.8648  val_recon=0.8389  val_con=4.7241
+  loss=7.9396  recon=0.8410  con=4.8380
+  val_loss=7.8359  val_recon=0.8343  val_con=4.7241
+Pretrain Epoch 11/139: val_loss=7.8359  val_recon=0.8343  val_con=4.7241
+  loss=7.9297  recon=0.8395  con=4.8380
+  val_loss=7.8366  val_recon=0.8344  val_con=4.7241
+Pretrain Epoch 12/139: val_loss=7.8366  val_recon=0.8344  val_con=4.7241
+  loss=7.9257  recon=0.8388  con=4.8379
+  val_loss=7.8265  val_recon=0.8329  val_con=4.7239
+Pretrain Epoch 13/139: val_loss=7.8265  val_recon=0.8329  val_con=4.7239
+  loss=7.9205  recon=0.8381  con=4.8370
+  val_loss=7.8196  val_recon=0.8320  val_con=4.7205
+Pretrain Epoch 14/139: val_loss=7.8196  val_recon=0.8320  val_con=4.7205
+  loss=7.9112  recon=0.8371  con=4.8319
+  val_loss=7.8011  val_recon=0.8298  val_con=4.7130
+Pretrain Epoch 15/139: val_loss=7.8011  val_recon=0.8298  val_con=4.7130
+  loss=7.9083  recon=0.8373  con=4.8231
+  val_loss=7.8234  val_recon=0.8337  val_con=4.7082
+Pretrain Epoch 16/139: val_loss=7.8234  val_recon=0.8337  val_con=4.7082
+  loss=7.9031  recon=0.8367  con=4.8207
+  val_loss=7.8141  val_recon=0.8324  val_con=4.7059
+Pretrain Epoch 17/139: val_loss=7.8141  val_recon=0.8324  val_con=4.7059
+  loss=7.8938  recon=0.8360  con=4.8125
+  val_loss=7.7826  val_recon=0.8281  val_con=4.6985
+Pretrain Epoch 18/139: val_loss=7.7826  val_recon=0.8281  val_con=4.6985
+  loss=7.8927  recon=0.8360  con=4.8103
+  val_loss=7.8102  val_recon=0.8313  val_con=4.7119
+Pretrain Epoch 19/139: val_loss=7.8102  val_recon=0.8313  val_con=4.7119
+  loss=7.8874  recon=0.8354  con=4.8068
+  val_loss=7.7991  val_recon=0.8306  val_con=4.6996
+Pretrain Epoch 20/139: val_loss=7.7991  val_recon=0.8306  val_con=4.6996
+  loss=7.8789  recon=0.8349  con=4.7973
+  val_loss=7.8105  val_recon=0.8319  val_con=4.7048
+Pretrain Epoch 21/139: val_loss=7.8105  val_recon=0.8319  val_con=4.7048
+  loss=7.8759  recon=0.8351  con=4.7898
+  val_loss=7.8180  val_recon=0.8308  val_con=4.7318
+Pretrain Epoch 22/139: val_loss=7.8180  val_recon=0.8308  val_con=4.7318
+  loss=7.8775  recon=0.8345  con=4.7989
+  val_loss=7.7963  val_recon=0.8296  val_con=4.7065
+Pretrain Epoch 23/139: val_loss=7.7963  val_recon=0.8296  val_con=4.7065
+  loss=7.8630  recon=0.8337  con=4.7820
+  val_loss=7.7775  val_recon=0.8276  val_con=4.6948
+Pretrain Epoch 24/139: val_loss=7.7775  val_recon=0.8276  val_con=4.6948
+  loss=7.8707  recon=0.8347  con=4.7839
+  val_loss=7.8014  val_recon=0.8287  val_con=4.7267
+Pretrain Epoch 25/139: val_loss=7.8014  val_recon=0.8287  val_con=4.7267
+  loss=7.8607  recon=0.8341  con=4.7725
+  val_loss=7.7945  val_recon=0.8285  val_con=4.7163
+Pretrain Epoch 26/139: val_loss=7.7945  val_recon=0.8285  val_con=4.7163
+  loss=7.8571  recon=0.8332  con=4.7764
+  val_loss=7.7718  val_recon=0.8270  val_con=4.6910
+Pretrain Epoch 27/139: val_loss=7.7718  val_recon=0.8270  val_con=4.6910
+  loss=7.8477  recon=0.8326  con=4.7662
+  val_loss=7.8072  val_recon=0.8288  val_con=4.7352
+Pretrain Epoch 28/139: val_loss=7.8072  val_recon=0.8288  val_con=4.7352
+  loss=7.8489  recon=0.8329  con=4.7648
+  val_loss=7.8204  val_recon=0.8277  val_con=4.7738
+Pretrain Epoch 29/139: val_loss=7.8204  val_recon=0.8277  val_con=4.7738
+  loss=7.8445  recon=0.8329  con=4.7571
+  val_loss=7.8006  val_recon=0.8298  val_con=4.7123
+Pretrain Epoch 30/139: val_loss=7.8006  val_recon=0.8298  val_con=4.7123
+  loss=7.8423  recon=0.8327  con=4.7546
+  val_loss=7.7910  val_recon=0.8270  val_con=4.7274
+Pretrain Epoch 31/139: val_loss=7.7910  val_recon=0.8270  val_con=4.7274
+  loss=7.8419  recon=0.8324  con=4.7583
+  val_loss=7.7837  val_recon=0.8270  val_con=4.7130
+Pretrain Epoch 32/139: val_loss=7.7837  val_recon=0.8270  val_con=4.7130
+  loss=7.8349  recon=0.8321  con=4.7486
+  val_loss=7.8283  val_recon=0.8261  val_con=4.8078
+Pretrain Epoch 33/139: val_loss=7.8283  val_recon=0.8261  val_con=4.8078
+  loss=7.8374  recon=0.8323  con=4.7510
+  val_loss=7.7768  val_recon=0.8262  val_con=4.7104
+Pretrain Epoch 34/139: val_loss=7.7768  val_recon=0.8262  val_con=4.7104
+  loss=7.8329  recon=0.8323  con=4.7425
+  val_loss=7.7862  val_recon=0.8256  val_con=4.7341
+Pretrain Epoch 35/139: val_loss=7.7862  val_recon=0.8256  val_con=4.7341
+  loss=7.8380  recon=0.8333  con=4.7403
+  val_loss=7.8021  val_recon=0.8265  val_con=4.7542
+Pretrain Epoch 36/139: val_loss=7.8021  val_recon=0.8265  val_con=4.7542
+  loss=7.8265  recon=0.8319  con=4.7352
+  val_loss=7.8053  val_recon=0.8263  val_con=4.7617
+Pretrain Epoch 37/139: val_loss=7.8053  val_recon=0.8263  val_con=4.7617
+  loss=7.8268  recon=0.8318  con=4.7374
+  val_loss=7.8021  val_recon=0.8287  val_con=4.7282
+Pretrain Epoch 38/139: val_loss=7.8021  val_recon=0.8287  val_con=4.7282
+  loss=7.8176  recon=0.8315  con=4.7234
+  val_loss=7.7997  val_recon=0.8264  val_con=4.7507
+Pretrain Epoch 39/139: val_loss=7.7997  val_recon=0.8264  val_con=4.7507
+  loss=7.8143  recon=0.8309  con=4.7238
+  val_loss=7.7770  val_recon=0.8246  val_con=4.7299
+Pretrain Epoch 40/139: val_loss=7.7770  val_recon=0.8246  val_con=4.7299
+  loss=7.8221  recon=0.8316  con=4.7301
+  val_loss=7.7965  val_recon=0.8256  val_con=4.7543
+Pretrain Epoch 41/139: val_loss=7.7965  val_recon=0.8256  val_con=4.7543
+  loss=7.8252  recon=0.8319  con=4.7330
+  val_loss=7.7741  val_recon=0.8247  val_con=4.7230
+Pretrain Epoch 42/139: val_loss=7.7741  val_recon=0.8247  val_con=4.7230
+  loss=7.8088  recon=0.8307  con=4.7168
+  val_loss=7.8173  val_recon=0.8253  val_con=4.7960
+Pretrain Epoch 43/139: val_loss=7.8173  val_recon=0.8253  val_con=4.7960
+  loss=7.7910  recon=0.8302  con=4.6893
+  val_loss=7.8202  val_recon=0.8261  val_con=4.7926
+Pretrain Epoch 44/139: val_loss=7.8202  val_recon=0.8261  val_con=4.7926
+  loss=7.7934  recon=0.8301  con=4.6943
+  val_loss=7.8183  val_recon=0.8257  val_con=4.7935
+Pretrain Epoch 45/139: val_loss=7.8183  val_recon=0.8257  val_con=4.7935
+  loss=7.7882  recon=0.8298  con=4.6887
+  val_loss=7.8357  val_recon=0.8254  val_con=4.8296
+Pretrain Epoch 46/139: val_loss=7.8357  val_recon=0.8254  val_con=4.8296
+  loss=7.7818  recon=0.8301  con=4.6727
+  val_loss=7.8003  val_recon=0.8249  val_con=4.7689
+Pretrain Epoch 47/139: val_loss=7.8003  val_recon=0.8249  val_con=4.7689
+  loss=7.7871  recon=0.8309  con=4.6739
+  val_loss=7.8218  val_recon=0.8247  val_con=4.8120
+Pretrain Epoch 48/139: val_loss=7.8218  val_recon=0.8247  val_con=4.8120
+  loss=7.7951  recon=0.8309  con=4.6887
+  val_loss=7.8075  val_recon=0.8241  val_con=4.7917
+Pretrain Epoch 49/139: val_loss=7.8075  val_recon=0.8241  val_con=4.7917
+  loss=7.7795  recon=0.8303  con=4.6665
+  val_loss=7.8015  val_recon=0.8223  val_con=4.8025
+Pretrain Epoch 50/139: val_loss=7.8015  val_recon=0.8223  val_con=4.8025
+  loss=7.7767  recon=0.8295  con=4.6711
+  val_loss=7.7985  val_recon=0.8225  val_con=4.7946
+Pretrain Epoch 51/139: val_loss=7.7985  val_recon=0.8225  val_con=4.7946
+  loss=7.7786  recon=0.8303  con=4.6651
+  val_loss=7.7853  val_recon=0.8225  val_con=4.7698
+Pretrain Epoch 52/139: val_loss=7.7853  val_recon=0.8225  val_con=4.7698
+  loss=7.7811  recon=0.8302  con=4.6704
+  val_loss=7.8048  val_recon=0.8220  val_con=4.8117
+Pretrain Epoch 53/139: val_loss=7.8048  val_recon=0.8220  val_con=4.8117
+  loss=7.7759  recon=0.8305  con=4.6578
+  val_loss=7.8150  val_recon=0.8227  val_con=4.8232
+Pretrain Epoch 54/139: val_loss=7.8150  val_recon=0.8227  val_con=4.8232
+  loss=7.7727  recon=0.8297  con=4.6606
+  val_loss=7.8143  val_recon=0.8237  val_con=4.8093
+Pretrain Epoch 55/139: val_loss=7.8143  val_recon=0.8237  val_con=4.8093
+  loss=7.7718  recon=0.8298  con=4.6582
+  val_loss=7.8224  val_recon=0.8246  val_con=4.8136
+Pretrain Epoch 56/139: val_loss=7.8224  val_recon=0.8246  val_con=4.8136
+  loss=7.7614  recon=0.8293  con=4.6448
+  val_loss=7.8253  val_recon=0.8236  val_con=4.8314
+Pretrain Epoch 57/139: val_loss=7.8253  val_recon=0.8236  val_con=4.8314
+  loss=7.7726  recon=0.8295  con=4.6628
+  val_loss=7.7823  val_recon=0.8221  val_con=4.7695
+Pretrain Epoch 58/139: val_loss=7.7823  val_recon=0.8221  val_con=4.7695
+  loss=7.7574  recon=0.8286  con=4.6455
+  val_loss=7.7929  val_recon=0.8242  val_con=4.7641
+Pretrain Epoch 59/139: val_loss=7.7929  val_recon=0.8242  val_con=4.7641
+  loss=7.7533  recon=0.8288  con=4.6350
+  val_loss=7.8019  val_recon=0.8236  val_con=4.7872
+Pretrain Epoch 60/139: val_loss=7.8019  val_recon=0.8236  val_con=4.7872
+  loss=7.7530  recon=0.8294  con=4.6275
+  val_loss=7.8210  val_recon=0.8224  val_con=4.8379
+Pretrain Epoch 61/139: val_loss=7.8210  val_recon=0.8224  val_con=4.8379
+  loss=7.7605  recon=0.8297  con=4.6386
+  val_loss=7.8191  val_recon=0.8230  val_con=4.8274
+Pretrain Epoch 62/139: val_loss=7.8191  val_recon=0.8230  val_con=4.8274
+  loss=7.7565  recon=0.8299  con=4.6280
+  val_loss=7.8332  val_recon=0.8237  val_con=4.8445
+Pretrain Epoch 63/139: val_loss=7.8332  val_recon=0.8237  val_con=4.8445
+  loss=7.7508  recon=0.8291  con=4.6269
+  val_loss=7.8278  val_recon=0.8234  val_con=4.8380
+Pretrain Epoch 64/139: val_loss=7.8278  val_recon=0.8234  val_con=4.8380
+  loss=7.7528  recon=0.8296  con=4.6245
+  val_loss=7.7927  val_recon=0.8201  val_con=4.8124
+Pretrain Epoch 65/139: val_loss=7.7927  val_recon=0.8201  val_con=4.8124
+  loss=7.7498  recon=0.8292  con=4.6238
+  val_loss=7.8660  val_recon=0.8254  val_con=4.8865
+Pretrain Epoch 66/139: val_loss=7.8660  val_recon=0.8254  val_con=4.8865
+  loss=7.7476  recon=0.8287  con=4.6264
+  val_loss=7.8138  val_recon=0.8232  val_con=4.8145
+Pretrain Epoch 67/139: val_loss=7.8138  val_recon=0.8232  val_con=4.8145
+  loss=7.7482  recon=0.8288  con=4.6252
+  val_loss=7.8135  val_recon=0.8225  val_con=4.8226
+Pretrain Epoch 68/139: val_loss=7.8135  val_recon=0.8225  val_con=4.8226
+  loss=7.7466  recon=0.8291  con=4.6194
+  val_loss=7.8068  val_recon=0.8225  val_con=4.8098
+Pretrain Epoch 69/139: val_loss=7.8068  val_recon=0.8225  val_con=4.8098
+  loss=7.7482  recon=0.8297  con=4.6149
+  val_loss=7.8377  val_recon=0.8220  val_con=4.8733
+Pretrain Epoch 70/139: val_loss=7.8377  val_recon=0.8220  val_con=4.8733
+  loss=7.7380  recon=0.8289  con=4.6054
+  val_loss=7.8650  val_recon=0.8230  val_con=4.9121
+Pretrain Epoch 71/139: val_loss=7.8650  val_recon=0.8230  val_con=4.9121
+  loss=7.7462  recon=0.8295  con=4.6140
+  val_loss=7.8026  val_recon=0.8244  val_con=4.7799
+Pretrain Epoch 72/139: val_loss=7.8026  val_recon=0.8244  val_con=4.7799
+  loss=7.7403  recon=0.8284  con=4.6159
+  val_loss=7.8457  val_recon=0.8234  val_con=4.8722
+Pretrain Epoch 73/139: val_loss=7.8457  val_recon=0.8234  val_con=4.8722
+  loss=7.7418  recon=0.8287  con=4.6150
+  val_loss=7.8494  val_recon=0.8228  val_con=4.8855
+Pretrain Epoch 74/139: val_loss=7.8494  val_recon=0.8228  val_con=4.8855
+  loss=7.7402  recon=0.8290  con=4.6086
+  val_loss=7.8440  val_recon=0.8217  val_con=4.8891
+Pretrain Epoch 75/139: val_loss=7.8440  val_recon=0.8217  val_con=4.8891
+  loss=7.7464  recon=0.8303  con=4.6047
+  val_loss=7.8242  val_recon=0.8228  val_con=4.8389
+Pretrain Epoch 76/139: val_loss=7.8242  val_recon=0.8228  val_con=4.8389
+  loss=7.7370  recon=0.8292  con=4.6005
+  val_loss=7.8218  val_recon=0.8231  val_con=4.8309
+Pretrain Epoch 77/139: val_loss=7.8218  val_recon=0.8231  val_con=4.8309
+  loss=7.7332  recon=0.8289  con=4.5967
+  val_loss=7.8451  val_recon=0.8261  val_con=4.8391
+Pretrain Epoch 78/139: val_loss=7.8451  val_recon=0.8261  val_con=4.8391
+  loss=7.7351  recon=0.8290  con=4.5990
+  val_loss=7.8646  val_recon=0.8245  val_con=4.8944
+Pretrain Epoch 79/139: val_loss=7.8646  val_recon=0.8245  val_con=4.8944
+  loss=7.7335  recon=0.8291  con=4.5946
+  val_loss=7.8370  val_recon=0.8225  val_con=4.8657
+Pretrain Epoch 80/139: val_loss=7.8370  val_recon=0.8225  val_con=4.8657
+  loss=7.7370  recon=0.8284  con=4.6101
+  val_loss=7.8457  val_recon=0.8236  val_con=4.8692
+Pretrain Epoch 81/139: val_loss=7.8457  val_recon=0.8236  val_con=4.8692
+  loss=7.7307  recon=0.8283  con=4.5996
+  val_loss=7.8507  val_recon=0.8224  val_con=4.8929
+Pretrain Epoch 82/139: val_loss=7.8507  val_recon=0.8224  val_con=4.8929
+  loss=7.7298  recon=0.8291  con=4.5881
+  val_loss=7.8513  val_recon=0.8229  val_con=4.8882
+Pretrain Epoch 83/139: val_loss=7.8513  val_recon=0.8229  val_con=4.8882
+  loss=7.7276  recon=0.8286  con=4.5902
+  val_loss=7.8741  val_recon=0.8233  val_con=4.9258
+Pretrain Epoch 84/139: val_loss=7.8741  val_recon=0.8233  val_con=4.9258
+  loss=7.7297  recon=0.8293  con=4.5849
+  val_loss=7.8202  val_recon=0.8205  val_con=4.8581
+Pretrain Epoch 85/139: val_loss=7.8202  val_recon=0.8205  val_con=4.8581
+  loss=7.7383  recon=0.8294  con=4.5996
+  val_loss=7.8540  val_recon=0.8230  val_con=4.8921
+Pretrain Epoch 86/139: val_loss=7.8540  val_recon=0.8230  val_con=4.8921
+  loss=7.7244  recon=0.8285  con=4.5845
+  val_loss=7.8419  val_recon=0.8248  val_con=4.8481
+Pretrain Epoch 87/139: val_loss=7.8419  val_recon=0.8248  val_con=4.8481
+  loss=7.7245  recon=0.8280  con=4.5916
+  val_loss=7.8465  val_recon=0.8235  val_con=4.8722
+Pretrain Epoch 88/139: val_loss=7.8465  val_recon=0.8235  val_con=4.8722
+  loss=7.7300  recon=0.8292  con=4.5871
+  val_loss=7.8456  val_recon=0.8213  val_con=4.8968
+Pretrain Epoch 89/139: val_loss=7.8456  val_recon=0.8213  val_con=4.8968
+  loss=7.7290  recon=0.8293  con=4.5837
+  val_loss=7.8476  val_recon=0.8233  val_con=4.8765
+Pretrain Epoch 90/139: val_loss=7.8476  val_recon=0.8233  val_con=4.8765
+  loss=7.7352  recon=0.8295  con=4.5936
+  val_loss=7.8425  val_recon=0.8225  val_con=4.8761
+Pretrain Epoch 91/139: val_loss=7.8425  val_recon=0.8225  val_con=4.8761
+  loss=7.7310  recon=0.8298  con=4.5824
+  val_loss=7.8227  val_recon=0.8227  val_con=4.8370
+Pretrain Epoch 92/139: val_loss=7.8227  val_recon=0.8227  val_con=4.8370
+  loss=7.7293  recon=0.8287  con=4.5917
+  val_loss=7.8526  val_recon=0.8230  val_con=4.8898
+Pretrain Epoch 93/139: val_loss=7.8526  val_recon=0.8230  val_con=4.8898
+  loss=7.7248  recon=0.8289  con=4.5806
+  val_loss=7.8529  val_recon=0.8235  val_con=4.8835
+Pretrain Epoch 94/139: val_loss=7.8529  val_recon=0.8235  val_con=4.8835
+  loss=7.7188  recon=0.8284  con=4.5756
+  val_loss=7.8473  val_recon=0.8213  val_con=4.9003
+Pretrain Epoch 95/139: val_loss=7.8473  val_recon=0.8213  val_con=4.9003
+  loss=7.7243  recon=0.8284  con=4.5865
+  val_loss=7.8465  val_recon=0.8214  val_con=4.8970
+Pretrain Epoch 96/139: val_loss=7.8465  val_recon=0.8214  val_con=4.8970
+  loss=7.7239  recon=0.8291  con=4.5765
+  val_loss=7.8535  val_recon=0.8237  val_con=4.8832
+Pretrain Epoch 97/139: val_loss=7.8535  val_recon=0.8237  val_con=4.8832
+  loss=7.7245  recon=0.8285  con=4.5846
+  val_loss=7.8438  val_recon=0.8236  val_con=4.8662
+Pretrain Epoch 98/139: val_loss=7.8438  val_recon=0.8236  val_con=4.8662
+  loss=7.7243  recon=0.8287  con=4.5823
+  val_loss=7.8356  val_recon=0.8203  val_con=4.8896
+Pretrain Epoch 99/139: val_loss=7.8356  val_recon=0.8203  val_con=4.8896
+  loss=7.7221  recon=0.8287  con=4.5784
+  val_loss=7.8634  val_recon=0.8249  val_con=4.8867
+Pretrain Epoch 100/139: val_loss=7.8634  val_recon=0.8249  val_con=4.8867
+  loss=7.7205  recon=0.8287  con=4.5757
+  val_loss=7.8635  val_recon=0.8227  val_con=4.9131
+Pretrain Epoch 101/139: val_loss=7.8635  val_recon=0.8227  val_con=4.9131
+  loss=7.7164  recon=0.8284  con=4.5713
+  val_loss=7.8376  val_recon=0.8222  val_con=4.8706
+Pretrain Epoch 102/139: val_loss=7.8376  val_recon=0.8222  val_con=4.8706
+  loss=7.7225  recon=0.8284  con=4.5827
+  val_loss=7.8451  val_recon=0.8233  val_con=4.8718
+Pretrain Epoch 103/139: val_loss=7.8451  val_recon=0.8233  val_con=4.8718
+  loss=7.7299  recon=0.8295  con=4.5837
+  val_loss=7.8433  val_recon=0.8205  val_con=4.9013
+Pretrain Epoch 104/139: val_loss=7.8433  val_recon=0.8205  val_con=4.9013
+  loss=7.7197  recon=0.8287  con=4.5743
+  val_loss=7.8411  val_recon=0.8235  val_con=4.8615
+Pretrain Epoch 105/139: val_loss=7.8411  val_recon=0.8235  val_con=4.8615
+  loss=7.7273  recon=0.8291  con=4.5834
+  val_loss=7.8651  val_recon=0.8235  val_con=4.9073
+Pretrain Epoch 106/139: val_loss=7.8651  val_recon=0.8235  val_con=4.9073
+  loss=7.7149  recon=0.8283  con=4.5692
+  val_loss=7.8499  val_recon=0.8223  val_con=4.8930
+Pretrain Epoch 107/139: val_loss=7.8499  val_recon=0.8223  val_con=4.8930
+  loss=7.7180  recon=0.8283  con=4.5751
+  val_loss=7.8244  val_recon=0.8205  val_con=4.8663
+Pretrain Epoch 108/139: val_loss=7.8244  val_recon=0.8205  val_con=4.8663
+  loss=7.7204  recon=0.8288  con=4.5745
+  val_loss=7.8545  val_recon=0.8242  val_con=4.8792
+Pretrain Epoch 109/139: val_loss=7.8545  val_recon=0.8242  val_con=4.8792
+  loss=7.7187  recon=0.8283  con=4.5763
+  val_loss=7.8640  val_recon=0.8225  val_con=4.9162
+Pretrain Epoch 110/139: val_loss=7.8640  val_recon=0.8225  val_con=4.9162
+  loss=7.7150  recon=0.8282  con=4.5709
+  val_loss=7.8444  val_recon=0.8232  val_con=4.8723
+Pretrain Epoch 111/139: val_loss=7.8444  val_recon=0.8232  val_con=4.8723
+  loss=7.7134  recon=0.8279  con=4.5714
+  val_loss=7.8547  val_recon=0.8232  val_con=4.8909
+Pretrain Epoch 112/139: val_loss=7.8547  val_recon=0.8232  val_con=4.8909
+  loss=7.7198  recon=0.8284  con=4.5774
+  val_loss=7.8462  val_recon=0.8212  val_con=4.8993
+Pretrain Epoch 113/139: val_loss=7.8462  val_recon=0.8212  val_con=4.8993
+  loss=7.7107  recon=0.8277  con=4.5693
+  val_loss=7.8672  val_recon=0.8219  val_con=4.9298
+Pretrain Epoch 114/139: val_loss=7.8672  val_recon=0.8219  val_con=4.9298
+  loss=7.7196  recon=0.8289  con=4.5714
+  val_loss=7.8433  val_recon=0.8221  val_con=4.8832
+Pretrain Epoch 115/139: val_loss=7.8433  val_recon=0.8221  val_con=4.8832
+  loss=7.7135  recon=0.8286  con=4.5639
+  val_loss=7.8610  val_recon=0.8234  val_con=4.9008
+Pretrain Epoch 116/139: val_loss=7.8610  val_recon=0.8234  val_con=4.9008
+  loss=7.7244  recon=0.8290  con=4.5791
+  val_loss=7.8507  val_recon=0.8222  val_con=4.8955
+Pretrain Epoch 117/139: val_loss=7.8507  val_recon=0.8222  val_con=4.8955
+  loss=7.7140  recon=0.8283  con=4.5680
+  val_loss=7.8454  val_recon=0.8235  val_con=4.8701
+Pretrain Epoch 118/139: val_loss=7.8454  val_recon=0.8235  val_con=4.8701
+  loss=7.7236  recon=0.8287  con=4.5805
+  val_loss=7.8544  val_recon=0.8244  val_con=4.8762
+Pretrain Epoch 119/139: val_loss=7.8544  val_recon=0.8244  val_con=4.8762
+  loss=7.7226  recon=0.8286  con=4.5806
+  val_loss=7.8288  val_recon=0.8218  val_con=4.8586
+Pretrain Epoch 120/139: val_loss=7.8288  val_recon=0.8218  val_con=4.8586
+  loss=7.7310  recon=0.8291  con=4.5903
+  val_loss=7.8259  val_recon=0.8207  val_con=4.8666
+Pretrain Epoch 121/139: val_loss=7.8259  val_recon=0.8207  val_con=4.8666
+  loss=7.7214  recon=0.8292  con=4.5711
+  val_loss=7.8360  val_recon=0.8213  val_con=4.8789
+Pretrain Epoch 122/139: val_loss=7.8360  val_recon=0.8213  val_con=4.8789
+  loss=7.7181  recon=0.8280  con=4.5797
+  val_loss=7.8290  val_recon=0.8229  val_con=4.8468
+Pretrain Epoch 123/139: val_loss=7.8290  val_recon=0.8229  val_con=4.8468
+  loss=7.7130  recon=0.8285  con=4.5641
+  val_loss=7.8465  val_recon=0.8238  val_con=4.8681
+Pretrain Epoch 124/139: val_loss=7.8465  val_recon=0.8238  val_con=4.8681
+  loss=7.7158  recon=0.8278  con=4.5769
+  val_loss=7.8480  val_recon=0.8216  val_con=4.8976
+Pretrain Epoch 125/139: val_loss=7.8480  val_recon=0.8216  val_con=4.8976
+  loss=7.7241  recon=0.8290  con=4.5781
+  val_loss=7.8437  val_recon=0.8216  val_con=4.8894
+Pretrain Epoch 126/139: val_loss=7.8437  val_recon=0.8216  val_con=4.8894
+  loss=7.7231  recon=0.8290  con=4.5770
+  val_loss=7.8382  val_recon=0.8207  val_con=4.8897
+Pretrain Epoch 127/139: val_loss=7.8382  val_recon=0.8207  val_con=4.8897
+  loss=7.7253  recon=0.8285  con=4.5863
+  val_loss=7.8385  val_recon=0.8209  val_con=4.8885
+Pretrain Epoch 128/139: val_loss=7.8385  val_recon=0.8209  val_con=4.8885
+  loss=7.7198  recon=0.8289  con=4.5721
+  val_loss=7.8538  val_recon=0.8234  val_con=4.8865
+Pretrain Epoch 129/139: val_loss=7.8538  val_recon=0.8234  val_con=4.8865
+  loss=7.7106  recon=0.8278  con=4.5675
+  val_loss=7.8563  val_recon=0.8231  val_con=4.8957
+Pretrain Epoch 130/139: val_loss=7.8563  val_recon=0.8231  val_con=4.8957
+  loss=7.7145  recon=0.8283  con=4.5685
+  val_loss=7.8491  val_recon=0.8213  val_con=4.9027
+Pretrain Epoch 131/139: val_loss=7.8491  val_recon=0.8213  val_con=4.9027
+  loss=7.7190  recon=0.8286  con=4.5734
+  val_loss=7.8368  val_recon=0.8217  val_con=4.8755
+Pretrain Epoch 132/139: val_loss=7.8368  val_recon=0.8217  val_con=4.8755
+  loss=7.7196  recon=0.8293  con=4.5669
+  val_loss=7.8491  val_recon=0.8213  val_con=4.9029
+Pretrain Epoch 133/139: val_loss=7.8491  val_recon=0.8213  val_con=4.9029
+  loss=7.7170  recon=0.8285  con=4.5713
+  val_loss=7.8651  val_recon=0.8232  val_con=4.9108
+Pretrain Epoch 134/139: val_loss=7.8651  val_recon=0.8232  val_con=4.9108
+  loss=7.7254  recon=0.8287  con=4.5845
+  val_loss=7.8627  val_recon=0.8234  val_con=4.9033
+Pretrain Epoch 135/139: val_loss=7.8627  val_recon=0.8234  val_con=4.9033
+  loss=7.7177  recon=0.8289  con=4.5677
+  val_loss=7.8405  val_recon=0.8214  val_con=4.8857
+Pretrain Epoch 136/139: val_loss=7.8405  val_recon=0.8214  val_con=4.8857
+  loss=7.7209  recon=0.8286  con=4.5770
+  val_loss=7.8545  val_recon=0.8220  val_con=4.9054
+Pretrain Epoch 137/139: val_loss=7.8545  val_recon=0.8220  val_con=4.9054
+  loss=7.7215  recon=0.8289  con=4.5754
+  val_loss=7.8317  val_recon=0.8222  val_con=4.8603
+Pretrain Epoch 138/139: val_loss=7.8317  val_recon=0.8222  val_con=4.8603
+  loss=7.7169  recon=0.8291  con=4.5635
+  val_loss=7.8362  val_recon=0.8227  val_con=4.8621
+Pretrain Epoch 139/139: val_loss=7.8362  val_recon=0.8227  val_con=4.8621
+  loss=0.4689  acc=0.926
+Best val acc   : 0.8633
+Best threshold : 0.95
+Best f1        : 0.6702
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[657  54]
+ [ 70 126]]
+  loss=0.1980  acc=0.988
+Best val acc   : 0.8523
+Best threshold : 0.95
+Best f1        : 0.6699
+Best threshold f1: 0.89
+Confusion matrix (optimized for f1):
+[[633  78]
+ [ 58 138]]
+  loss=0.1943  acc=0.987
+Best val acc   : 0.8467
+Best threshold : 0.95
+Best f1        : 0.6745
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[624  87]
+ [ 52 144]]
+  loss=0.1758  acc=0.991
+Best val acc   : 0.8401
+Best threshold : 0.93
+Best f1        : 0.6682
+Best threshold f1: 0.93
+Confusion matrix (optimized for f1):
+[[616  95]
+ [ 50 146]]
+  loss=0.1770  acc=0.988
+Best val acc   : 0.8490
+Best threshold : 0.95
+Best f1        : 0.6699
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[631  80]
+ [ 57 139]]
+  loss=0.1885  acc=0.988
+Best val acc   : 0.8545
+Best threshold : 0.90
+Best f1        : 0.6780
+Best threshold f1: 0.85
+Confusion matrix (optimized for f1):
+[[634  77]
+ [ 56 140]]
+  loss=0.1771  acc=0.989
+Best val acc   : 0.8578
+Best threshold : 0.90
+Best f1        : 0.6716
+Best threshold f1: 0.18
+Confusion matrix (optimized for f1):
+[[636  75]
+ [ 59 137]]
+  loss=0.1722  acc=0.990
+Best val acc   : 0.8490
+Best threshold : 0.89
+Best f1        : 0.6761
+Best threshold f1: 0.89
+Confusion matrix (optimized for f1):
+[[627  84]
+ [ 53 143]]
+  loss=0.1712  acc=0.989
+Best val acc   : 0.8434
+Best threshold : 0.92
+Best f1        : 0.6742
+Best threshold f1: 0.78
+Confusion matrix (optimized for f1):
+[[612  99]
+ [ 46 150]]
+  loss=0.1609  acc=0.991
+Best val acc   : 0.8423
+Best threshold : 0.89
+Best f1        : 0.6713
+Best threshold f1: 0.89
+Confusion matrix (optimized for f1):
+[[618  93]
+ [ 50 146]]
+  loss=0.1730  acc=0.989
+Best val acc   : 0.8556
+Best threshold : 0.87
+Best f1        : 0.6717
+Best threshold f1: 0.87
+Confusion matrix (optimized for f1):
+[[642  69]
+ [ 62 134]]
+  loss=0.1807  acc=0.990
+Best val acc   : 0.8523
+Best threshold : 0.89
+Best f1        : 0.6713
+Best threshold f1: 0.40
+Confusion matrix (optimized for f1):
+[[618  93]
+ [ 50 146]]
+  loss=0.1632  acc=0.989
+Best val acc   : 0.8567
+Best threshold : 0.92
+Best f1        : 0.6764
+Best threshold f1: 0.74
+Confusion matrix (optimized for f1):
+[[635  76]
+ [ 57 139]]
+  loss=0.1620  acc=0.990
+Best val acc   : 0.8512
+Best threshold : 0.93
+Best f1        : 0.6761
+Best threshold f1: 0.72
+Confusion matrix (optimized for f1):
+[[625  86]
+ [ 52 144]]
+  loss=0.1660  acc=0.989
+Best val acc   : 0.8368
+Best threshold : 0.94
+Best f1        : 0.6637
+Best threshold f1: 0.83
+Confusion matrix (optimized for f1):
+[[609 102]
+ [ 48 148]]
+  loss=0.1692  acc=0.988
+Best val acc   : 0.8545
+Best threshold : 0.91
+Best f1        : 0.6714
+Best threshold f1: 0.40
+Confusion matrix (optimized for f1):
+[[628  83]
+ [ 55 141]]
+  loss=0.1540  acc=0.990
+Best val acc   : 0.8501
+Best threshold : 0.83
+Best f1        : 0.6745
+Best threshold f1: 0.72
+Confusion matrix (optimized for f1):
+[[626  85]
+ [ 53 143]]
+  loss=0.1554  acc=0.990
+Best val acc   : 0.8412
+Best threshold : 0.90
+Best f1        : 0.6727
+Best threshold f1: 0.90
+Confusion matrix (optimized for f1):
+[[615  96]
+ [ 48 148]]
+  loss=0.1620  acc=0.990
+Best val acc   : 0.8512
+Best threshold : 0.91
+Best f1        : 0.6746
+Best threshold f1: 0.78
+Confusion matrix (optimized for f1):
+[[628  83]
+ [ 54 142]]
+  loss=0.1630  acc=0.991
+Best val acc   : 0.8423
+Best threshold : 0.95
+Best f1        : 0.6743
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[616  95]
+ [ 48 148]]
+  loss=0.1598  acc=0.988
+Best val acc   : 0.8567
+Best threshold : 0.95
+Best f1        : 0.6763
+Best threshold f1: 0.69
+Confusion matrix (optimized for f1):
+[[633  78]
+ [ 56 140]]
+  loss=0.1526  acc=0.991
+Best val acc   : 0.8512
+Best threshold : 0.95
+Best f1        : 0.6744
+Best threshold f1: 0.64
+Confusion matrix (optimized for f1):
+[[620  91]
+ [ 50 146]]
+  loss=0.1424  acc=0.990
+Best val acc   : 0.8379
+Best threshold : 0.95
+Best f1        : 0.6667
+Best threshold f1: 0.85
+Confusion matrix (optimized for f1):
+[[607 104]
+ [ 46 150]]
+  loss=0.1457  acc=0.991
+Best val acc   : 0.8456
+Best threshold : 0.95
+Best f1        : 0.6682
+Best threshold f1: 0.95
+Confusion matrix (optimized for f1):
+[[626  85]
+ [ 55 141]]
+  loss=0.1521  acc=0.990
+Best val acc   : 0.8467
+Best threshold : 0.95
+Best f1        : 0.6729
+Best threshold f1: 0.85
+Confusion matrix (optimized for f1):
+[[621  90]
+ [ 51 145]]
+  loss=0.1512  acc=0.990
+Best val acc   : 0.8412
+Best threshold : 0.95
+Best f1        : 0.6682
+Best threshold f1: 0.91
+Confusion matrix (optimized for f1):
+[[616  95]
+ [ 50 146]]
+Early stopping at epoch 26
+Fold 5 result: val_loss=1.6113, best_thresh(f1)=0.850, val_f1=0.678, val_acc=0.854, best_thresh_acc=0.900
+  Confusion Matrix:
+[[634  77]
+ [ 56 140]]
+Fold 5 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded/fold_4.pt
+
+===== 5-Fold Cross-Validation Summary =====
+Fold 1: F1=0.6774  Accuracy=0.8678  Val Loss=1.4073
+Fold 2: F1=0.7146  Accuracy=0.8732  Val Loss=1.8380
+Fold 3: F1=0.7038  Accuracy=0.8710  Val Loss=1.8910
+Fold 4: F1=0.7019  Accuracy=0.8655  Val Loss=1.4929
+Fold 5: F1=0.6780  Accuracy=0.8545  Val Loss=1.6113
+
+Mean F1       : 0.6951 +/- 0.0149
+Mean Accuracy : 0.8664 +/- 0.0065
+Mean Val Loss : 1.6481 +/- 0.1890
+
+All fold checkpoints saved to: /scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded
