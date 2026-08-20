@@ -301,7 +301,7 @@ class FRBMaskedAutoencoder(nn.Module):
                                       nn.ReLU(), nn.Dropout(dropout), 
                                       nn.Linear(embed_dim // 2, 1))
 
-        self.proj_head = nn.Sequential(nn.Linear(embed_dim * 2, embed_dim), 
+        self.proj_head = nn.Sequential(nn.Linear(embed_dim, embed_dim), 
                                        nn.LayerNorm(embed_dim), 
                                        nn.ReLU(), 
                                        nn.Dropout(dropout), 
@@ -382,26 +382,24 @@ class FRBMaskedAutoencoder(nn.Module):
         x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
         cls_token = x_enc[:, 0, :] # 
         seq_tokens = x_enc[:, 1:, :]
-        mean_pooled = seq_tokens.mean(dim=1)
-        rich_embed = torch.cat([cls_token, mean_pooled], dim=1)
-        rich_embed_norm = nn.functional.normalize(rich_embed, dim=1)
-        proj1 = nn.functional.normalize(self.proj_head(rich_embed_norm), dim=1)
-
-
-        recon = self.decoder(x_enc, ids_restore)
-
         
-        # pool tokens
+        # pass cls token and every seq_token through the projection head for contrastive learning
+        seq_token_emb = self.proj_head(seq_tokens)
+        cls_token_emb = self.proj_head(cls_token)
+        # concat every sequence token to the cls token to make one giant embedding for contrastive learning
+        rich_embed = torch.cat([cls_token_emb, seq_token_emb.view(seq_token_emb.size(0), -1)], dim=1)
+        proj1 = nn.functional.normalize(rich_embed, dim=1)
+        recon = self.decoder(x_enc, ids_restore)
 
         if augment:
             x_aug = self.augment_fn(x)
             x_enc2, _, _ = self.encoder(x_aug, shared_noise)
             cls_token2 = x_enc2[:, 0, :]
             seq_tokens2 = x_enc2[:, 1:, :]
-            mean_pooled2 = seq_tokens2.mean(dim=1)
-            rich_embed2 = torch.cat([cls_token2, mean_pooled2], dim=1)
-            rich_embed_norm2 = nn.functional.normalize(rich_embed2, dim=1)
-            proj2 = nn.functional.normalize(self.proj_head(rich_embed_norm2), dim=1)
+            seq_token_emb2 = self.proj_head(seq_tokens2)
+            cls_token_emb2 = self.proj_head(cls_token2)
+            rich_embed2 = torch.cat([cls_token_emb2, seq_token_emb2.view(seq_token_emb2.size(0), -1)], dim=1)
+            proj2 = nn.functional.normalize(rich_embed2, dim=1)
             proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
         else:
             proj = proj1.unsqueeze(1)  # fallback: [B, 1, contrast_dim]
@@ -572,7 +570,7 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
 N_EPOCHS = 250
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_concat"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 best_overall = {"f1": float("-inf")}
@@ -701,7 +699,7 @@ def objective(trial):
 
 study = optuna.create_study(
     study_name="cmae_optimize_freq",
-    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq_expanded.db",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq_concat.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
