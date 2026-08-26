@@ -174,14 +174,29 @@ class FocalLoss(nn.Module):
 
 
 class WaterfallAugment(nn.Module):
-    def __init__(self, time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05):
+    def __init__(self, time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05, crop_frac_range=(0.7, 1.0)):
         super().__init__()
         self.time_mask_frac = time_mask_frac
         self.freq_mask_frac = freq_mask_frac
         self.noise_std = noise_std
+        self.crop_frac_range = crop_frac_range
+        
+    def _random_time_crop(self, x):
+        # pads with zeroes (ref https://arxiv.org/pdf/2103.01929)
+        B, n_freq, seq_len = x.shape
+        out = torch.zeros_like(x)
+        for i in range(B):
+            frac = float(torch.empty(1).uniform_(*self.crop_frac_range))
+            crop_len = min(seq_len, max(1, int(seq_len * frac))) # choose window size
+            src_start = int(torch.randint(0, seq_len - crop_len + 1, (1,))) # choose where to start copying
+            dst_start = int(torch.randint(0, seq_len - crop_len + 1, (1,))) # choose where to copy into
+            out[i, :, dst_start:dst_start + crop_len] = x[i, :, src_start:src_start + crop_len]
+        return out
 
     def forward(self, x):
         x = x.clone()
+        x = self._random_time_crop(x)
+
         B, n_freq, seq_len = x.shape
 
         # Per-sample time masking
@@ -200,7 +215,7 @@ class WaterfallAugment(nn.Module):
         x = x + torch.randn_like(x) * self.noise_std
 
         return x
-
+    
 
 class SinusoidalPE(nn.Module):
     def __init__(self, seq_len, embed_dim):
@@ -258,7 +273,7 @@ class FRBMaskedAutoencoder(nn.Module):
                                       nn.ReLU(), nn.Dropout(dropout), 
                                       nn.Linear(embed_dim // 2, 1))
 
-        self.proj_head = nn.Sequential(nn.Linear(embed_dim * 2, embed_dim), 
+        self.proj_head = nn.Sequential(nn.Linear(embed_dim, embed_dim), 
                                        nn.LayerNorm(embed_dim), 
                                        nn.ReLU(), 
                                        nn.Dropout(dropout), 
@@ -339,25 +354,24 @@ class FRBMaskedAutoencoder(nn.Module):
         x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
         cls_token = x_enc[:, 0, :] # 
         seq_tokens = x_enc[:, 1:, :]
-        mean_pooled = seq_tokens.mean(dim=1)
-        rich_embed = torch.cat([cls_token, mean_pooled], dim=1)
-        rich_embed_norm = nn.functional.normalize(rich_embed, dim=1)
-        proj1 = nn.functional.normalize(self.proj_head(rich_embed_norm), dim=1)
-
-
+        
+        # pass cls token and every seq_token through the projection head for contrastive learning
+        seq_token_emb = self.proj_head(seq_tokens)
+        cls_token_emb = self.proj_head(cls_token)
+        # concat every sequence token to the cls token to make one giant embedding for contrastive learning
+        rich_embed = torch.cat([cls_token_emb, seq_token_emb.view(seq_token_emb.size(0), -1)], dim=1)
+        proj1 = nn.functional.normalize(rich_embed, dim=1)
         recon = self.decoder(x_enc, ids_restore)
 
-        
-        # pool tokens
         if augment:
             x_aug = self.augment_fn(x)
             x_enc2, _, _ = self.encoder(x_aug, shared_noise)
             cls_token2 = x_enc2[:, 0, :]
             seq_tokens2 = x_enc2[:, 1:, :]
-            mean_pooled2 = seq_tokens2.mean(dim=1)
-            rich_embed2 = torch.cat([cls_token2, mean_pooled2], dim=1)
-            rich_embed_norm2 = nn.functional.normalize(rich_embed2, dim=1)
-            proj2 = nn.functional.normalize(self.proj_head(rich_embed_norm2), dim=1)
+            seq_token_emb2 = self.proj_head(seq_tokens2)
+            cls_token_emb2 = self.proj_head(cls_token2)
+            rich_embed2 = torch.cat([cls_token_emb2, seq_token_emb2.view(seq_token_emb2.size(0), -1)], dim=1)
+            proj2 = nn.functional.normalize(rich_embed2, dim=1)
             proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
         else:
             proj = proj1.unsqueeze(1)  # fallback: [B, 1, contrast_dim]
@@ -515,11 +529,30 @@ N_EPOCHS = 250
 LR_PATIENCE = 15
 ES_PATIENCE = 20
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_expanded"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_concat"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-SOURCE_TRIAL = 91
-BEST_PARAMS = {'embed_dim': 256, 'dec_emb_frac': 1.0, 'contrast_dim': 32, 'mask_ratio': 0.4820731904335109, 'dropout': 0.24648660625802013, 'n_enc_heads': 2, 'n_dec_frac': 0.25, 'dim_feedforward': 128, 'dim_feedforward_dec_frac': 0.25, 'beta': 6.513504354578434, 'gamma': 0.016487013459320132, 'pos_weight_scalar': 2.781467851765632, 'focal_gamma': 0.5933905321554959, 'n_enc_blocks': 4, 'n_dec_block_frac': 0.5, 'pretrain_frac': 0.539065433450904, 'lr': 0.0006095802498010144, 'weight_decay': 0.008568992880137998}
+SOURCE_TRIAL = 64
+BEST_PARAMS = {
+    "embed_dim": 64,
+    "dec_emb_frac": 1.0,
+    "contrast_dim": 64,
+    "mask_ratio": 0.5930518878743469,
+    "dropout": 0.30577382602324266,
+    "n_enc_heads": 1,
+    "n_dec_frac": 1.0,
+    "dim_feedforward": 256,
+    "dim_feedforward_dec_frac": 0.25,
+    "beta": 0.9176973966743691,
+    "gamma": 0.08324752968023559,
+    "pos_weight_scalar": 4.514088469257983,
+    "focal_gamma": 0.5425841550368339,
+    "n_enc_blocks": 4,
+    "n_dec_block_frac": 1.0,
+    "pretrain_frac": 0.8336379970034191,
+    "lr": 0.0010457023067501074,
+    "weight_decay": 0.004699924006391208,
+}
 
 
 def build_model():
