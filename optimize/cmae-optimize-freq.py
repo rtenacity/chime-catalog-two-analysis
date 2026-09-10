@@ -83,38 +83,50 @@ class CHIMEFRBDataset(Dataset):
 
         return tensor, label
 
-def make_dataloader(hdf5_path: str, catalog_path: str, target_length: int, batch_size: int = 32, shuffle: bool = True, num_workers: int = 0, train_frac: float = 0.66, seed: int = 42):
+def make_dataloader(hdf5_path: str, catalog_path: str, target_length: int, batch_size: int = 32,
+                     shuffle: bool = True, num_workers: int = 0,
+                     train_frac: float = 0.66, holdout_frac: float = 0.15, seed: int = 42):
     dataset = CHIMEFRBDataset(hdf5_path, catalog_path, target_length)
     n_total = len(dataset)
 
-    # Collect labels once up front (needed for stratify)
-    labels = [dataset[i][1].item() for i in range(n_total)]
-
+    labels = dataset.labels
     indices = list(range(n_total))
-    train_idx, val_idx = train_test_split(indices, test_size=1 - train_frac, stratify=labels, random_state=seed)
+
+    trainval_idx, holdout_idx = train_test_split(
+        indices, test_size=holdout_frac, stratify=labels, random_state=seed
+    )
+
+    trainval_labels = [labels[i] for i in trainval_idx]
+    val_frac_of_trainval = (1 - train_frac - holdout_frac) / (1 - holdout_frac)
+    train_idx, val_idx = train_test_split(
+        trainval_idx, test_size=val_frac_of_trainval, stratify=trainval_labels, random_state=seed
+    )
 
     train_ds = Subset(dataset, train_idx)
     val_ds = Subset(dataset, val_idx)
+    holdout_ds = Subset(dataset, holdout_idx)
 
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)
     val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
+    holdout_loader = DataLoader(holdout_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers, pin_memory=True)
 
-    n_rep = sum(labels)
-    n_rep_train = sum(labels[i] for i in train_idx)
-    n_rep_val = sum(labels[i] for i in val_idx)
-    print(f"Dataset: {n_total} | repeaters: {n_rep} ({100*n_rep/n_total:.1f}%)")
-    print(f"Train: {len(train_idx)} | repeaters: {n_rep_train} ({100*n_rep_train/len(train_idx):.1f}%)")
-    print(f"Val:   {len(val_idx)}   | repeaters: {n_rep_val}   ({100*n_rep_val/len(val_idx):.1f}%)")
+    def _rep_stats(name, idx):
+        n_rep = sum(labels[i] for i in idx)
+        print(f"{name}: {len(idx)} | repeaters: {n_rep} ({100*n_rep/len(idx):.1f}%)")
 
-    return train_loader, val_loader
+    _rep_stats("Train  ", train_idx)
+    _rep_stats("Val    ", val_idx)
+    _rep_stats("Holdout", holdout_idx)
+
+    return train_loader, val_loader, holdout_loader
 
 
 TARGET_LENGTH = 128       # number of time samples kept per burst window
 N_FREQ_CHANNELS = 256     # number of frequency channels in the waterfall
 
-train_loader, val_loader = make_dataloader(hdf5_path="/scratch/gpfs/MLISANTI/ra0438/all_bursts.hdf5", 
+train_loader, val_loader, holdout_loader = make_dataloader(hdf5_path="/scratch/gpfs/MLISANTI/ra0438/all_bursts.hdf5", 
                                            catalog_path="/home/ra0438/chime-catalog-two-analysis/chimefrbcat2.csv", 
-                                           train_frac=0.75, target_length=TARGET_LENGTH, batch_size=64, num_workers=5)
+                                           train_frac=0.7,  holdout_frac=0.15, target_length=TARGET_LENGTH, batch_size=64, num_workers=5)
 
 
 for wfall_batch, label_batch in train_loader:
@@ -259,7 +271,7 @@ class SinusoidalPE(nn.Module):
         return x + self.pe
 
 
-class FRBMaskedAutoencoder(nn.Module):
+class FRBMaskedAutoencoderBase(nn.Module):
     def __init__(self, seq_len, n_freq, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
         super().__init__()
         self.seq_len = seq_len
@@ -379,27 +391,19 @@ class FRBMaskedAutoencoder(nn.Module):
     def forward_pretrain(self, x, augment=True):
         x_t = x
         shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
+
         x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
-        cls_token = x_enc[:, 0, :] # 
-        seq_tokens = x_enc[:, 1:, :]
-        
-        # pass cls token and every seq_token through the projection head for contrastive learning
-        seq_token_emb = self.proj_head(seq_tokens)
-        cls_token_emb = self.proj_head(cls_token)
-        # concat every sequence token to the cls token to make one giant embedding for contrastive learning
-        rich_embed = torch.cat([cls_token_emb, seq_token_emb.view(seq_token_emb.size(0), -1)], dim=1)
-        proj1 = nn.functional.normalize(rich_embed, dim=1)
+        cls_token = x_enc[:, 0, :]
+
         recon = self.decoder(x_enc, ids_restore)
+
+        proj1 = nn.functional.normalize(self.proj_head(cls_token), dim=1)
 
         if augment:
             x_aug = self.augment_fn(x)
             x_enc2, _, _ = self.encoder(x_aug, shared_noise)
             cls_token2 = x_enc2[:, 0, :]
-            seq_tokens2 = x_enc2[:, 1:, :]
-            seq_token_emb2 = self.proj_head(seq_tokens2)
-            cls_token_emb2 = self.proj_head(cls_token2)
-            rich_embed2 = torch.cat([cls_token_emb2, seq_token_emb2.view(seq_token_emb2.size(0), -1)], dim=1)
-            proj2 = nn.functional.normalize(rich_embed2, dim=1)
+            proj2 = nn.functional.normalize(self.proj_head(cls_token2), dim=1)
             proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
         else:
             proj = proj1.unsqueeze(1)  # fallback: [B, 1, contrast_dim]
@@ -570,7 +574,7 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
 N_EPOCHS = 250
 
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_concat"
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_holdout"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
 best_overall = {"f1": float("-inf")}
@@ -610,7 +614,7 @@ def objective(trial):
     if embed_dim % n_enc_heads != 0 or dec_emb_dim % n_dec_heads != 0:
         raise optuna.exceptions.TrialPruned()
 
-    model = FRBMaskedAutoencoder(seq_len=N_FREQ_CHANNELS,
+    model = FRBMaskedAutoencoderBase(seq_len=N_FREQ_CHANNELS,
                                  n_freq=TARGET_LENGTH,
                                  embed_dim=embed_dim, 
                                  dec_embed_dim=dec_emb_dim, 
@@ -699,7 +703,7 @@ def objective(trial):
 
 study = optuna.create_study(
     study_name="cmae_optimize_freq",
-    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq_concat.db",
+    storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq_holdout.db",
     direction="maximize",
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
