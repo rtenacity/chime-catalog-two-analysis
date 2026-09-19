@@ -6,6 +6,7 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, Subset
 from sklearn.metrics import confusion_matrix, f1_score
 from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import train_test_split
 import os
 from scipy.ndimage import gaussian_filter
 
@@ -29,7 +30,9 @@ class CHIMEFRBDataset(Dataset):
         )
         with h5py.File(hdf5_path, "r") as f:
             self.keys = list(f.keys())
-        self.labels = np.array([int(k in self.repeater_set) for k in self.keys], dtype=np.int64)
+        self.labels = np.array(
+            [int(k in self.repeater_set) for k in self.keys], dtype=np.int64
+        )
 
     @staticmethod
     def _pad_or_crop(wfall, target_length, center_idx):
@@ -45,7 +48,9 @@ class CHIMEFRBDataset(Dataset):
         src_end = min(end, n_time)
         out = np.zeros((n_freq, target_length), dtype=wfall.dtype)
         dst_start = src_start - start
-        out[:, dst_start:dst_start + (src_end - src_start)] = wfall[:, src_start:src_end]
+        out[:, dst_start : dst_start + (src_end - src_start)] = wfall[
+            :, src_start:src_end
+        ]
         return out
 
     def _get_file(self):
@@ -55,7 +60,9 @@ class CHIMEFRBDataset(Dataset):
 
     def __len__(self):
         return len(self.keys)
-    
+
+    # def __gaussian_filter__(self, wfall, sigma):
+    #     return gaussian_filter(wfall, sigma=sigma, radius=2)
 
     def __getitem__(self, idx):
         key = self.keys[idx]
@@ -63,7 +70,8 @@ class CHIMEFRBDataset(Dataset):
         f = self._get_file()
         wfall = f[key]["wfall_plot"][:]
         extent = np.array(f[key]["extent"])
-        
+        # wfall = self.__gaussian_filter__(wfall, sigma=1)
+
         wfall = wfall.astype(np.float32)
         std = wfall.std(axis=1, keepdims=True)
         std[std == 0] = 1.0  # avoid divide-by-zero for masked channels
@@ -77,22 +85,91 @@ class CHIMEFRBDataset(Dataset):
         return tensor, label
 
 
-TARGET_LENGTH = 128 
-N_FREQ_CHANNELS = 256
-N_SPLITS = 5
-BATCH_SIZE = 64
-NUM_WORKERS = 5
-SEED = 42
+def make_dataloader(
+    hdf5_path: str,
+    catalog_path: str,
+    target_length: int,
+    batch_size: int = 32,
+    shuffle: bool = True,
+    num_workers: int = 0,
+    train_frac: float = 0.66,
+    holdout_frac: float = 0.15,
+    seed: int = 42,
+):
+    dataset = CHIMEFRBDataset(hdf5_path, catalog_path, target_length)
+    n_total = len(dataset)
 
-dataset = CHIMEFRBDataset(
+    labels = dataset.labels
+    indices = list(range(n_total))
+
+    trainval_idx, holdout_idx = train_test_split(
+        indices, test_size=holdout_frac, stratify=labels, random_state=seed
+    )
+
+    trainval_labels = [labels[i] for i in trainval_idx]
+    val_frac_of_trainval = (1 - train_frac - holdout_frac) / (1 - holdout_frac)
+    train_idx, val_idx = train_test_split(
+        trainval_idx,
+        test_size=val_frac_of_trainval,
+        stratify=trainval_labels,
+        random_state=seed,
+    )
+
+    train_ds = Subset(dataset, train_idx)
+    val_ds = Subset(dataset, val_idx)
+    holdout_ds = Subset(dataset, holdout_idx)
+
+    train_loader = DataLoader(
+        train_ds,
+        batch_size=batch_size,
+        shuffle=shuffle,
+        num_workers=num_workers,
+        pin_memory=True,
+    )
+    val_loader = DataLoader(
+        val_ds,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=True,
+    )
+    holdout_loader = DataLoader(
+        holdout_ds,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=num_workers,
+        pin_memory=True,
+    )
+
+    def _rep_stats(name, idx):
+        n_rep = sum(labels[i] for i in idx)
+        print(f"{name}: {len(idx)} | repeaters: {n_rep} ({100*n_rep/len(idx):.1f}%)")
+
+    _rep_stats("Train  ", train_idx)
+    _rep_stats("Val    ", val_idx)
+    _rep_stats("Holdout", holdout_idx)
+
+    return train_loader, val_loader, holdout_loader
+
+
+TARGET_LENGTH = 128  # number of time samples kept per burst window
+N_FREQ_CHANNELS = 256  # number of frequency channels in the waterfall
+
+train_loader, val_loader, holdout_loader = make_dataloader(
     hdf5_path="/scratch/gpfs/MLISANTI/ra0438/all_bursts.hdf5",
     catalog_path="/home/ra0438/chime-catalog-two-analysis/chimefrbcat2.csv",
+    train_frac=0.7,
+    holdout_frac=0.15,
     target_length=TARGET_LENGTH,
+    batch_size=64,
+    num_workers=5,
 )
 
-n_total = len(dataset)
-n_rep = int(dataset.labels.sum())
-print(f"Dataset: {n_total} | repeaters: {n_rep} ({100 * n_rep / n_total:.1f}%)")
+
+for wfall_batch, label_batch in train_loader:
+    print(f"Batch shape : {wfall_batch.shape}")
+    print(f"Labels      : {label_batch}")
+    break
 
 
 class SupConLoss(nn.Module):
@@ -106,7 +183,10 @@ class SupConLoss(nn.Module):
     def forward(self, features, labels=None, mask=None):
 
         if len(features.shape) < 3:
-            raise ValueError("`features` needs to be [bsz, n_views, ...]," "at least 3 dimensions are required")
+            raise ValueError(
+                "`features` needs to be [bsz, n_views, ...],"
+                "at least 3 dimensions are required"
+            )
         if len(features.shape) > 3:
             features = features.view(features.shape[0], features.shape[1], -1)
 
@@ -134,12 +214,19 @@ class SupConLoss(nn.Module):
         else:
             raise ValueError("Unknown mode: {}".format(self.contrast_mode))
 
-        anchor_dot_contrast = torch.div(torch.matmul(anchor_feature, contrast_feature.T), self.temperature)
+        anchor_dot_contrast = torch.div(
+            torch.matmul(anchor_feature, contrast_feature.T), self.temperature
+        )
         logits_max, _ = torch.max(anchor_dot_contrast, dim=1, keepdim=True)
         logits = anchor_dot_contrast - logits_max.detach()
 
         mask = mask.repeat(anchor_count, contrast_count)
-        logits_mask = torch.scatter(torch.ones_like(mask), 1, torch.arange(batch_size * anchor_count).view(-1, 1).to(device), 0)
+        logits_mask = torch.scatter(
+            torch.ones_like(mask),
+            1,
+            torch.arange(batch_size * anchor_count).view(-1, 1).to(device),
+            0,
+        )
         mask = mask * logits_mask
 
         exp_logits = torch.exp(logits) * logits_mask
@@ -174,23 +261,35 @@ class FocalLoss(nn.Module):
 
 
 class WaterfallAugment(nn.Module):
-    def __init__(self, time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05, crop_frac_range=(0.7, 1.0)):
+    def __init__(
+        self,
+        time_mask_frac=0.15,
+        freq_mask_frac=0.15,
+        noise_std=0.05,
+        crop_frac_range=(0.7, 1.0),
+    ):
         super().__init__()
         self.time_mask_frac = time_mask_frac
         self.freq_mask_frac = freq_mask_frac
         self.noise_std = noise_std
         self.crop_frac_range = crop_frac_range
-        
+
     def _random_time_crop(self, x):
         # pads with zeroes (ref https://arxiv.org/pdf/2103.01929)
         B, n_freq, seq_len = x.shape
         out = torch.zeros_like(x)
         for i in range(B):
             frac = float(torch.empty(1).uniform_(*self.crop_frac_range))
-            crop_len = min(seq_len, max(1, int(seq_len * frac))) # choose window size
-            src_start = int(torch.randint(0, seq_len - crop_len + 1, (1,))) # choose where to start copying
-            dst_start = int(torch.randint(0, seq_len - crop_len + 1, (1,))) # choose where to copy into
-            out[i, :, dst_start:dst_start + crop_len] = x[i, :, src_start:src_start + crop_len]
+            crop_len = min(seq_len, max(1, int(seq_len * frac)))  # choose window size
+            src_start = int(
+                torch.randint(0, seq_len - crop_len + 1, (1,))
+            )  # choose where to start copying
+            dst_start = int(
+                torch.randint(0, seq_len - crop_len + 1, (1,))
+            )  # choose where to copy into
+            out[i, :, dst_start : dst_start + crop_len] = x[
+                i, :, src_start : src_start + crop_len
+            ]
         return out
 
     def forward(self, x):
@@ -215,7 +314,7 @@ class WaterfallAugment(nn.Module):
         x = x + torch.randn_like(x) * self.noise_std
 
         return x
-    
+
 
 class SinusoidalPE(nn.Module):
     def __init__(self, seq_len, embed_dim):
@@ -231,8 +330,23 @@ class SinusoidalPE(nn.Module):
         return x + self.pe
 
 
-class FRBMaskedAutoencoder(nn.Module):
-    def __init__(self, seq_len, n_freq, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
+class FRBMaskedAutoencoderBase(nn.Module):
+    def __init__(
+        self,
+        seq_len,
+        n_freq,
+        embed_dim,
+        dec_embed_dim,
+        contrast_dim=32,
+        mask_ratio=0.25,
+        dropout=0.1,
+        n_enc_heads=4,
+        n_dec_heads=2,
+        dim_feedforward_enc=128,
+        dim_feedforward_dec=128,
+        n_enc_blocks=2,
+        n_dec_blocks=2,
+    ):
         super().__init__()
         self.seq_len = seq_len
         self.n_freq = n_freq
@@ -244,11 +358,18 @@ class FRBMaskedAutoencoder(nn.Module):
         self.enc_proj = nn.Linear(n_freq, embed_dim)
         self.enc_drop = nn.Dropout(dropout)
         self.enc_pe = SinusoidalPE(seq_len + 1, embed_dim)
-        self.enc_blocks = nn.ModuleList([nn.TransformerEncoderLayer(embed_dim, 
-                                                                    nhead=n_enc_heads, 
-                                                                    dim_feedforward=dim_feedforward_enc, 
-                                                                    batch_first=True, dropout=dropout) 
-                                         for _ in range(n_enc_blocks)])
+        self.enc_blocks = nn.ModuleList(
+            [
+                nn.TransformerEncoderLayer(
+                    embed_dim,
+                    nhead=n_enc_heads,
+                    dim_feedforward=dim_feedforward_enc,
+                    batch_first=True,
+                    dropout=dropout,
+                )
+                for _ in range(n_enc_blocks)
+            ]
+        )
         self.enc_norm = nn.LayerNorm(embed_dim)
 
         self.cls_token = nn.Parameter(torch.zeros(1, 1, embed_dim))
@@ -257,32 +378,46 @@ class FRBMaskedAutoencoder(nn.Module):
 
         self.enc_to_dec = nn.Linear(embed_dim, dec_embed_dim)
         self.dec_pe = SinusoidalPE(seq_len + 1, dec_embed_dim)
-        self.dec_blocks = nn.ModuleList([nn.TransformerEncoderLayer(dec_embed_dim, 
-                                                                    nhead=n_dec_heads, 
-                                                                    dim_feedforward=dim_feedforward_dec, 
-                                                                    batch_first=True, dropout=dropout) 
-                                         for _ in range(n_dec_blocks)])
+        self.dec_blocks = nn.ModuleList(
+            [
+                nn.TransformerEncoderLayer(
+                    dec_embed_dim,
+                    nhead=n_dec_heads,
+                    dim_feedforward=dim_feedforward_dec,
+                    batch_first=True,
+                    dropout=dropout,
+                )
+                for _ in range(n_dec_blocks)
+            ]
+        )
         self.dec_norm = nn.LayerNorm(dec_embed_dim)
         self.dec_proj = nn.Linear(dec_embed_dim, n_freq)
 
-        self.cls_head = nn.Sequential(nn.Linear(embed_dim * 2, embed_dim), 
-                                      nn.LayerNorm(embed_dim), 
-                                      nn.ReLU(),
-                                      nn.Dropout(dropout), 
-                                      nn.Linear(embed_dim, embed_dim // 2), 
-                                      nn.ReLU(), nn.Dropout(dropout), 
-                                      nn.Linear(embed_dim // 2, 1))
+        self.cls_head = nn.Sequential(
+            nn.Linear(embed_dim * 2, embed_dim),
+            nn.LayerNorm(embed_dim),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(embed_dim, embed_dim // 2),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(embed_dim // 2, 1),
+        )
 
-        self.proj_head = nn.Sequential(nn.Linear(embed_dim, embed_dim), 
-                                       nn.LayerNorm(embed_dim), 
-                                       nn.ReLU(), 
-                                       nn.Dropout(dropout), 
-                                       nn.Linear(embed_dim, contrast_dim))
+        self.proj_head = nn.Sequential(
+            nn.Linear(embed_dim, embed_dim),
+            nn.LayerNorm(embed_dim),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+            nn.Linear(embed_dim, contrast_dim),
+        )
 
         nn.init.normal_(self.cls_token, std=0.02)
         nn.init.normal_(self.mask_token, std=0.02)
 
-        self.augment_fn = WaterfallAugment(time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05)
+        self.augment_fn = WaterfallAugment(
+            time_mask_frac=0.15, freq_mask_frac=0.15, noise_std=0.05
+        )
 
     def mask_input(self, x, shared_noise=None):
         B, F, T = x.shape
@@ -296,7 +431,9 @@ class FRBMaskedAutoencoder(nn.Module):
         ids_restore = torch.argsort(ids_shuffle, dim=1)
 
         ids_keep = ids_shuffle[:, :len_keep]
-        x_masked = torch.gather(x, dim=1, index=ids_keep.unsqueeze(-1).expand(-1, -1, T))
+        x_masked = torch.gather(
+            x, dim=1, index=ids_keep.unsqueeze(-1).expand(-1, -1, T)
+        )
 
         mask = torch.ones(B, F, device=x.device)
         mask[:, :len_keep] = 0
@@ -335,7 +472,11 @@ class FRBMaskedAutoencoder(nn.Module):
 
         x_no_cls = x_enc[:, 1:, :]
         x_full = torch.cat([x_no_cls, mask_tokens], dim=1)
-        x_full = torch.gather(x_full, dim=1, index=ids_restore.unsqueeze(-1).expand(-1, -1, self.dec_embed_dim))
+        x_full = torch.gather(
+            x_full,
+            dim=1,
+            index=ids_restore.unsqueeze(-1).expand(-1, -1, self.dec_embed_dim),
+        )
 
         x_full = x_full + self.dec_pe.pe[1 : T + 1]
         cls = x_enc[:, :1, :] + self.dec_pe.pe[0]
@@ -351,27 +492,19 @@ class FRBMaskedAutoencoder(nn.Module):
     def forward_pretrain(self, x, augment=True):
         x_t = x
         shared_noise = torch.rand(x_t.size(0), self.seq_len, device=x_t.device)
+
         x_enc, mask, ids_restore = self.encoder(x_t, shared_noise)
-        cls_token = x_enc[:, 0, :] # 
-        seq_tokens = x_enc[:, 1:, :]
-        
-        # pass cls token and every seq_token through the projection head for contrastive learning
-        seq_token_emb = self.proj_head(seq_tokens)
-        cls_token_emb = self.proj_head(cls_token)
-        # concat every sequence token to the cls token to make one giant embedding for contrastive learning
-        rich_embed = torch.cat([cls_token_emb, seq_token_emb.view(seq_token_emb.size(0), -1)], dim=1)
-        proj1 = nn.functional.normalize(rich_embed, dim=1)
+        cls_token = x_enc[:, 0, :]
+
         recon = self.decoder(x_enc, ids_restore)
+
+        proj1 = nn.functional.normalize(self.proj_head(cls_token), dim=1)
 
         if augment:
             x_aug = self.augment_fn(x)
             x_enc2, _, _ = self.encoder(x_aug, shared_noise)
             cls_token2 = x_enc2[:, 0, :]
-            seq_tokens2 = x_enc2[:, 1:, :]
-            seq_token_emb2 = self.proj_head(seq_tokens2)
-            cls_token_emb2 = self.proj_head(cls_token2)
-            rich_embed2 = torch.cat([cls_token_emb2, seq_token_emb2.view(seq_token_emb2.size(0), -1)], dim=1)
-            proj2 = nn.functional.normalize(rich_embed2, dim=1)
+            proj2 = nn.functional.normalize(self.proj_head(cls_token2), dim=1)
             proj = torch.stack([proj1, proj2], dim=1)  # [B, 2, contrast_dim]
         else:
             proj = proj1.unsqueeze(1)  # fallback: [B, 1, contrast_dim]
@@ -406,13 +539,21 @@ def compute_pretrain_loss(x_recon, mask, wfall, proj, labels, beta=1.0, gamma=0.
     return beta * recon_loss + gamma * con_loss, recon_loss, con_loss
 
 
-def compute_finetune_loss(cls_out, labels, pos_weight=None, focal_param=0.0, device="cpu"):
-    pw = torch.tensor([pos_weight], dtype=torch.float32, device=device) if pos_weight else None
+def compute_finetune_loss(
+    cls_out, labels, pos_weight=None, focal_param=0.0, device="cpu"
+):
+    pw = (
+        torch.tensor([pos_weight], dtype=torch.float32, device=device)
+        if pos_weight
+        else None
+    )
     cls_loss = FocalLoss(gamma=focal_param, pos_weight=pw)(cls_out, labels.float())
     return cls_loss
 
 
-def pretrain_one_epoch(model, loader, optimizer, device, beta, gamma, pos_weight_scalar):
+def pretrain_one_epoch(
+    model, loader, optimizer, device, beta, gamma, pos_weight_scalar
+):
     model.train()
     running_loss = running_recon = running_con = 0.0
 
@@ -420,7 +561,9 @@ def pretrain_one_epoch(model, loader, optimizer, device, beta, gamma, pos_weight
         wfall, labels = wfall.to(device), labels.to(device)
 
         recon, mask, proj = model.forward_pretrain(wfall, augment=True)
-        loss, recon_loss, con_loss = compute_pretrain_loss(recon, mask, wfall, proj, labels, beta=beta, gamma=gamma)
+        loss, recon_loss, con_loss = compute_pretrain_loss(
+            recon, mask, wfall, proj, labels, beta=beta, gamma=gamma
+        )
 
         optimizer.zero_grad()
         loss.backward()
@@ -432,10 +575,14 @@ def pretrain_one_epoch(model, loader, optimizer, device, beta, gamma, pos_weight
         running_con += con_loss.item()
 
     n = len(loader)
-    print(f"  loss={running_loss/n:.4f}  recon={running_recon/n:.4f}  con={running_con/n:.4f}")
+    print(
+        f"  loss={running_loss/n:.4f}  recon={running_recon/n:.4f}  con={running_con/n:.4f}"
+    )
 
 
-def finetune_one_epoch(model, loader, optimizer, device, alpha, pos_weight_scalar, focal_param):
+def finetune_one_epoch(
+    model, loader, optimizer, device, alpha, pos_weight_scalar, focal_param
+):
     model.train()
     total, correct = 0, 0
     running_loss = 0.0
@@ -444,7 +591,13 @@ def finetune_one_epoch(model, loader, optimizer, device, alpha, pos_weight_scala
         wfall, labels = wfall.to(device), labels.to(device)
 
         cls_out = model.forward_finetune(wfall)
-        loss = compute_finetune_loss(cls_out, labels, pos_weight=pos_weight_scalar, focal_param=focal_param, device=device)
+        loss = compute_finetune_loss(
+            cls_out,
+            labels,
+            pos_weight=pos_weight_scalar,
+            focal_param=focal_param,
+            device=device,
+        )
 
         optimizer.zero_grad()
         loss.backward()
@@ -468,17 +621,23 @@ def evaluate_pretrain(model, loader, device, beta, gamma, pos_weight_scalar):
     for wfall, labels in loader:
         wfall, labels = wfall.to(device), labels.to(device)
         x_recon, mask, proj = model.forward_pretrain(wfall, augment=True)
-        loss, recon_loss, con_loss = compute_pretrain_loss(x_recon, mask, wfall, proj, labels, beta=beta, gamma=gamma)
+        loss, recon_loss, con_loss = compute_pretrain_loss(
+            x_recon, mask, wfall, proj, labels, beta=beta, gamma=gamma
+        )
         running_loss += loss.item()
         running_recon += recon_loss.item()
         running_con += con_loss.item()
     n = len(loader)
-    print(f"  val_loss={running_loss/n:.4f}  val_recon={running_recon/n:.4f}  val_con={running_con/n:.4f}")
+    print(
+        f"  val_loss={running_loss/n:.4f}  val_recon={running_recon/n:.4f}  val_con={running_con/n:.4f}"
+    )
     return running_loss / n, running_recon / n, running_con / n
 
 
 @torch.no_grad()
-def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar, focal_param):
+def sweep_threshold(
+    model, loader, device, alpha, beta, gamma, pos_weight_scalar, focal_param
+):
     model.eval()
     all_probs, all_labels = [], []
     running_loss = 0.0
@@ -487,7 +646,13 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
         wfall, labels = wfall.to(device), labels.to(device)
         cls_out = model.forward_finetune(wfall)
 
-        loss = compute_finetune_loss(cls_out, labels, pos_weight=pos_weight_scalar, focal_param=focal_param, device=device)
+        loss = compute_finetune_loss(
+            cls_out,
+            labels,
+            pos_weight=pos_weight_scalar,
+            focal_param=focal_param,
+            device=device,
+        )
         running_loss += loss.item()
 
         probs = torch.sigmoid(cls_out).cpu().numpy()
@@ -522,38 +687,77 @@ def sweep_threshold(model, loader, device, alpha, beta, gamma, pos_weight_scalar
     print(f"Best threshold f1: {best_thresh_f1:.2f}")
     print(f"Confusion matrix (optimized for f1):\n{confusion_matrix_global}")
 
-    return val_loss, best_thresh_acc, best_acc, best_thresh_f1, best_f1, confusion_matrix_global
+    return (
+        val_loss,
+        best_thresh_acc,
+        best_acc,
+        best_thresh_f1,
+        best_f1,
+        confusion_matrix_global,
+    )
 
 
 N_EPOCHS = 250
 LR_PATIENCE = 15
 ES_PATIENCE = 20
 
-CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_concat"
+
+TARGET_LENGTH = 128
+N_FREQ_CHANNELS = 256
+N_SPLITS = 5
+BATCH_SIZE = 64
+NUM_WORKERS = 5
+SEED = 42
+
+HOLDOUT_FRAC = 0.15
+
+dataset = CHIMEFRBDataset(
+    hdf5_path="/scratch/gpfs/MLISANTI/ra0438/all_bursts.hdf5",
+    catalog_path="/home/ra0438/chime-catalog-two-analysis/chimefrbcat2.csv",
+    target_length=TARGET_LENGTH,
+)
+
+n_total = len(dataset)
+n_rep = int(dataset.labels.sum())
+print(f"Dataset: {n_total} | repeaters: {n_rep} ({100 * n_rep / n_total:.1f}%)")
+
+cv_idx, holdout_idx = train_test_split(
+    list(range(n_total)),
+    test_size=HOLDOUT_FRAC,
+    stratify=dataset.labels,
+    random_state=SEED,
+)
+
+n_rep_cv = int(dataset.labels[cv_idx].sum())
+n_rep_holdout = int(dataset.labels[holdout_idx].sum())
+print(f"CV pool: {len(cv_idx)} | repeaters: {n_rep_cv} ({100 * n_rep_cv / len(cv_idx):.1f}%)")
+print(f"Holdout: {len(holdout_idx)} | repeaters: {n_rep_holdout} ({100 * n_rep_holdout / len(holdout_idx):.1f}%)")
+
+
+CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_holdout"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-SOURCE_TRIAL = 64
+SOURCE_TRIAL = 56
 BEST_PARAMS = {
     "embed_dim": 64,
     "dec_emb_frac": 1.0,
     "contrast_dim": 64,
-    "mask_ratio": 0.5930518878743469,
-    "dropout": 0.30577382602324266,
-    "n_enc_heads": 1,
-    "n_dec_frac": 1.0,
-    "dim_feedforward": 256,
-    "dim_feedforward_dec_frac": 0.25,
-    "beta": 0.9176973966743691,
-    "gamma": 0.08324752968023559,
-    "pos_weight_scalar": 4.514088469257983,
-    "focal_gamma": 0.5425841550368339,
-    "n_enc_blocks": 4,
-    "n_dec_block_frac": 1.0,
-    "pretrain_frac": 0.8336379970034191,
-    "lr": 0.0010457023067501074,
-    "weight_decay": 0.004699924006391208,
+    "mask_ratio": 0.4347974332787024,
+    "dropout": 0.3086676323325686,
+    "n_enc_heads": 4,
+    "n_dec_frac": 0.25,
+    "dim_feedforward": 128,
+    "dim_feedforward_dec_frac": 0.5,
+    "beta": 9.46403844319336,
+    "gamma": 0.5107129331928202,
+    "pos_weight_scalar": 1.1471669200443542,
+    "focal_gamma": 0.5791677213024788,
+    "n_enc_blocks": 8,
+    "n_dec_block_frac": 0.5,
+    "pretrain_frac": 0.8165449970880235,
+    "lr": 0.0007110189607168146,
+    "weight_decay": 0.00043318556504058094,
 }
-
 
 def build_model():
     p = BEST_PARAMS
@@ -566,7 +770,7 @@ def build_model():
     n_enc_blocks = p["n_enc_blocks"]
     n_dec_blocks = max(1, int(n_enc_blocks * p["n_dec_block_frac"]))
 
-    model = FRBMaskedAutoencoder(
+    model = FRBMaskedAutoencoderBase(
         n_freq=TARGET_LENGTH,
         seq_len=N_FREQ_CHANNELS,
         embed_dim=embed_dim,
@@ -597,33 +801,77 @@ def run_fold(fold_idx, train_idx, val_idx):
     train_ds = Subset(dataset, train_idx)
     val_ds = Subset(dataset, val_idx)
 
-    train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True, num_workers=NUM_WORKERS, pin_memory=True)
-    val_loader = DataLoader(val_ds, batch_size=BATCH_SIZE, shuffle=False, num_workers=NUM_WORKERS, pin_memory=True)
+    train_loader = DataLoader(
+        train_ds,
+        batch_size=BATCH_SIZE,
+        shuffle=True,
+        num_workers=NUM_WORKERS,
+        pin_memory=True,
+    )
+    val_loader = DataLoader(
+        val_ds,
+        batch_size=BATCH_SIZE,
+        shuffle=False,
+        num_workers=NUM_WORKERS,
+        pin_memory=True,
+    )
 
     n_rep_train = int(dataset.labels[train_idx].sum())
     n_rep_val = int(dataset.labels[val_idx].sum())
     print(f"\n===== Fold {fold_idx + 1}/{N_SPLITS} =====")
-    print(f"Train: {len(train_idx)} | repeaters: {n_rep_train} ({100 * n_rep_train / len(train_idx):.1f}%)")
-    print(f"Val:   {len(val_idx)}   | repeaters: {n_rep_val}   ({100 * n_rep_val / len(val_idx):.1f}%)")
+    print(
+        f"Train: {len(train_idx)} | repeaters: {n_rep_train} ({100 * n_rep_train / len(train_idx):.1f}%)"
+    )
+    print(
+        f"Val:   {len(val_idx)}   | repeaters: {n_rep_val}   ({100 * n_rep_val / len(val_idx):.1f}%)"
+    )
 
     model = build_model()
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=LR_PATIENCE, min_lr=1e-6)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode="min", factor=0.5, patience=LR_PATIENCE, min_lr=1e-6
+    )
 
     n_pretrain_epochs = int(N_EPOCHS * pretrain_frac)
     for epoch in range(n_pretrain_epochs):
-        pretrain_one_epoch(model, train_loader, optimizer, device, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
-        loss, recon_loss, con_loss = evaluate_pretrain(model, val_loader, device, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight)
+        pretrain_one_epoch(
+            model,
+            train_loader,
+            optimizer,
+            device,
+            beta=beta,
+            gamma=gamma,
+            pos_weight_scalar=pos_weight,
+        )
+        loss, recon_loss, con_loss = evaluate_pretrain(
+            model,
+            val_loader,
+            device,
+            beta=beta,
+            gamma=gamma,
+            pos_weight_scalar=pos_weight,
+        )
         scheduler.step(loss)
-        print(f"Pretrain Epoch {epoch + 1}/{n_pretrain_epochs}: val_loss={loss:.4f}  val_recon={recon_loss:.4f}  val_con={con_loss:.4f}")
+        print(
+            f"Pretrain Epoch {epoch + 1}/{n_pretrain_epochs}: val_loss={loss:.4f}  val_recon={recon_loss:.4f}  val_con={con_loss:.4f}"
+        )
 
     for name, param in model.named_parameters():
-        if any(name.startswith(pfx) for pfx in ("enc_proj", "enc_drop", "enc_pe", "enc_blocks", "enc_norm")):
+        if any(
+            name.startswith(pfx)
+            for pfx in ("enc_proj", "enc_drop", "enc_pe", "enc_blocks", "enc_norm")
+        ):
             param.requires_grad = False
 
-    optimizer = torch.optim.AdamW(filter(lambda p_: p_.requires_grad, model.parameters()), lr=lr, weight_decay=weight_decay)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=LR_PATIENCE, min_lr=1e-6)
+    optimizer = torch.optim.AdamW(
+        filter(lambda p_: p_.requires_grad, model.parameters()),
+        lr=lr,
+        weight_decay=weight_decay,
+    )
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode="min", factor=0.5, patience=LR_PATIENCE, min_lr=1e-6
+    )
 
     best_val_f1 = float("-inf")
     best_val_acc = float("-inf")
@@ -636,10 +884,25 @@ def run_fold(fold_idx, train_idx, val_idx):
 
     n_finetune_epochs = int(N_EPOCHS * (1 - pretrain_frac))
     for epoch in range(n_finetune_epochs):
-        finetune_one_epoch(model, train_loader, optimizer, device, alpha=1.0, pos_weight_scalar=pos_weight, focal_param=focal_param)
+        finetune_one_epoch(
+            model,
+            train_loader,
+            optimizer,
+            device,
+            alpha=1.0,
+            pos_weight_scalar=pos_weight,
+            focal_param=focal_param,
+        )
 
         val_loss, opt_thresh_acc, val_acc, opt_thresh, val_f1, cm = sweep_threshold(
-            model, val_loader, device, alpha=1.0, beta=beta, gamma=gamma, pos_weight_scalar=pos_weight, focal_param=focal_param
+            model,
+            val_loader,
+            device,
+            alpha=1.0,
+            beta=beta,
+            gamma=gamma,
+            pos_weight_scalar=pos_weight,
+            focal_param=focal_param,
         )
 
         scheduler.step(val_loss)
@@ -660,8 +923,10 @@ def run_fold(fold_idx, train_idx, val_idx):
             print(f"Early stopping at epoch {epoch + 1}")
             break
 
-    print(f"Fold {fold_idx + 1} result: val_loss={best_val_loss:.4f}, best_thresh(f1)={best_thresh:.3f}, "
-          f"val_f1={best_val_f1:.3f}, val_acc={best_val_acc:.3f}, best_thresh_acc={best_thresh_acc:.3f}")
+    print(
+        f"Fold {fold_idx + 1} result: val_loss={best_val_loss:.4f}, best_thresh(f1)={best_thresh:.3f}, "
+        f"val_f1={best_val_f1:.3f}, val_acc={best_val_acc:.3f}, best_thresh_acc={best_thresh_acc:.3f}"
+    )
     print("  Confusion Matrix:")
     print(best_confusion_matrix)
 
@@ -691,8 +956,9 @@ fold_f1s = []
 fold_accs = []
 fold_losses = []
 
-indices = np.arange(n_total)
-for fold_idx, (train_idx, val_idx) in enumerate(skf.split(indices, dataset.labels)):
+cv_idx = np.array(cv_idx)
+for fold_idx, (train_pos, val_pos) in enumerate(skf.split(cv_idx, dataset.labels[cv_idx])):
+    train_idx, val_idx = cv_idx[train_pos], cv_idx[val_pos]
     val_f1, val_acc, val_loss, cm = run_fold(fold_idx, train_idx, val_idx)
     fold_f1s.append(val_f1)
     fold_accs.append(val_acc)
@@ -704,10 +970,77 @@ fold_losses = np.array(fold_losses)
 
 print("\n===== 5-Fold Cross-Validation Summary =====")
 for i in range(N_SPLITS):
-    print(f"Fold {i + 1}: F1={fold_f1s[i]:.4f}  Accuracy={fold_accs[i]:.4f}  Val Loss={fold_losses[i]:.4f}")
+    print(
+        f"Fold {i + 1}: F1={fold_f1s[i]:.4f}  Accuracy={fold_accs[i]:.4f}  Val Loss={fold_losses[i]:.4f}"
+    )
 
 print(f"\nMean F1       : {fold_f1s.mean():.4f} +/- {fold_f1s.std():.4f}")
 print(f"Mean Accuracy : {fold_accs.mean():.4f} +/- {fold_accs.std():.4f}")
 print(f"Mean Val Loss : {fold_losses.mean():.4f} +/- {fold_losses.std():.4f}")
 
 print(f"\nAll fold checkpoints saved to: {CHECKPOINT_DIR}")
+
+
+holdout_ds = Subset(dataset, holdout_idx)
+holdout_loader = DataLoader(
+    holdout_ds,
+    batch_size=BATCH_SIZE,
+    shuffle=False,
+    num_workers=NUM_WORKERS,
+    pin_memory=True,
+)
+
+n_rep_holdout = int(dataset.labels[holdout_idx].sum())
+print("\n===== Holdout Evaluation Per Fold =====")
+print(
+    f"Holdout: {len(holdout_idx)} | repeaters: {n_rep_holdout} ({100 * n_rep_holdout / len(holdout_idx):.1f}%)"
+)
+
+holdout_f1s = []
+holdout_accs = []
+holdout_losses = []
+
+for fold_idx in range(N_SPLITS):
+    fold_path = os.path.join(CHECKPOINT_DIR, f"fold_{fold_idx}.pt")
+    ckpt = torch.load(fold_path, map_location=device)
+
+    model = build_model()
+    model.load_state_dict(ckpt["model_state_dict"])
+
+    p = BEST_PARAMS
+    print(f"\n----- Fold {fold_idx + 1}/{N_SPLITS} on Holdout -----")
+    (
+        holdout_loss,
+        _,
+        holdout_acc,
+        _,
+        holdout_f1,
+        holdout_cm,
+    ) = sweep_threshold(
+        model,
+        holdout_loader,
+        device,
+        alpha=1.0,
+        beta=p["beta"],
+        gamma=p["gamma"],
+        pos_weight_scalar=p["pos_weight_scalar"],
+        focal_param=p["focal_gamma"],
+    )
+
+    holdout_f1s.append(holdout_f1)
+    holdout_accs.append(holdout_acc)
+    holdout_losses.append(holdout_loss)
+
+holdout_f1s = np.array(holdout_f1s)
+holdout_accs = np.array(holdout_accs)
+holdout_losses = np.array(holdout_losses)
+
+print("\n===== Holdout Evaluation Summary =====")
+for i in range(N_SPLITS):
+    print(
+        f"Fold {i + 1}: Holdout F1={holdout_f1s[i]:.4f}  Holdout Accuracy={holdout_accs[i]:.4f}  Holdout Loss={holdout_losses[i]:.4f}"
+    )
+
+print(f"\nMean Holdout F1       : {holdout_f1s.mean():.4f} +/- {holdout_f1s.std():.4f}")
+print(f"Mean Holdout Accuracy : {holdout_accs.mean():.4f} +/- {holdout_accs.std():.4f}")
+print(f"Mean Holdout Loss     : {holdout_losses.mean():.4f} +/- {holdout_losses.std():.4f}")
