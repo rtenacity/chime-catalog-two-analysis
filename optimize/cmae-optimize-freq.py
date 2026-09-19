@@ -1,4 +1,5 @@
 import h5py
+import random
 import numpy as np
 import pandas as pd
 import torch
@@ -17,6 +18,18 @@ from scipy.ndimage import gaussian_filter
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
 print(torch.cuda.get_device_name(0))
+
+SEED = 42
+
+
+def set_seed(seed=SEED):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+
+set_seed()
 
 
 class CHIMEFRBDataset(Dataset):
@@ -581,6 +594,7 @@ best_overall = {"f1": float("-inf")}
 
 
 def objective(trial):
+    set_seed()
     lr_patience = 15
     es_patience = 20
     embed_dim = trial.suggest_categorical("embed_dim", [32, 64, 128, 256, 512])
@@ -705,6 +719,7 @@ study = optuna.create_study(
     study_name="cmae_optimize_freq",
     storage="sqlite:////scratch/gpfs/MLISANTI/ra0438/cmae_study_freq_holdout.db",
     direction="maximize",
+    sampler=optuna.samplers.TPESampler(seed=SEED),
     pruner=optuna.pruners.MedianPruner(n_startup_trials=10, n_warmup_steps=15),
     load_if_exists=True,
 )

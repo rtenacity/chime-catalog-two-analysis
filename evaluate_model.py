@@ -1,4 +1,5 @@
 import h5py
+import random
 import numpy as np
 import pandas as pd
 import torch
@@ -14,6 +15,18 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(device)
 if torch.cuda.is_available():
     print(torch.cuda.get_device_name(0))
+
+SEED = 42
+
+
+def set_seed(seed=SEED):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+
+
+set_seed()
 
 
 class CHIMEFRBDataset(Dataset):
@@ -707,7 +720,6 @@ N_FREQ_CHANNELS = 256
 N_SPLITS = 5
 BATCH_SIZE = 64
 NUM_WORKERS = 5
-SEED = 42
 
 HOLDOUT_FRAC = 0.15
 
@@ -717,47 +729,14 @@ dataset = CHIMEFRBDataset(
     target_length=TARGET_LENGTH,
 )
 
-n_total = len(dataset)
-n_rep = int(dataset.labels.sum())
-print(f"Dataset: {n_total} | repeaters: {n_rep} ({100 * n_rep / n_total:.1f}%)")
 
-cv_idx, holdout_idx = train_test_split(
-    list(range(n_total)),
-    test_size=HOLDOUT_FRAC,
-    stratify=dataset.labels,
-    random_state=SEED,
-)
-
-n_rep_cv = int(dataset.labels[cv_idx].sum())
-n_rep_holdout = int(dataset.labels[holdout_idx].sum())
-print(f"CV pool: {len(cv_idx)} | repeaters: {n_rep_cv} ({100 * n_rep_cv / len(cv_idx):.1f}%)")
-print(f"Holdout: {len(holdout_idx)} | repeaters: {n_rep_holdout} ({100 * n_rep_holdout / len(holdout_idx):.1f}%)")
 
 
 CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_holdout"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-SOURCE_TRIAL = 56
-BEST_PARAMS = {
-    "embed_dim": 64,
-    "dec_emb_frac": 1.0,
-    "contrast_dim": 64,
-    "mask_ratio": 0.4347974332787024,
-    "dropout": 0.3086676323325686,
-    "n_enc_heads": 4,
-    "n_dec_frac": 0.25,
-    "dim_feedforward": 128,
-    "dim_feedforward_dec_frac": 0.5,
-    "beta": 9.46403844319336,
-    "gamma": 0.5107129331928202,
-    "pos_weight_scalar": 1.1471669200443542,
-    "focal_gamma": 0.5791677213024788,
-    "n_enc_blocks": 8,
-    "n_dec_block_frac": 0.5,
-    "pretrain_frac": 0.8165449970880235,
-    "lr": 0.0007110189607168146,
-    "weight_decay": 0.00043318556504058094,
-}
+SOURCE_TRIAL = 72
+BEST_PARAMS = {'embed_dim': 64, 'dec_emb_frac': 1.0, 'contrast_dim': 64, 'mask_ratio': 0.445025733718212, 'dropout': 0.3414765199403667, 'n_enc_heads': 1, 'n_dec_frac': 0.25, 'dim_feedforward': 128, 'dim_feedforward_dec_frac': 0.5, 'beta': 9.449250481483997, 'gamma': 0.8182905069100579, 'pos_weight_scalar': 1.117595041746957, 'focal_gamma': 0.34941686429639385, 'n_enc_blocks': 8, 'n_dec_block_frac': 0.5, 'pretrain_frac': 0.7796955867967842, 'lr': 0.0004805146017831697, 'weight_decay': 0.00039766127792734314}
 
 def build_model():
     p = BEST_PARAMS
@@ -789,6 +768,7 @@ def build_model():
 
 
 def run_fold(fold_idx, train_idx, val_idx):
+    set_seed(SEED + fold_idx)
     p = BEST_PARAMS
     lr = p["lr"]
     weight_decay = p["weight_decay"]
@@ -950,6 +930,32 @@ def run_fold(fold_idx, train_idx, val_idx):
     return best_val_f1, best_val_acc, best_val_loss, best_confusion_matrix
 
 
+n_total = len(dataset)
+n_rep = int(dataset.labels.sum())
+print(f"Dataset: {n_total} | repeaters: {n_rep} ({100 * n_rep / n_total:.1f}%)")
+
+cv_idx, holdout_idx = train_test_split(
+    list(range(n_total)),
+    test_size=HOLDOUT_FRAC,
+    stratify=dataset.labels,
+    random_state=SEED,
+)
+
+n_rep_cv = int(dataset.labels[cv_idx].sum())
+n_rep_holdout = int(dataset.labels[holdout_idx].sum())
+print(f"CV pool: {len(cv_idx)} | repeaters: {n_rep_cv} ({100 * n_rep_cv / len(cv_idx):.1f}%)")
+print(f"Holdout: {len(holdout_idx)} | repeaters: {n_rep_holdout} ({100 * n_rep_holdout / len(holdout_idx):.1f}%)")
+
+
+holdout_ds = Subset(dataset, holdout_idx)
+holdout_loader = DataLoader(
+    holdout_ds,
+    batch_size=BATCH_SIZE,
+    shuffle=False,
+    num_workers=NUM_WORKERS,
+    pin_memory=True,
+)
+
 skf = StratifiedKFold(n_splits=N_SPLITS, shuffle=True, random_state=SEED)
 
 fold_f1s = []
@@ -981,14 +987,6 @@ print(f"Mean Val Loss : {fold_losses.mean():.4f} +/- {fold_losses.std():.4f}")
 print(f"\nAll fold checkpoints saved to: {CHECKPOINT_DIR}")
 
 
-holdout_ds = Subset(dataset, holdout_idx)
-holdout_loader = DataLoader(
-    holdout_ds,
-    batch_size=BATCH_SIZE,
-    shuffle=False,
-    num_workers=NUM_WORKERS,
-    pin_memory=True,
-)
 
 n_rep_holdout = int(dataset.labels[holdout_idx].sum())
 print("\n===== Holdout Evaluation Per Fold =====")
