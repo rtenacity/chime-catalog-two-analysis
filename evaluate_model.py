@@ -735,8 +735,8 @@ dataset = CHIMEFRBDataset(
 CHECKPOINT_DIR = "/scratch/gpfs/MLISANTI/ra0438/cmae_checkpoints_freq_holdout"
 os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
-SOURCE_TRIAL = 72
-BEST_PARAMS = {'embed_dim': 64, 'dec_emb_frac': 1.0, 'contrast_dim': 64, 'mask_ratio': 0.445025733718212, 'dropout': 0.3414765199403667, 'n_enc_heads': 1, 'n_dec_frac': 0.25, 'dim_feedforward': 128, 'dim_feedforward_dec_frac': 0.5, 'beta': 9.449250481483997, 'gamma': 0.8182905069100579, 'pos_weight_scalar': 1.117595041746957, 'focal_gamma': 0.34941686429639385, 'n_enc_blocks': 8, 'n_dec_block_frac': 0.5, 'pretrain_frac': 0.7796955867967842, 'lr': 0.0004805146017831697, 'weight_decay': 0.00039766127792734314}
+SOURCE_TRIAL = 77
+BEST_PARAMS = {'embed_dim': 128, 'dec_emb_frac': 1.0, 'contrast_dim': 32, 'mask_ratio': 0.6432549895129309, 'dropout': 0.17548884382616234, 'n_enc_heads': 1, 'n_dec_frac': 0.25, 'dim_feedforward': 128, 'dim_feedforward_dec_frac': 1.0, 'beta': 6.3995105157297125, 'gamma': 0.3542547591110353, 'pos_weight_scalar': 3.433549381299146, 'focal_gamma': 1.792458388799441, 'n_enc_blocks': 6, 'n_dec_block_frac': 0.25, 'pretrain_frac': 0.8355540202246319, 'lr': 0.0005908039267519742, 'weight_decay': 0.005106454139850454}
 
 def build_model():
     p = BEST_PARAMS
