@@ -162,13 +162,29 @@ def make_dataloader(
     _rep_stats("Val    ", val_idx)
     _rep_stats("Holdout", holdout_idx)
 
-    return train_loader, val_loader, holdout_loader
+    return (
+        train_loader,
+        val_loader,
+        holdout_loader,
+        trainval_idx,
+        train_idx,
+        val_idx,
+        holdout_idx,
+    )
 
 
 TARGET_LENGTH = 128  # number of time samples kept per burst window
 N_FREQ_CHANNELS = 256  # number of frequency channels in the waterfall
 
-train_loader, val_loader, holdout_loader = make_dataloader(
+(
+    train_loader,
+    val_loader,
+    holdout_loader,
+    cv_idx,
+    train_idx,
+    val_idx,
+    holdout_idx,
+) = make_dataloader(
     hdf5_path="/scratch/gpfs/MLISANTI/ra0438/all_bursts.hdf5",
     catalog_path="/home/ra0438/chime-catalog-two-analysis/chimefrbcat2.csv",
     train_frac=0.7,
@@ -768,7 +784,7 @@ def build_model():
 
 
 def run_fold(fold_idx, train_idx, val_idx):
-    set_seed(SEED + fold_idx)
+    set_seed(SEED)
     p = BEST_PARAMS
     lr = p["lr"]
     weight_decay = p["weight_decay"]
@@ -934,27 +950,10 @@ n_total = len(dataset)
 n_rep = int(dataset.labels.sum())
 print(f"Dataset: {n_total} | repeaters: {n_rep} ({100 * n_rep / n_total:.1f}%)")
 
-cv_idx, holdout_idx = train_test_split(
-    list(range(n_total)),
-    test_size=HOLDOUT_FRAC,
-    stratify=dataset.labels,
-    random_state=SEED,
-)
-
 n_rep_cv = int(dataset.labels[cv_idx].sum())
 n_rep_holdout = int(dataset.labels[holdout_idx].sum())
 print(f"CV pool: {len(cv_idx)} | repeaters: {n_rep_cv} ({100 * n_rep_cv / len(cv_idx):.1f}%)")
 print(f"Holdout: {len(holdout_idx)} | repeaters: {n_rep_holdout} ({100 * n_rep_holdout / len(holdout_idx):.1f}%)")
-
-
-holdout_ds = Subset(dataset, holdout_idx)
-holdout_loader = DataLoader(
-    holdout_ds,
-    batch_size=BATCH_SIZE,
-    shuffle=False,
-    num_workers=NUM_WORKERS,
-    pin_memory=True,
-)
 
 skf = StratifiedKFold(n_splits=N_SPLITS, shuffle=True, random_state=SEED)
 
