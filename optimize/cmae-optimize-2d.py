@@ -303,7 +303,7 @@ class SinusoidalPE2D(nn.Module):
         self.register_buffer("pe", pe)
 
 
-class FRBMaskedAutoencoderBase(nn.Module):
+class FRBMaskedAutoencoderBase2D(nn.Module):
     def __init__(self, n_freq, n_time, patch_f, patch_t, embed_dim, dec_embed_dim, contrast_dim=32, mask_ratio=0.25, dropout=0.1, n_enc_heads=4, n_dec_heads=2, dim_feedforward_enc=128, dim_feedforward_dec=128, n_enc_blocks=2, n_dec_blocks=2):
         super().__init__()
         
@@ -678,7 +678,7 @@ def objective(trial):
     if embed_dim % n_enc_heads != 0 or dec_emb_dim % n_dec_heads != 0:
         raise optuna.exceptions.TrialPruned()
 
-    model = FRBMaskedAutoencoderBase(n_freq=N_FREQ_CHANNELS,
+    model = FRBMaskedAutoencoderBase2D(n_freq=N_FREQ_CHANNELS,
                                  n_time=TARGET_LENGTH,
                                  patch_f=patch_f,
                                 patch_t=patch_t,
