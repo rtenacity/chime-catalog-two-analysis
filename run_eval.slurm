@@ -17,4 +17,4 @@ cd ~/chime-catalog-two-analysis
 module load anaconda3/2025.12
 conda activate frb_env
 
-python evaluate_model_2d.py
+python evaluate_model_resnet.py
