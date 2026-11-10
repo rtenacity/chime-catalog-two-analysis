@@ -1,0 +1,2021 @@
+cuda
+NVIDIA A100-PCIE-40GB
+Optuna-time split (for reference):
+  Train  : 3174 | repeaters: 687 (21.6%)
+  Val    : 681 | repeaters: 147 (21.6%)
+  Holdout: 681 | repeaters: 147 (21.6%)
+
+Dataset: 4536 | repeaters: 981 (21.6%)
+CV pool: 3855 | repeaters: 834 (21.6%)
+Holdout: 681 | repeaters: 147 (21.6%)
+Params (trial 36): {'base_channels': 64, 'n_stages': 5, 'enc_blocks': 1, 'dec_blocks': 1, 'max_channels': 256, 'latent_channels': 64, 'embed_dim': 128, 'head_hidden': 64, 'dropout': 0.2843821508619558, 'mask_ratio': 0.40047252756520246, 'mask_patch': '16x8', 'beta': 1.172011179404148, 'gamma': 0.41967589674733885, 'temperature': 0.05, 'pos_weight_scalar': 2.19354335985951, 'focal_gamma': 2.0143470433974877, 'lr': 0.00031356498058302744, 'weight_decay': 0.009421024060519761}
+
+===== Fold 1/5 =====
+Train: 3084 | repeaters: 667 (21.6%)
+Val:   771   | repeaters: 167   (21.7%)
+Model: 9.81M params (source trial 36)
+Fold 1 Epoch 1/250
+  train loss=17.4083  cls=0.2878  recon=12.8123  con=5.0144  acc=0.610
+  val loss=7.5369  cls=0.2239  recon=4.5938  con=4.5968
+  best acc=0.7834 @ 0.52   best f1=0.3621 @ 0.45
+  confusion matrix (f1-optimal):
+[[ 20 584]
+ [  1 166]]
+Fold 1 Epoch 2/250
+  train loss=3.9864  cls=0.2191  recon=1.4761  con=4.8544  acc=0.674
+  val loss=4.4711  cls=0.2208  recon=1.9796  con=4.5993
+  best acc=0.7834 @ 0.52   best f1=0.3591 @ 0.48
+  confusion matrix (f1-optimal):
+[[  8 596]
+ [  0 167]]
+Fold 1 Epoch 3/250
+  train loss=3.3370  cls=0.2164  recon=0.9273  con=4.8459  acc=0.692
+  val loss=3.2479  cls=0.2192  recon=0.9383  con=4.5963
+  best acc=0.7834 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 1 Epoch 4/250
+  train loss=3.3239  cls=0.2117  recon=0.9205  con=4.8450  acc=0.750
+  val loss=3.2549  cls=0.2191  recon=0.9442  con=4.5966
+  best acc=0.7834 @ 0.47   best f1=0.3565 @ 0.46
+  confusion matrix (f1-optimal):
+[[  1 603]
+ [  0 167]]
+Fold 1 Epoch 5/250
+  train loss=3.3180  cls=0.2109  recon=0.9163  con=4.8447  acc=0.771
+  val loss=3.2359  cls=0.2191  recon=0.9283  con=4.5961
+  best acc=0.7834 @ 0.48   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 1 Epoch 6/250
+  train loss=3.3040  cls=0.2116  recon=0.9037  con=4.8446  acc=0.762
+  val loss=3.3698  cls=0.2191  recon=1.0423  con=4.5965
+  best acc=0.7834 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 1 Epoch 7/250
+  train loss=3.2784  cls=0.2096  recon=0.8837  con=4.8445  acc=0.773
+  val loss=3.4141  cls=0.2193  recon=1.0805  con=4.5950
+  best acc=0.7834 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 1 Epoch 8/250
+  train loss=3.2557  cls=0.2088  recon=0.8650  con=4.8445  acc=0.781
+  val loss=3.2019  cls=0.2193  recon=0.8993  con=4.5956
+  best acc=0.7834 @ 0.47   best f1=0.3590 @ 0.46
+  confusion matrix (f1-optimal):
+[[ 58 546]
+ [ 11 156]]
+Fold 1 Epoch 9/250
+  train loss=3.2437  cls=0.2084  recon=0.8553  con=4.8442  acc=0.779
+  val loss=3.1989  cls=0.2188  recon=0.8972  con=4.5955
+  best acc=0.7834 @ 0.48   best f1=0.3665 @ 0.47
+  confusion matrix (f1-optimal):
+[[254 350]
+ [ 51 116]]
+Fold 1 Epoch 10/250
+  train loss=3.2356  cls=0.2076  recon=0.8488  con=4.8444  acc=0.783
+  val loss=3.3381  cls=0.2183  recon=1.0156  con=4.5976
+  best acc=0.7834 @ 0.48   best f1=0.3638 @ 0.46
+  confusion matrix (f1-optimal):
+[[ 29 575]
+ [  2 165]]
+Fold 1 Epoch 11/250
+  train loss=3.2301  cls=0.2055  recon=0.8461  con=4.8441  acc=0.780
+  val loss=3.6372  cls=0.2138  recon=1.2760  con=4.5939
+  best acc=0.7873 @ 0.49   best f1=0.4692 @ 0.48
+  confusion matrix (f1-optimal):
+[[435 169]
+ [ 64 103]]
+Fold 1 Epoch 12/250
+  train loss=3.2209  cls=0.1992  recon=0.8431  con=4.8457  acc=0.775
+  val loss=3.2354  cls=0.2031  recon=0.9414  con=4.5965
+  best acc=0.7873 @ 0.51   best f1=0.5233 @ 0.50
+  confusion matrix (f1-optimal):
+[[407 197]
+ [ 38 129]]
+Fold 1 Epoch 13/250
+  train loss=3.2110  cls=0.1901  recon=0.8425  con=4.8455  acc=0.760
+  val loss=3.2529  cls=0.2086  recon=0.9457  con=4.6129
+  best acc=0.7899 @ 0.54   best f1=0.4286 @ 0.53
+  confusion matrix (f1-optimal):
+[[474 130]
+ [ 86  81]]
+Fold 1 Epoch 14/250
+  train loss=3.2038  cls=0.1834  recon=0.8428  con=4.8435  acc=0.751
+  val loss=3.2634  cls=0.1841  recon=0.9825  con=4.5935
+  best acc=0.8106 @ 0.53   best f1=0.5945 @ 0.51
+  confusion matrix (f1-optimal):
+[[492 112]
+ [ 49 118]]
+Fold 1 Epoch 15/250
+  train loss=3.1953  cls=0.1766  recon=0.8420  con=4.8413  acc=0.753
+  val loss=3.1513  cls=0.1627  recon=0.9025  con=4.6009
+  best acc=0.8457 @ 0.53   best f1=0.6538 @ 0.50
+  confusion matrix (f1-optimal):
+[[526  78]
+ [ 48 119]]
+Fold 1 Epoch 16/250
+  train loss=3.1816  cls=0.1696  recon=0.8393  con=4.8330  acc=0.784
+  val loss=3.1453  cls=0.1516  recon=0.9157  con=4.5760
+  best acc=0.8482 @ 0.57   best f1=0.6467 @ 0.56
+  confusion matrix (f1-optimal):
+[[545  59]
+ [ 59 108]]
+Fold 1 Epoch 17/250
+  train loss=3.1782  cls=0.1659  recon=0.8401  con=4.8316  acc=0.785
+  val loss=3.2959  cls=0.1535  recon=1.0432  con=4.5743
+  best acc=0.8573 @ 0.59   best f1=0.6387 @ 0.58
+  confusion matrix (f1-optimal):
+[[560  44]
+ [ 68  99]]
+Fold 1 Epoch 18/250
+  train loss=3.1618  cls=0.1526  recon=0.8398  con=4.8248  acc=0.799
+  val loss=3.3022  cls=0.1496  recon=1.0560  con=4.5629
+  best acc=0.8677 @ 0.55   best f1=0.6746 @ 0.51
+  confusion matrix (f1-optimal):
+[[547  57]
+ [ 53 114]]
+Fold 1 Epoch 19/250
+  train loss=3.1581  cls=0.1520  recon=0.8391  con=4.8196  acc=0.825
+  val loss=3.1826  cls=0.1415  recon=0.9604  con=4.5642
+  best acc=0.8651 @ 0.60   best f1=0.6893 @ 0.53
+  confusion matrix (f1-optimal):
+[[520  84]
+ [ 35 132]]
+Fold 1 Epoch 20/250
+  train loss=3.1492  cls=0.1460  recon=0.8381  con=4.8155  acc=0.829
+  val loss=3.1458  cls=0.1357  recon=0.9390  con=4.5501
+  best acc=0.8638 @ 0.61   best f1=0.6851 @ 0.53
+  confusion matrix (f1-optimal):
+[[533  71]
+ [ 43 124]]
+Fold 1 Epoch 21/250
+  train loss=3.1516  cls=0.1486  recon=0.8386  con=4.8136  acc=0.828
+  val loss=3.5036  cls=0.1402  recon=1.2376  con=4.5582
+  best acc=0.8638 @ 0.53   best f1=0.6788 @ 0.52
+  confusion matrix (f1-optimal):
+[[553  51]
+ [ 55 112]]
+Fold 1 Epoch 22/250
+  train loss=3.1407  cls=0.1427  recon=0.8365  con=4.8077  acc=0.835
+  val loss=3.7975  cls=0.1500  recon=1.4826  con=4.5509
+  best acc=0.8729 @ 0.56   best f1=0.6796 @ 0.48
+  confusion matrix (f1-optimal):
+[[532  72]
+ [ 44 123]]
+Fold 1 Epoch 23/250
+  train loss=3.1283  cls=0.1318  recon=0.8389  con=4.7975  acc=0.849
+  val loss=3.9714  cls=0.1376  recon=1.6442  con=4.5435
+  best acc=0.8677 @ 0.68   best f1=0.6729 @ 0.61
+  confusion matrix (f1-optimal):
+[[558  46]
+ [ 59 108]]
+Fold 1 Epoch 24/250
+  train loss=3.1355  cls=0.1396  recon=0.8370  con=4.8013  acc=0.837
+  val loss=5.9121  cls=0.1317  recon=3.3108  con=4.5276
+  best acc=0.8690 @ 0.61   best f1=0.6841 @ 0.51
+  confusion matrix (f1-optimal):
+[[519  85]
+ [ 36 131]]
+Fold 1 Epoch 25/250
+  train loss=3.1218  cls=0.1320  recon=0.8363  con=4.7885  acc=0.852
+  val loss=6.2233  cls=0.1454  recon=3.5550  con=4.5547
+  best acc=0.8612 @ 0.50   best f1=0.6764 @ 0.46
+  confusion matrix (f1-optimal):
+[[544  60]
+ [ 51 116]]
+Fold 1 Epoch 26/250
+  train loss=3.1167  cls=0.1290  recon=0.8353  con=4.7862  acc=0.863
+  val loss=5.7281  cls=0.1275  recon=3.1553  con=4.5335
+  best acc=0.8677 @ 0.57   best f1=0.6916 @ 0.53
+  confusion matrix (f1-optimal):
+[[544  60]
+ [ 47 120]]
+Fold 1 Epoch 27/250
+  train loss=3.1120  cls=0.1248  recon=0.8357  con=4.7839  acc=0.867
+  val loss=3.4609  cls=0.1276  recon=1.2251  con=4.5214
+  best acc=0.8820 @ 0.54   best f1=0.7200 @ 0.54
+  confusion matrix (f1-optimal):
+[[563  41]
+ [ 50 117]]
+Fold 1 Epoch 28/250
+  train loss=3.1015  cls=0.1178  recon=0.8351  con=4.7773  acc=0.877
+  val loss=6.4573  cls=0.1366  recon=3.7725  con=4.5255
+  best acc=0.8820 @ 0.59   best f1=0.7029 @ 0.51
+  confusion matrix (f1-optimal):
+[[544  60]
+ [ 44 123]]
+Fold 1 Epoch 29/250
+  train loss=3.0997  cls=0.1178  recon=0.8337  con=4.7773  acc=0.876
+  val loss=4.3445  cls=0.1322  recon=1.9671  con=4.5436
+  best acc=0.8768 @ 0.65   best f1=0.7027 @ 0.62
+  confusion matrix (f1-optimal):
+[[555  49]
+ [ 50 117]]
+Fold 1 Epoch 30/250
+  train loss=3.0933  cls=0.1137  recon=0.8357  con=4.7658  acc=0.887
+  val loss=4.7872  cls=0.1358  recon=2.3403  con=4.5476
+  best acc=0.8898 @ 0.53   best f1=0.7335 @ 0.53
+  confusion matrix (f1-optimal):
+[[569  35]
+ [ 50 117]]
+Fold 1 Epoch 31/250
+  train loss=3.0844  cls=0.1063  recon=0.8339  con=4.7674  acc=0.894
+  val loss=4.5805  cls=0.1251  recon=2.1819  con=4.5229
+  best acc=0.8833 @ 0.62   best f1=0.7224 @ 0.53
+  confusion matrix (f1-optimal):
+[[557  47]
+ [ 46 121]]
+Fold 1 Epoch 32/250
+  train loss=3.0776  cls=0.1030  recon=0.8341  con=4.7586  acc=0.894
+  val loss=5.8349  cls=0.1511  recon=3.2207  con=4.5491
+  best acc=0.8729 @ 0.49   best f1=0.7000 @ 0.46
+  confusion matrix (f1-optimal):
+[[550  54]
+ [ 48 119]]
+Fold 1 Epoch 33/250
+  train loss=3.0547  cls=0.0888  recon=0.8328  con=4.7414  acc=0.919
+  val loss=3.6111  cls=0.1468  recon=1.3245  con=4.5557
+  best acc=0.8794 @ 0.61   best f1=0.6952 @ 0.52
+  confusion matrix (f1-optimal):
+[[542  62]
+ [ 45 122]]
+Fold 1 Epoch 34/250
+  train loss=3.0472  cls=0.0866  recon=0.8325  con=4.7297  acc=0.923
+  val loss=4.5900  cls=0.1746  recon=2.1346  con=4.5597
+  best acc=0.8794 @ 0.51   best f1=0.7045 @ 0.45
+  confusion matrix (f1-optimal):
+[[554  50]
+ [ 49 118]]
+Fold 1 Epoch 35/250
+  train loss=3.0364  cls=0.0784  recon=0.8337  con=4.7200  acc=0.934
+  val loss=4.4791  cls=0.1488  recon=2.0657  con=4.5493
+  best acc=0.8781 @ 0.62   best f1=0.6964 @ 0.48
+  confusion matrix (f1-optimal):
+[[552  52]
+ [ 50 117]]
+Fold 1 Epoch 36/250
+  train loss=3.0225  cls=0.0684  recon=0.8328  con=4.7131  acc=0.931
+  val loss=4.9208  cls=0.1716  recon=2.4112  con=4.5828
+  best acc=0.8859 @ 0.69   best f1=0.7202 @ 0.53
+  confusion matrix (f1-optimal):
+[[556  48]
+ [ 46 121]]
+Fold 1 Epoch 37/250
+  train loss=3.0260  cls=0.0709  recon=0.8323  con=4.7171  acc=0.942
+  val loss=4.0257  cls=0.1531  recon=1.6786  con=4.5399
+  best acc=0.8859 @ 0.62   best f1=0.7134 @ 0.57
+  confusion matrix (f1-optimal):
+[[569  35]
+ [ 55 112]]
+Fold 1 Epoch 38/250
+  train loss=3.0184  cls=0.0659  recon=0.8328  con=4.7096  acc=0.947
+  val loss=4.2142  cls=0.1598  recon=1.8326  con=4.5430
+  best acc=0.8677 @ 0.69   best f1=0.6786 @ 0.59
+  confusion matrix (f1-optimal):
+[[549  55]
+ [ 53 114]]
+Fold 1 Epoch 39/250
+  train loss=3.0065  cls=0.0587  recon=0.8318  con=4.7011  acc=0.949
+  val loss=4.2312  cls=0.1933  recon=1.8167  con=4.5483
+  best acc=0.8872 @ 0.55   best f1=0.7305 @ 0.40
+  confusion matrix (f1-optimal):
+[[559  45]
+ [ 45 122]]
+Fold 1 Epoch 40/250
+  train loss=3.0014  cls=0.0571  recon=0.8327  con=4.6903  acc=0.951
+  val loss=3.5408  cls=0.1602  recon=1.2551  con=4.5504
+  best acc=0.8833 @ 0.65   best f1=0.7235 @ 0.53
+  confusion matrix (f1-optimal):
+[[554  50]
+ [ 44 123]]
+Fold 1 Epoch 41/250
+  train loss=3.0036  cls=0.0577  recon=0.8321  con=4.6958  acc=0.955
+  val loss=4.0002  cls=0.1867  recon=1.6156  con=4.5750
+  best acc=0.8781 @ 0.69   best f1=0.7037 @ 0.67
+  confusion matrix (f1-optimal):
+[[561  43]
+ [ 53 114]]
+Fold 1 Epoch 42/250
+  train loss=2.9849  cls=0.0456  recon=0.8326  con=4.6784  acc=0.960
+  val loss=3.6886  cls=0.2234  recon=1.3054  con=4.6113
+  best acc=0.8768 @ 0.73   best f1=0.6985 @ 0.51
+  confusion matrix (f1-optimal):
+[[553  51]
+ [ 50 117]]
+Fold 1 Epoch 43/250
+  train loss=2.9861  cls=0.0462  recon=0.8320  con=4.6815  acc=0.959
+  val loss=3.7633  cls=0.2067  recon=1.3994  con=4.5666
+  best acc=0.8716 @ 0.61   best f1=0.6706 @ 0.46
+  confusion matrix (f1-optimal):
+[[545  59]
+ [ 53 114]]
+Fold 1 Epoch 44/250
+  train loss=2.9721  cls=0.0379  recon=0.8313  con=4.6699  acc=0.968
+  val loss=3.6533  cls=0.2346  recon=1.2772  con=4.5792
+  best acc=0.8833 @ 0.58   best f1=0.7126 @ 0.44
+  confusion matrix (f1-optimal):
+[[556  48]
+ [ 48 119]]
+Fold 1 Epoch 45/250
+  train loss=2.9723  cls=0.0393  recon=0.8317  con=4.6661  acc=0.966
+  val loss=4.1236  cls=0.2225  recon=1.6884  con=4.5803
+  best acc=0.8833 @ 0.68   best f1=0.6951 @ 0.63
+  confusion matrix (f1-optimal):
+[[572  32]
+ [ 61 106]]
+Fold 1 Epoch 46/250
+  train loss=2.9757  cls=0.0410  recon=0.8325  con=4.6681  acc=0.965
+  val loss=4.4442  cls=0.2322  recon=1.9527  con=4.5831
+  best acc=0.8872 @ 0.76   best f1=0.7016 @ 0.71
+  confusion matrix (f1-optimal):
+[[573  31]
+ [ 60 107]]
+Fold 1 Epoch 47/250
+  train loss=2.9745  cls=0.0372  recon=0.8317  con=4.6764  acc=0.970
+  val loss=3.9624  cls=0.2207  recon=1.5546  con=4.5741
+  best acc=0.8820 @ 0.58   best f1=0.7143 @ 0.51
+  confusion matrix (f1-optimal):
+[[564  40]
+ [ 52 115]]
+Fold 1 Epoch 48/250
+  train loss=2.9528  cls=0.0304  recon=0.8309  con=4.6431  acc=0.977
+  val loss=4.1450  cls=0.2907  recon=1.6411  con=4.6009
+  best acc=0.8885 @ 0.68   best f1=0.7157 @ 0.56
+  confusion matrix (f1-optimal):
+[[570  34]
+ [ 55 112]]
+Fold 1 Epoch 49/250
+  train loss=2.9512  cls=0.0278  recon=0.8312  con=4.6445  acc=0.978
+  val loss=4.1612  cls=0.2907  recon=1.6597  con=4.5876
+  best acc=0.8911 @ 0.74   best f1=0.7083 @ 0.74
+  confusion matrix (f1-optimal):
+[[585  19]
+ [ 65 102]]
+Fold 1 Epoch 50/250
+  train loss=2.9604  cls=0.0328  recon=0.8311  con=4.6548  acc=0.974
+  val loss=4.2373  cls=0.2308  recon=1.7805  con=4.5744
+  best acc=0.8846 @ 0.64   best f1=0.7101 @ 0.64
+  confusion matrix (f1-optimal):
+[[573  31]
+ [ 58 109]]
+Early stopping at epoch 50
+Fold 1 result (best epoch 30): val_loss=4.7872 (cls=0.1358, recon=2.3403, con=4.5476), val_f1=0.734 @ 0.53, val_acc=0.890 @ 0.53
+  Confusion Matrix:
+[[569  35]
+ [ 50 117]]
+Fold 1 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/resnet_ae_checkpoints_cv_holdout/fold_0.pt
+
+===== Fold 2/5 =====
+Train: 3084 | repeaters: 667 (21.6%)
+Val:   771   | repeaters: 167   (21.7%)
+Model: 9.81M params (source trial 36)
+Fold 2 Epoch 1/250
+  train loss=16.7365  cls=0.2891  recon=12.2360  con=5.0195  acc=0.606
+  val loss=10.0842  cls=0.2204  recon=6.7619  con=4.6199
+  best acc=0.7834 @ 0.53   best f1=0.3679 @ 0.49
+  confusion matrix (f1-optimal):
+[[ 39 565]
+ [  2 165]]
+Fold 2 Epoch 2/250
+  train loss=3.7044  cls=0.2237  recon=1.2321  con=4.8529  acc=0.670
+  val loss=3.3404  cls=0.2126  recon=1.0215  con=4.6002
+  best acc=0.7834 @ 0.49   best f1=0.3740 @ 0.48
+  confusion matrix (f1-optimal):
+[[145 459]
+ [ 23 144]]
+Fold 2 Epoch 3/250
+  train loss=3.3338  cls=0.2133  recon=0.9273  con=4.8460  acc=0.720
+  val loss=3.3287  cls=0.2112  recon=1.0136  con=4.5974
+  best acc=0.7834 @ 0.46   best f1=0.3619 @ 0.44
+  confusion matrix (f1-optimal):
+[[ 15 589]
+ [  0 167]]
+Fold 2 Epoch 4/250
+  train loss=3.3193  cls=0.2118  recon=0.9165  con=4.8450  acc=0.753
+  val loss=3.2106  cls=0.2107  recon=0.9151  con=4.5927
+  best acc=0.7834 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 2 Epoch 5/250
+  train loss=3.2876  cls=0.2091  recon=0.8917  con=4.8451  acc=0.769
+  val loss=4.1166  cls=0.2106  recon=1.6876  con=4.5942
+  best acc=0.7834 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 2 Epoch 6/250
+  train loss=3.2608  cls=0.2098  recon=0.8684  con=4.8449  acc=0.756
+  val loss=3.3635  cls=0.2103  recon=1.0455  con=4.5936
+  best acc=0.7834 @ 0.47   best f1=0.3611 @ 0.46
+  confusion matrix (f1-optimal):
+[[ 13 591]
+ [  0 167]]
+Fold 2 Epoch 7/250
+  train loss=3.2462  cls=0.2095  recon=0.8562  con=4.8446  acc=0.763
+  val loss=4.1300  cls=0.2104  recon=1.6998  con=4.5925
+  best acc=0.7847 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 2 Epoch 8/250
+  train loss=3.2367  cls=0.2092  recon=0.8486  con=4.8442  acc=0.771
+  val loss=3.8833  cls=0.2093  recon=1.4902  con=4.5927
+  best acc=0.7834 @ 0.47   best f1=0.4267 @ 0.46
+  confusion matrix (f1-optimal):
+[[358 246]
+ [ 55 112]]
+Fold 2 Epoch 9/250
+  train loss=3.2318  cls=0.2081  recon=0.8454  con=4.8441  acc=0.779
+  val loss=4.0702  cls=0.2091  recon=1.6491  con=4.5949
+  best acc=0.7834 @ 0.48   best f1=0.4498 @ 0.47
+  confusion matrix (f1-optimal):
+[[447 157]
+ [ 73  94]]
+Fold 2 Epoch 10/250
+  train loss=3.2263  cls=0.2064  recon=0.8421  con=4.8439  acc=0.780
+  val loss=3.8746  cls=0.2066  recon=1.4854  con=4.5918
+  best acc=0.7886 @ 0.48   best f1=0.4615 @ 0.46
+  confusion matrix (f1-optimal):
+[[361 243]
+ [ 44 123]]
+Fold 2 Epoch 11/250
+  train loss=3.2157  cls=0.1973  recon=0.8403  con=4.8452  acc=0.772
+  val loss=3.8588  cls=0.1835  recon=1.4949  con=4.5827
+  best acc=0.8016 @ 0.53   best f1=0.5207 @ 0.48
+  confusion matrix (f1-optimal):
+[[413 191]
+ [ 41 126]]
+Fold 2 Epoch 12/250
+  train loss=3.2086  cls=0.1896  recon=0.8414  con=4.8438  acc=0.762
+  val loss=5.4500  cls=0.1765  recon=2.8612  con=4.5754
+  best acc=0.8249 @ 0.58   best f1=0.5690 @ 0.56
+  confusion matrix (f1-optimal):
+[[517  87]
+ [ 66 101]]
+Fold 2 Epoch 13/250
+  train loss=3.1906  cls=0.1730  recon=0.8426  con=4.8372  acc=0.771
+  val loss=3.3970  cls=0.1513  recon=1.1312  con=4.5748
+  best acc=0.8470 @ 0.54   best f1=0.6347 @ 0.50
+  confusion matrix (f1-optimal):
+[[515  89]
+ [ 48 119]]
+Fold 2 Epoch 14/250
+  train loss=3.1754  cls=0.1638  recon=0.8409  con=4.8278  acc=0.803
+  val loss=4.2082  cls=0.1474  recon=1.8330  con=4.5571
+  best acc=0.8495 @ 0.50   best f1=0.6409 @ 0.48
+  confusion matrix (f1-optimal):
+[[542  62]
+ [ 59 108]]
+Fold 2 Epoch 15/250
+  train loss=3.1669  cls=0.1576  recon=0.8398  con=4.8253  acc=0.819
+  val loss=3.8162  cls=0.1711  recon=1.4715  con=4.5764
+  best acc=0.8729 @ 0.43   best f1=0.6818 @ 0.43
+  confusion matrix (f1-optimal):
+[[568  36]
+ [ 62 105]]
+Fold 2 Epoch 16/250
+  train loss=3.1580  cls=0.1530  recon=0.8394  con=4.8162  acc=0.829
+  val loss=4.2842  cls=0.1548  recon=1.8901  con=4.5610
+  best acc=0.8651 @ 0.65   best f1=0.6704 @ 0.62
+  confusion matrix (f1-optimal):
+[[535  69]
+ [ 48 119]]
+Fold 2 Epoch 17/250
+  train loss=3.1462  cls=0.1449  recon=0.8384  con=4.8102  acc=0.829
+  val loss=3.4858  cls=0.1512  recon=1.2140  con=4.5553
+  best acc=0.8470 @ 0.67   best f1=0.6448 @ 0.59
+  confusion matrix (f1-optimal):
+[[523  81]
+ [ 49 118]]
+Fold 2 Epoch 18/250
+  train loss=3.1449  cls=0.1467  recon=0.8376  con=4.8049  acc=0.838
+  val loss=4.0194  cls=0.1282  recon=1.6894  con=4.5541
+  best acc=0.8716 @ 0.55   best f1=0.6954 @ 0.52
+  confusion matrix (f1-optimal):
+[[544  60]
+ [ 46 121]]
+Fold 2 Epoch 19/250
+  train loss=3.1385  cls=0.1415  recon=0.8366  con=4.8049  acc=0.845
+  val loss=3.8722  cls=0.1325  recon=1.5658  con=4.5382
+  best acc=0.8651 @ 0.57   best f1=0.6848 @ 0.57
+  confusion matrix (f1-optimal):
+[[554  50]
+ [ 54 113]]
+Fold 2 Epoch 20/250
+  train loss=3.1279  cls=0.1368  recon=0.8360  con=4.7923  acc=0.855
+  val loss=4.8587  cls=0.1313  recon=2.4064  con=4.5441
+  best acc=0.8820 @ 0.64   best f1=0.7129 @ 0.64
+  confusion matrix (f1-optimal):
+[[567  37]
+ [ 54 113]]
+Fold 2 Epoch 21/250
+  train loss=3.1116  cls=0.1277  recon=0.8348  con=4.7789  acc=0.872
+  val loss=3.6617  cls=0.1308  recon=1.3857  con=4.5436
+  best acc=0.8768 @ 0.56   best f1=0.7119 @ 0.50
+  confusion matrix (f1-optimal):
+[[543  61]
+ [ 41 126]]
+Fold 2 Epoch 22/250
+  train loss=3.1065  cls=0.1249  recon=0.8340  con=4.7755  acc=0.874
+  val loss=3.4119  cls=0.1320  recon=1.1753  con=4.5331
+  best acc=0.8755 @ 0.64   best f1=0.7055 @ 0.64
+  confusion matrix (f1-optimal):
+[[560  44]
+ [ 52 115]]
+Fold 2 Epoch 23/250
+  train loss=3.1047  cls=0.1225  recon=0.8341  con=4.7769  acc=0.879
+  val loss=3.4826  cls=0.1359  recon=1.2275  con=4.5464
+  best acc=0.8716 @ 0.65   best f1=0.7011 @ 0.56
+  confusion matrix (f1-optimal):
+[[545  59]
+ [ 45 122]]
+Fold 2 Epoch 24/250
+  train loss=3.0982  cls=0.1181  recon=0.8340  con=4.7719  acc=0.876
+  val loss=3.6251  cls=0.1303  recon=1.3578  con=4.5356
+  best acc=0.8755 @ 0.53   best f1=0.7159 @ 0.47
+  confusion matrix (f1-optimal):
+[[545  59]
+ [ 41 126]]
+Fold 2 Epoch 25/250
+  train loss=3.0976  cls=0.1189  recon=0.8332  con=4.7707  acc=0.876
+  val loss=3.8048  cls=0.1312  recon=1.5049  con=4.5506
+  best acc=0.8781 @ 0.61   best f1=0.7127 @ 0.51
+  confusion matrix (f1-optimal):
+[[538  66]
+ [ 38 129]]
+Fold 2 Epoch 26/250
+  train loss=3.0850  cls=0.1097  recon=0.8335  con=4.7620  acc=0.890
+  val loss=4.2224  cls=0.1349  recon=1.8565  con=4.5551
+  best acc=0.8755 @ 0.65   best f1=0.7069 @ 0.54
+  confusion matrix (f1-optimal):
+[[546  58]
+ [ 44 123]]
+Fold 2 Epoch 27/250
+  train loss=3.0787  cls=0.1048  recon=0.8334  con=4.7588  acc=0.898
+  val loss=4.0086  cls=0.1320  recon=1.6803  con=4.5446
+  best acc=0.8755 @ 0.59   best f1=0.7049 @ 0.50
+  confusion matrix (f1-optimal):
+[[545  59]
+ [ 44 123]]
+Fold 2 Epoch 28/250
+  train loss=3.0756  cls=0.1033  recon=0.8333  con=4.7552  acc=0.898
+  val loss=4.3932  cls=0.1490  recon=1.9915  con=4.5516
+  best acc=0.8781 @ 0.58   best f1=0.7059 @ 0.40
+  confusion matrix (f1-optimal):
+[[518  86]
+ [ 29 138]]
+Fold 2 Epoch 29/250
+  train loss=3.0634  cls=0.0964  recon=0.8329  con=4.7436  acc=0.904
+  val loss=3.6043  cls=0.1346  recon=1.3304  con=4.5523
+  best acc=0.8716 @ 0.57   best f1=0.7027 @ 0.57
+  confusion matrix (f1-optimal):
+[[555  49]
+ [ 50 117]]
+Fold 2 Epoch 30/250
+  train loss=3.0677  cls=0.0978  recon=0.8335  con=4.7489  acc=0.906
+  val loss=3.9663  cls=0.1567  recon=1.6173  con=4.5611
+  best acc=0.8794 @ 0.56   best f1=0.7173 @ 0.56
+  confusion matrix (f1-optimal):
+[[560  44]
+ [ 49 118]]
+Fold 2 Epoch 31/250
+  train loss=3.0490  cls=0.0877  recon=0.8329  con=4.7301  acc=0.924
+  val loss=3.2118  cls=0.1454  recon=0.9870  con=4.5503
+  best acc=0.8755 @ 0.46   best f1=0.7209 @ 0.46
+  confusion matrix (f1-optimal):
+[[551  53]
+ [ 43 124]]
+Fold 2 Epoch 32/250
+  train loss=3.0519  cls=0.0881  recon=0.8337  con=4.7340  acc=0.917
+  val loss=3.4896  cls=0.1570  recon=1.2112  con=4.5587
+  best acc=0.8807 @ 0.54   best f1=0.7178 @ 0.54
+  confusion matrix (f1-optimal):
+[[562  42]
+ [ 50 117]]
+Fold 2 Epoch 33/250
+  train loss=3.0410  cls=0.0810  recon=0.8328  con=4.7275  acc=0.929
+  val loss=4.0563  cls=0.1597  recon=1.6913  con=4.5617
+  best acc=0.8768 @ 0.59   best f1=0.7147 @ 0.42
+  confusion matrix (f1-optimal):
+[[539  65]
+ [ 38 129]]
+Fold 2 Epoch 34/250
+  train loss=3.0441  cls=0.0843  recon=0.8328  con=4.7269  acc=0.923
+  val loss=3.8104  cls=0.1624  recon=1.4821  con=4.5534
+  best acc=0.8729 @ 0.51   best f1=0.7110 @ 0.42
+  confusion matrix (f1-optimal):
+[[548  56]
+ [ 44 123]]
+Fold 2 Epoch 35/250
+  train loss=3.0371  cls=0.0784  recon=0.8335  con=4.7220  acc=0.933
+  val loss=3.3143  cls=0.1579  recon=1.0658  con=4.5447
+  best acc=0.8651 @ 0.59   best f1=0.6989 @ 0.48
+  confusion matrix (f1-optimal):
+[[542  62]
+ [ 44 123]]
+Fold 2 Epoch 36/250
+  train loss=3.0242  cls=0.0718  recon=0.8325  con=4.7099  acc=0.937
+  val loss=3.8551  cls=0.1787  recon=1.4896  con=4.6002
+  best acc=0.8690 @ 0.71   best f1=0.6912 @ 0.49
+  confusion matrix (f1-optimal):
+[[540  64]
+ [ 45 122]]
+Fold 2 Epoch 37/250
+  train loss=2.9972  cls=0.0590  recon=0.8317  con=4.6784  acc=0.952
+  val loss=3.6759  cls=0.1860  recon=1.3245  con=4.6168
+  best acc=0.8690 @ 0.60   best f1=0.6860 @ 0.35
+  confusion matrix (f1-optimal):
+[[522  82]
+ [ 37 130]]
+Fold 2 Epoch 38/250
+  train loss=2.9945  cls=0.0533  recon=0.8325  con=4.6834  acc=0.959
+  val loss=3.9658  cls=0.1853  recon=1.5805  con=4.5942
+  best acc=0.8638 @ 0.71   best f1=0.6667 @ 0.65
+  confusion matrix (f1-optimal):
+[[559  45]
+ [ 61 106]]
+Fold 2 Epoch 39/250
+  train loss=2.9899  cls=0.0507  recon=0.8310  con=4.6826  acc=0.955
+  val loss=3.7774  cls=0.2368  recon=1.3849  con=4.5692
+  best acc=0.8651 @ 0.62   best f1=0.6667 @ 0.39
+  confusion matrix (f1-optimal):
+[[547  57]
+ [ 55 112]]
+Fold 2 Epoch 40/250
+  train loss=2.9933  cls=0.0529  recon=0.8312  con=4.6853  acc=0.956
+  val loss=3.6498  cls=0.2002  recon=1.3060  con=4.5724
+  best acc=0.8690 @ 0.75   best f1=0.6797 @ 0.42
+  confusion matrix (f1-optimal):
+[[534  70]
+ [ 45 122]]
+Fold 2 Epoch 41/250
+  train loss=2.9818  cls=0.0476  recon=0.8311  con=4.6704  acc=0.961
+  val loss=4.1796  cls=0.2177  recon=1.7368  con=4.5903
+  best acc=0.8716 @ 0.81   best f1=0.6846 @ 0.41
+  confusion matrix (f1-optimal):
+[[527  77]
+ [ 40 127]]
+Fold 2 Epoch 42/250
+  train loss=2.9841  cls=0.0479  recon=0.8326  con=4.6713  acc=0.964
+  val loss=4.6543  cls=0.2624  recon=2.1012  con=4.5969
+  best acc=0.8729 @ 0.50   best f1=0.6937 @ 0.50
+  confusion matrix (f1-optimal):
+[[562  42]
+ [ 56 111]]
+Fold 2 Epoch 43/250
+  train loss=2.9866  cls=0.0503  recon=0.8316  con=4.6744  acc=0.962
+  val loss=3.7646  cls=0.2041  recon=1.3983  con=4.5789
+  best acc=0.8651 @ 0.58   best f1=0.6704 @ 0.41
+  confusion matrix (f1-optimal):
+[[531  73]
+ [ 46 121]]
+Fold 2 Epoch 44/250
+  train loss=2.9722  cls=0.0419  recon=0.8308  con=4.6619  acc=0.970
+  val loss=3.8074  cls=0.2316  recon=1.3997  con=4.6113
+  best acc=0.8742 @ 0.80   best f1=0.6882 @ 0.55
+  confusion matrix (f1-optimal):
+[[548  56]
+ [ 50 117]]
+Fold 2 Epoch 45/250
+  train loss=2.9684  cls=0.0408  recon=0.8313  con=4.6540  acc=0.965
+  val loss=3.6618  cls=0.2565  recon=1.2545  con=4.6107
+  best acc=0.8729 @ 0.63   best f1=0.6899 @ 0.63
+  confusion matrix (f1-optimal):
+[[564  40]
+ [ 58 109]]
+Fold 2 Epoch 46/250
+  train loss=2.9729  cls=0.0411  recon=0.8313  con=4.6642  acc=0.969
+  val loss=3.6574  cls=0.2512  recon=1.2569  con=4.6061
+  best acc=0.8664 @ 0.73   best f1=0.6790 @ 0.39
+  confusion matrix (f1-optimal):
+[[522  82]
+ [ 39 128]]
+Fold 2 Epoch 47/250
+  train loss=2.9720  cls=0.0419  recon=0.8312  con=4.6606  acc=0.962
+  val loss=3.6964  cls=0.2739  recon=1.2779  con=4.5864
+  best acc=0.8677 @ 0.63   best f1=0.6847 @ 0.46
+  confusion matrix (f1-optimal):
+[[552  52]
+ [ 53 114]]
+Fold 2 Epoch 48/250
+  train loss=2.9607  cls=0.0353  recon=0.8313  con=4.6492  acc=0.974
+  val loss=4.1151  cls=0.2687  recon=1.6322  con=4.6071
+  best acc=0.8677 @ 0.83   best f1=0.6751 @ 0.58
+  confusion matrix (f1-optimal):
+[[561  43]
+ [ 60 107]]
+Fold 2 Epoch 49/250
+  train loss=2.9609  cls=0.0354  recon=0.8312  con=4.6496  acc=0.973
+  val loss=4.0496  cls=0.2476  recon=1.5944  con=4.6068
+  best acc=0.8703 @ 0.55   best f1=0.6933 @ 0.55
+  confusion matrix (f1-optimal):
+[[558  46]
+ [ 54 113]]
+Fold 2 Epoch 50/250
+  train loss=2.9525  cls=0.0312  recon=0.8308  con=4.6406  acc=0.976
+  val loss=4.3923  cls=0.2986  recon=1.8374  con=4.6233
+  best acc=0.8690 @ 0.53   best f1=0.6892 @ 0.53
+  confusion matrix (f1-optimal):
+[[558  46]
+ [ 55 112]]
+Fold 2 Epoch 51/250
+  train loss=2.9561  cls=0.0345  recon=0.8305  con=4.6422  acc=0.971
+  val loss=3.9276  cls=0.2699  recon=1.4706  con=4.6085
+  best acc=0.8651 @ 0.77   best f1=0.6788 @ 0.49
+  confusion matrix (f1-optimal):
+[[553  51]
+ [ 55 112]]
+Early stopping at epoch 51
+Fold 2 result (best epoch 31): val_loss=3.2118 (cls=0.1454, recon=0.9870, con=4.5503), val_f1=0.721 @ 0.46, val_acc=0.875 @ 0.46
+  Confusion Matrix:
+[[551  53]
+ [ 43 124]]
+Fold 2 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/resnet_ae_checkpoints_cv_holdout/fold_1.pt
+
+===== Fold 3/5 =====
+Train: 3084 | repeaters: 667 (21.6%)
+Val:   771   | repeaters: 167   (21.7%)
+Model: 9.81M params (source trial 36)
+Fold 3 Epoch 1/250
+  train loss=17.9172  cls=0.2945  recon=13.2357  con=5.0286  acc=0.599
+  val loss=5.9602  cls=0.2202  recon=3.2440  con=4.6178
+  best acc=0.7834 @ 0.52   best f1=0.3593 @ 0.47
+  confusion matrix (f1-optimal):
+[[ 13 591]
+ [  1 166]]
+Fold 3 Epoch 2/250
+  train loss=3.8806  cls=0.2236  recon=1.3813  con=4.8565  acc=0.653
+  val loss=3.2673  cls=0.2115  recon=0.9587  con=4.6041
+  best acc=0.7834 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 3 Epoch 3/250
+  train loss=3.3318  cls=0.2138  recon=0.9251  con=4.8459  acc=0.719
+  val loss=3.5001  cls=0.2109  recon=1.1605  con=4.5966
+  best acc=0.7834 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 3 Epoch 4/250
+  train loss=3.3212  cls=0.2103  recon=0.9194  con=4.8449  acc=0.758
+  val loss=3.7915  cls=0.2113  recon=1.4090  con=4.5960
+  best acc=0.7834 @ 0.48   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 3 Epoch 5/250
+  train loss=3.3033  cls=0.2096  recon=0.9048  con=4.8447  acc=0.764
+  val loss=4.4450  cls=0.2110  recon=1.9672  con=4.5950
+  best acc=0.7834 @ 0.48   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 3 Epoch 6/250
+  train loss=3.2668  cls=0.2102  recon=0.8733  con=4.8446  acc=0.771
+  val loss=4.6682  cls=0.2106  recon=2.1578  con=4.5956
+  best acc=0.7834 @ 0.47   best f1=0.3580 @ 0.46
+  confusion matrix (f1-optimal):
+[[  5 599]
+ [  0 167]]
+Fold 3 Epoch 7/250
+  train loss=3.2493  cls=0.2096  recon=0.8589  con=4.8445  acc=0.766
+  val loss=4.8839  cls=0.2105  recon=2.3420  con=4.5952
+  best acc=0.7860 @ 0.47   best f1=0.3588 @ 0.46
+  confusion matrix (f1-optimal):
+[[  7 597]
+ [  0 167]]
+Fold 3 Epoch 8/250
+  train loss=3.2366  cls=0.2070  recon=0.8502  con=4.8445  acc=0.774
+  val loss=4.1799  cls=0.2092  recon=1.7425  con=4.5953
+  best acc=0.7834 @ 0.48   best f1=0.3724 @ 0.46
+  confusion matrix (f1-optimal):
+[[ 98 506]
+ [ 13 154]]
+Fold 3 Epoch 9/250
+  train loss=3.2308  cls=0.2056  recon=0.8463  con=4.8450  acc=0.774
+  val loss=3.9950  cls=0.2044  recon=1.5893  con=4.5940
+  best acc=0.7834 @ 0.48   best f1=0.4289 @ 0.45
+  confusion matrix (f1-optimal):
+[[390 214]
+ [ 63 104]]
+Fold 3 Epoch 10/250
+  train loss=3.2253  cls=0.2035  recon=0.8431  con=4.8458  acc=0.772
+  val loss=3.9685  cls=0.2063  recon=1.5639  con=4.5971
+  best acc=0.7834 @ 0.50   best f1=0.4689 @ 0.49
+  confusion matrix (f1-optimal):
+[[402 202]
+ [ 54 113]]
+Fold 3 Epoch 11/250
+  train loss=3.2181  cls=0.1974  recon=0.8420  con=4.8464  acc=0.768
+  val loss=4.0029  cls=0.2086  recon=1.5929  con=4.5926
+  best acc=0.7834 @ 0.53   best f1=0.5211 @ 0.52
+  confusion matrix (f1-optimal):
+[[490 114]
+ [ 68  99]]
+Fold 3 Epoch 12/250
+  train loss=3.2078  cls=0.1889  recon=0.8411  con=4.8445  acc=0.746
+  val loss=4.9307  cls=0.1925  recon=2.3990  con=4.5907
+  best acc=0.7873 @ 0.54   best f1=0.5099 @ 0.53
+  confusion matrix (f1-optimal):
+[[432 172]
+ [ 51 116]]
+Fold 3 Epoch 13/250
+  train loss=3.2004  cls=0.1839  recon=0.8401  con=4.8415  acc=0.748
+  val loss=4.1872  cls=0.1775  recon=1.7763  con=4.5937
+  best acc=0.8262 @ 0.52   best f1=0.6005 @ 0.49
+  confusion matrix (f1-optimal):
+[[503 101]
+ [ 52 115]]
+Fold 3 Epoch 14/250
+  train loss=3.1860  cls=0.1720  recon=0.8394  con=4.8375  acc=0.775
+  val loss=4.8685  cls=0.1895  recon=2.3432  con=4.6053
+  best acc=0.8301 @ 0.56   best f1=0.5931 @ 0.44
+  confusion matrix (f1-optimal):
+[[484 120]
+ [ 46 121]]
+Fold 3 Epoch 15/250
+  train loss=3.1717  cls=0.1604  recon=0.8390  con=4.8322  acc=0.793
+  val loss=3.6725  cls=0.1722  recon=1.3448  con=4.5849
+  best acc=0.8573 @ 0.54   best f1=0.6510 @ 0.50
+  confusion matrix (f1-optimal):
+[[541  63]
+ [ 56 111]]
+Fold 3 Epoch 16/250
+  train loss=3.1653  cls=0.1580  recon=0.8385  con=4.8239  acc=0.809
+  val loss=7.5617  cls=0.1658  recon=4.6709  con=4.5787
+  best acc=0.8457 @ 0.55   best f1=0.6324 @ 0.51
+  confusion matrix (f1-optimal):
+[[518  86]
+ [ 50 117]]
+Fold 3 Epoch 17/250
+  train loss=3.1571  cls=0.1525  recon=0.8378  con=4.8197  acc=0.824
+  val loss=3.9857  cls=0.1823  recon=1.6007  con=4.5923
+  best acc=0.8482 @ 0.63   best f1=0.6324 @ 0.55
+  confusion matrix (f1-optimal):
+[[518  86]
+ [ 50 117]]
+Fold 3 Epoch 18/250
+  train loss=3.1508  cls=0.1494  recon=0.8364  con=4.8157  acc=0.818
+  val loss=3.7100  cls=0.1592  recon=1.3913  con=4.5755
+  best acc=0.8729 @ 0.63   best f1=0.6828 @ 0.60
+  confusion matrix (f1-optimal):
+[[553  51]
+ [ 54 113]]
+Fold 3 Epoch 19/250
+  train loss=3.1336  cls=0.1383  recon=0.8353  con=4.8044  acc=0.842
+  val loss=4.5925  cls=0.1699  recon=2.1385  con=4.5661
+  best acc=0.8742 @ 0.64   best f1=0.6910 @ 0.56
+  confusion matrix (f1-optimal):
+[[538  66]
+ [ 44 123]]
+Fold 3 Epoch 20/250
+  train loss=3.1269  cls=0.1340  recon=0.8357  con=4.7976  acc=0.848
+  val loss=3.6943  cls=0.1518  recon=1.3914  con=4.5553
+  best acc=0.8729 @ 0.62   best f1=0.7076 @ 0.59
+  confusion matrix (f1-optimal):
+[[550  54]
+ [ 46 121]]
+Fold 3 Epoch 21/250
+  train loss=3.1209  cls=0.1301  recon=0.8346  con=4.7956  acc=0.856
+  val loss=3.8579  cls=0.1637  recon=1.5186  con=4.5615
+  best acc=0.8742 @ 0.70   best f1=0.7018 @ 0.59
+  confusion matrix (f1-optimal):
+[[549  55]
+ [ 47 120]]
+Fold 3 Epoch 22/250
+  train loss=3.1142  cls=0.1264  recon=0.8345  con=4.7889  acc=0.861
+  val loss=4.6026  cls=0.1592  recon=2.1562  con=4.5662
+  best acc=0.8638 @ 0.71   best f1=0.7059 @ 0.60
+  confusion matrix (f1-optimal):
+[[529  75]
+ [ 35 132]]
+Fold 3 Epoch 23/250
+  train loss=3.1040  cls=0.1203  recon=0.8331  con=4.7828  acc=0.871
+  val loss=3.7198  cls=0.1632  recon=1.4006  con=4.5634
+  best acc=0.8742 @ 0.62   best f1=0.7045 @ 0.50
+  confusion matrix (f1-optimal):
+[[543  61]
+ [ 43 124]]
+Fold 3 Epoch 24/250
+  train loss=3.1067  cls=0.1220  recon=0.8345  con=4.7814  acc=0.874
+  val loss=3.8474  cls=0.1752  recon=1.5035  con=4.5512
+  best acc=0.8729 @ 0.54   best f1=0.7202 @ 0.53
+  confusion matrix (f1-optimal):
+[[540  64]
+ [ 37 130]]
+Fold 3 Epoch 25/250
+  train loss=3.0944  cls=0.1136  recon=0.8335  con=4.7750  acc=0.876
+  val loss=3.5514  cls=0.1676  recon=1.2577  con=4.5506
+  best acc=0.8833 @ 0.66   best f1=0.7262 @ 0.55
+  confusion matrix (f1-optimal):
+[[550  54]
+ [ 41 126]]
+Fold 3 Epoch 26/250
+  train loss=3.0846  cls=0.1060  recon=0.8334  con=4.7701  acc=0.889
+  val loss=3.9748  cls=0.1824  recon=1.5994  con=4.5699
+  best acc=0.8768 @ 0.58   best f1=0.7115 @ 0.47
+  confusion matrix (f1-optimal):
+[[541  63]
+ [ 40 127]]
+Fold 3 Epoch 27/250
+  train loss=3.0721  cls=0.0981  recon=0.8327  con=4.7611  acc=0.905
+  val loss=3.5630  cls=0.1672  recon=1.2649  con=4.5590
+  best acc=0.8742 @ 0.59   best f1=0.7195 @ 0.56
+  confusion matrix (f1-optimal):
+[[545  59]
+ [ 40 127]]
+Fold 3 Epoch 28/250
+  train loss=3.0748  cls=0.1006  recon=0.8334  con=4.7595  acc=0.903
+  val loss=3.7112  cls=0.1846  recon=1.3785  con=4.5533
+  best acc=0.8768 @ 0.50   best f1=0.7107 @ 0.42
+  confusion matrix (f1-optimal):
+[[537  67]
+ [ 38 129]]
+Fold 3 Epoch 29/250
+  train loss=3.0591  cls=0.0884  recon=0.8327  con=4.7529  acc=0.915
+  val loss=3.7187  cls=0.1863  recon=1.3806  con=4.5615
+  best acc=0.8716 @ 0.64   best f1=0.7079 @ 0.58
+  confusion matrix (f1-optimal):
+[[541  63]
+ [ 41 126]]
+Fold 3 Epoch 30/250
+  train loss=3.0481  cls=0.0794  recon=0.8340  con=4.7448  acc=0.926
+  val loss=5.5562  cls=0.2217  recon=2.9167  con=4.5655
+  best acc=0.8716 @ 0.55   best f1=0.6940 @ 0.45
+  confusion matrix (f1-optimal):
+[[532  72]
+ [ 40 127]]
+Fold 3 Epoch 31/250
+  train loss=3.0512  cls=0.0804  recon=0.8326  con=4.7535  acc=0.924
+  val loss=4.1096  cls=0.1800  recon=1.7203  con=4.5589
+  best acc=0.8820 @ 0.65   best f1=0.7119 @ 0.52
+  confusion matrix (f1-optimal):
+[[543  61]
+ [ 41 126]]
+Fold 3 Epoch 32/250
+  train loss=3.0342  cls=0.0731  recon=0.8324  con=4.7309  acc=0.937
+  val loss=4.0252  cls=0.2227  recon=1.6094  con=4.5660
+  best acc=0.8690 @ 0.59   best f1=0.7139 @ 0.36
+  confusion matrix (f1-optimal):
+[[526  78]
+ [ 31 136]]
+Fold 3 Epoch 33/250
+  train loss=3.0252  cls=0.0659  recon=0.8323  con=4.7274  acc=0.940
+  val loss=3.6023  cls=0.2228  recon=1.2478  con=4.5678
+  best acc=0.8781 @ 0.58   best f1=0.7219 @ 0.58
+  confusion matrix (f1-optimal):
+[[555  49]
+ [ 45 122]]
+Fold 3 Epoch 34/250
+  train loss=3.0259  cls=0.0660  recon=0.8323  con=4.7285  acc=0.938
+  val loss=3.7400  cls=0.2083  recon=1.3813  con=4.5579
+  best acc=0.8755 @ 0.66   best f1=0.7128 @ 0.47
+  confusion matrix (f1-optimal):
+[[529  75]
+ [ 33 134]]
+Fold 3 Epoch 35/250
+  train loss=3.0111  cls=0.0594  recon=0.8312  con=4.7121  acc=0.955
+  val loss=3.6631  cls=0.2397  recon=1.2813  con=4.5790
+  best acc=0.8690 @ 0.53   best f1=0.7021 @ 0.53
+  confusion matrix (f1-optimal):
+[[551  53]
+ [ 48 119]]
+Fold 3 Epoch 36/250
+  train loss=2.9992  cls=0.0519  recon=0.8317  con=4.7001  acc=0.955
+  val loss=3.8789  cls=0.2740  recon=1.4367  con=4.5775
+  best acc=0.8716 @ 0.56   best f1=0.6989 @ 0.35
+  confusion matrix (f1-optimal):
+[[529  75]
+ [ 37 130]]
+Fold 3 Epoch 37/250
+  train loss=2.9917  cls=0.0475  recon=0.8304  con=4.6966  acc=0.964
+  val loss=3.7091  cls=0.2469  recon=1.3168  con=4.5724
+  best acc=0.8781 @ 0.56   best f1=0.7097 @ 0.50
+  confusion matrix (f1-optimal):
+[[551  53]
+ [ 46 121]]
+Fold 3 Epoch 38/250
+  train loss=2.9914  cls=0.0458  recon=0.8312  con=4.6974  acc=0.966
+  val loss=3.5319  cls=0.2608  recon=1.1551  con=4.5685
+  best acc=0.8690 @ 0.70   best f1=0.7000 @ 0.37
+  confusion matrix (f1-optimal):
+[[524  80]
+ [ 34 133]]
+Fold 3 Epoch 39/250
+  train loss=2.9900  cls=0.0426  recon=0.8315  con=4.7008  acc=0.963
+  val loss=4.0948  cls=0.2823  recon=1.6182  con=4.5651
+  best acc=0.8690 @ 0.52   best f1=0.7100 @ 0.38
+  confusion matrix (f1-optimal):
+[[533  71]
+ [ 36 131]]
+Fold 3 Epoch 40/250
+  train loss=2.9847  cls=0.0418  recon=0.8305  con=4.6929  acc=0.968
+  val loss=3.7826  cls=0.2620  recon=1.3690  con=4.5658
+  best acc=0.8716 @ 0.66   best f1=0.7024 @ 0.43
+  confusion matrix (f1-optimal):
+[[529  75]
+ [ 36 131]]
+Fold 3 Epoch 41/250
+  train loss=2.9776  cls=0.0412  recon=0.8305  con=4.6776  acc=0.965
+  val loss=3.9094  cls=0.2818  recon=1.4643  con=4.5546
+  best acc=0.8781 @ 0.67   best f1=0.7177 @ 0.36
+  confusion matrix (f1-optimal):
+[[528  76]
+ [ 31 136]]
+Fold 3 Epoch 42/250
+  train loss=2.9787  cls=0.0384  recon=0.8316  con=4.6838  acc=0.971
+  val loss=4.1272  cls=0.2901  recon=1.6307  con=4.5891
+  best acc=0.8768 @ 0.60   best f1=0.7214 @ 0.60
+  confusion matrix (f1-optimal):
+[[553  51]
+ [ 44 123]]
+Fold 3 Epoch 43/250
+  train loss=2.9723  cls=0.0343  recon=0.8314  con=4.6789  acc=0.973
+  val loss=3.9434  cls=0.2938  recon=1.4794  con=4.5648
+  best acc=0.8781 @ 0.73   best f1=0.7318 @ 0.51
+  confusion matrix (f1-optimal):
+[[544  60]
+ [ 36 131]]
+Fold 3 Epoch 44/250
+  train loss=2.9753  cls=0.0365  recon=0.8305  con=4.6832  acc=0.972
+  val loss=3.8062  cls=0.2939  recon=1.3616  con=4.5668
+  best acc=0.8755 @ 0.55   best f1=0.7288 @ 0.49
+  confusion matrix (f1-optimal):
+[[539  65]
+ [ 34 133]]
+Fold 3 Epoch 45/250
+  train loss=2.9729  cls=0.0349  recon=0.8304  con=4.6818  acc=0.976
+  val loss=4.0292  cls=0.3026  recon=1.5476  con=4.5578
+  best acc=0.8729 @ 0.57   best f1=0.7230 @ 0.42
+  confusion matrix (f1-optimal):
+[[529  75]
+ [ 30 137]]
+Fold 3 Epoch 46/250
+  train loss=2.9609  cls=0.0303  recon=0.8307  con=4.6633  acc=0.973
+  val loss=4.0867  cls=0.3235  recon=1.5648  con=4.5967
+  best acc=0.8729 @ 0.60   best f1=0.7198 @ 0.38
+  confusion matrix (f1-optimal):
+[[538  66]
+ [ 36 131]]
+Fold 3 Epoch 47/250
+  train loss=2.9593  cls=0.0302  recon=0.8301  con=4.6610  acc=0.978
+  val loss=4.0466  cls=0.3164  recon=1.5474  con=4.5668
+  best acc=0.8742 @ 0.52   best f1=0.7185 @ 0.39
+  confusion matrix (f1-optimal):
+[[532  72]
+ [ 33 134]]
+Fold 3 Epoch 48/250
+  train loss=2.9615  cls=0.0298  recon=0.8319  con=4.6627  acc=0.977
+  val loss=4.9849  cls=0.3314  recon=2.3406  con=4.5521
+  best acc=0.8690 @ 0.65   best f1=0.7053 @ 0.30
+  confusion matrix (f1-optimal):
+[[525  79]
+ [ 33 134]]
+Fold 3 Epoch 49/250
+  train loss=2.9553  cls=0.0285  recon=0.8302  con=4.6552  acc=0.979
+  val loss=4.4234  cls=0.3366  recon=1.8473  con=4.5791
+  best acc=0.8677 @ 0.40   best f1=0.7249 @ 0.34
+  confusion matrix (f1-optimal):
+[[530  74]
+ [ 30 137]]
+Fold 3 Epoch 50/250
+  train loss=2.9633  cls=0.0321  recon=0.8305  con=4.6651  acc=0.976
+  val loss=4.3301  cls=0.3063  recon=1.8001  con=4.5608
+  best acc=0.8716 @ 0.70   best f1=0.7016 @ 0.41
+  confusion matrix (f1-optimal):
+[[523  81]
+ [ 33 134]]
+Fold 3 Epoch 51/250
+  train loss=2.9508  cls=0.0219  recon=0.8302  con=4.6605  acc=0.982
+  val loss=4.5454  cls=0.3391  recon=1.9500  con=4.5771
+  best acc=0.8716 @ 0.69   best f1=0.7089 @ 0.31
+  confusion matrix (f1-optimal):
+[[516  88]
+ [ 27 140]]
+Fold 3 Epoch 52/250
+  train loss=2.9532  cls=0.0259  recon=0.8306  con=4.6555  acc=0.981
+  val loss=4.2046  cls=0.3446  recon=1.6537  con=4.5793
+  best acc=0.8716 @ 0.48   best f1=0.7227 @ 0.48
+  confusion matrix (f1-optimal):
+[[543  61]
+ [ 38 129]]
+Fold 3 Epoch 53/250
+  train loss=2.9445  cls=0.0217  recon=0.8298  con=4.6473  acc=0.981
+  val loss=4.1728  cls=0.3571  recon=1.6169  con=4.5768
+  best acc=0.8742 @ 0.73   best f1=0.7143 @ 0.46
+  confusion matrix (f1-optimal):
+[[537  67]
+ [ 37 130]]
+Fold 3 Epoch 54/250
+  train loss=2.9418  cls=0.0207  recon=0.8298  con=4.6429  acc=0.986
+  val loss=4.1401  cls=0.3706  recon=1.5782  con=4.5744
+  best acc=0.8742 @ 0.66   best f1=0.7248 @ 0.34
+  confusion matrix (f1-optimal):
+[[537  67]
+ [ 34 133]]
+Fold 3 Epoch 55/250
+  train loss=2.9494  cls=0.0253  recon=0.8295  con=4.6512  acc=0.979
+  val loss=3.9291  cls=0.3554  recon=1.4099  con=4.5779
+  best acc=0.8716 @ 0.56   best f1=0.7178 @ 0.39
+  confusion matrix (f1-optimal):
+[[537  67]
+ [ 36 131]]
+Fold 3 Epoch 56/250
+  train loss=2.9451  cls=0.0237  recon=0.8302  con=4.6425  acc=0.983
+  val loss=3.8429  cls=0.3647  recon=1.3288  con=4.5771
+  best acc=0.8703 @ 0.51   best f1=0.7209 @ 0.38
+  confusion matrix (f1-optimal):
+[[535  69]
+ [ 34 133]]
+Fold 3 Epoch 57/250
+  train loss=2.9429  cls=0.0201  recon=0.8295  con=4.6478  acc=0.986
+  val loss=3.9142  cls=0.3815  recon=1.3672  con=4.5993
+  best acc=0.8703 @ 0.58   best f1=0.7143 @ 0.30
+  confusion matrix (f1-optimal):
+[[528  76]
+ [ 32 135]]
+Fold 3 Epoch 58/250
+  train loss=2.9456  cls=0.0233  recon=0.8293  con=4.6473  acc=0.980
+  val loss=3.8821  cls=0.3714  recon=1.3526  con=4.5878
+  best acc=0.8716 @ 0.70   best f1=0.7120 @ 0.44
+  confusion matrix (f1-optimal):
+[[534  70]
+ [ 36 131]]
+Fold 3 Epoch 59/250
+  train loss=2.9419  cls=0.0194  recon=0.8302  con=4.6451  acc=0.984
+  val loss=3.9014  cls=0.3776  recon=1.3694  con=4.5721
+  best acc=0.8716 @ 0.63   best f1=0.7192 @ 0.30
+  confusion matrix (f1-optimal):
+[[527  77]
+ [ 30 137]]
+Fold 3 Epoch 60/250
+  train loss=2.9405  cls=0.0210  recon=0.8298  con=4.6392  acc=0.983
+  val loss=4.0240  cls=0.3748  recon=1.4738  con=4.5795
+  best acc=0.8729 @ 0.74   best f1=0.7235 @ 0.25
+  confusion matrix (f1-optimal):
+[[524  80]
+ [ 27 140]]
+Fold 3 Epoch 61/250
+  train loss=2.9447  cls=0.0228  recon=0.8301  con=4.6441  acc=0.983
+  val loss=4.1118  cls=0.3847  recon=1.5430  con=4.5720
+  best acc=0.8716 @ 0.77   best f1=0.7089 @ 0.22
+  confusion matrix (f1-optimal):
+[[516  88]
+ [ 27 140]]
+Fold 3 Epoch 62/250
+  train loss=2.9299  cls=0.0159  recon=0.8289  con=4.6287  acc=0.986
+  val loss=4.0168  cls=0.4084  recon=1.4312  con=4.6013
+  best acc=0.8729 @ 0.67   best f1=0.7069 @ 0.47
+  confusion matrix (f1-optimal):
+[[546  58]
+ [ 44 123]]
+Fold 3 Epoch 63/250
+  train loss=2.9385  cls=0.0202  recon=0.8301  con=4.6354  acc=0.984
+  val loss=4.0869  cls=0.4078  recon=1.4948  con=4.5919
+  best acc=0.8690 @ 0.68   best f1=0.7118 @ 0.19
+  confusion matrix (f1-optimal):
+[[514  90]
+ [ 25 142]]
+Early stopping at epoch 63
+Fold 3 result (best epoch 43): val_loss=3.9434 (cls=0.2938, recon=1.4794, con=4.5648), val_f1=0.732 @ 0.51, val_acc=0.878 @ 0.73
+  Confusion Matrix:
+[[544  60]
+ [ 36 131]]
+Fold 3 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/resnet_ae_checkpoints_cv_holdout/fold_2.pt
+
+===== Fold 4/5 =====
+Train: 3084 | repeaters: 667 (21.6%)
+Val:   771   | repeaters: 167   (21.7%)
+Model: 9.81M params (source trial 36)
+Fold 4 Epoch 1/250
+  train loss=16.4975  cls=0.2848  recon=12.0337  con=5.0255  acc=0.610
+  val loss=8.4260  cls=0.2056  recon=5.3507  con=4.6449
+  best acc=0.7834 @ 0.52   best f1=0.3894 @ 0.48
+  confusion matrix (f1-optimal):
+[[196 408]
+ [ 28 139]]
+Fold 4 Epoch 2/250
+  train loss=3.6937  cls=0.2234  recon=1.2227  con=4.8543  acc=0.679
+  val loss=3.2307  cls=0.2059  recon=0.9345  con=4.5978
+  best acc=0.7834 @ 0.49   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 4 Epoch 3/250
+  train loss=3.3317  cls=0.2144  recon=0.9246  con=4.8459  acc=0.716
+  val loss=3.2105  cls=0.2026  recon=0.9203  con=4.5972
+  best acc=0.7834 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 4 Epoch 4/250
+  train loss=3.3179  cls=0.2124  recon=0.9147  con=4.8452  acc=0.718
+  val loss=3.2160  cls=0.2022  recon=0.9257  con=4.5960
+  best acc=0.7834 @ 0.47   best f1=0.3597 @ 0.46
+  confusion matrix (f1-optimal):
+[[ 14 590]
+ [  1 166]]
+Fold 4 Epoch 5/250
+  train loss=3.2851  cls=0.2099  recon=0.8890  con=4.8448  acc=0.748
+  val loss=5.0547  cls=0.2016  recon=2.4948  con=4.5968
+  best acc=0.7834 @ 0.47   best f1=0.3797 @ 0.46
+  confusion matrix (f1-optimal):
+[[ 84 520]
+ [  6 161]]
+Fold 4 Epoch 6/250
+  train loss=3.2618  cls=0.2098  recon=0.8693  con=4.8446  acc=0.765
+  val loss=3.9447  cls=0.2024  recon=1.5474  con=4.5959
+  best acc=0.7886 @ 0.47   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 4 Epoch 7/250
+  train loss=3.2488  cls=0.2100  recon=0.8582  con=4.8443  acc=0.762
+  val loss=5.6363  cls=0.2025  recon=2.9906  con=4.5959
+  best acc=0.7834 @ 0.48   best f1=0.3561 @ 0.05
+  confusion matrix (f1-optimal):
+[[  0 604]
+ [  0 167]]
+Fold 4 Epoch 8/250
+  train loss=3.2404  cls=0.2084  recon=0.8523  con=4.8442  acc=0.767
+  val loss=6.3882  cls=0.1995  recon=3.6345  con=4.5965
+  best acc=0.7834 @ 0.46   best f1=0.4456 @ 0.45
+  confusion matrix (f1-optimal):
+[[335 269]
+ [ 42 125]]
+Fold 4 Epoch 9/250
+  train loss=3.2337  cls=0.2079  recon=0.8472  con=4.8441  acc=0.771
+  val loss=6.3930  cls=0.1994  recon=3.6389  con=4.5959
+  best acc=0.7834 @ 0.48   best f1=0.4469 @ 0.46
+  confusion matrix (f1-optimal):
+[[274 330]
+ [ 24 143]]
+Fold 4 Epoch 10/250
+  train loss=3.2284  cls=0.2062  recon=0.8442  con=4.8436  acc=0.776
+  val loss=3.7768  cls=0.1934  recon=1.4111  con=4.5979
+  best acc=0.7899 @ 0.49   best f1=0.4619 @ 0.46
+  confusion matrix (f1-optimal):
+[[408 196]
+ [ 58 109]]
+Fold 4 Epoch 11/250
+  train loss=3.2218  cls=0.2010  recon=0.8429  con=4.8440  acc=0.761
+  val loss=3.8256  cls=0.1807  recon=1.4588  con=4.6111
+  best acc=0.8080 @ 0.50   best f1=0.5432 @ 0.47
+  confusion matrix (f1-optimal):
+[[425 179]
+ [ 38 129]]
+Fold 4 Epoch 12/250
+  train loss=3.2128  cls=0.1932  recon=0.8418  con=4.8444  acc=0.764
+  val loss=3.2215  cls=0.1619  recon=0.9643  con=4.5972
+  best acc=0.8171 @ 0.52   best f1=0.5789 @ 0.49
+  confusion matrix (f1-optimal):
+[[501 103]
+ [ 57 110]]
+Fold 4 Epoch 13/250
+  train loss=3.2060  cls=0.1879  recon=0.8414  con=4.8419  acc=0.755
+  val loss=5.0744  cls=0.1595  recon=2.5457  con=4.6018
+  best acc=0.8379 @ 0.57   best f1=0.5855 @ 0.50
+  confusion matrix (f1-optimal):
+[[498 106]
+ [ 54 113]]
+Fold 4 Epoch 14/250
+  train loss=3.1885  cls=0.1742  recon=0.8402  con=4.8362  acc=0.789
+  val loss=3.5071  cls=0.1459  recon=1.2240  con=4.5911
+  best acc=0.8534 @ 0.57   best f1=0.6553 @ 0.54
+  confusion matrix (f1-optimal):
+[[535  69]
+ [ 52 115]]
+Fold 4 Epoch 15/250
+  train loss=3.1732  cls=0.1622  recon=0.8400  con=4.8288  acc=0.810
+  val loss=3.8333  cls=0.1423  recon=1.5112  con=4.5748
+  best acc=0.8781 @ 0.46   best f1=0.7006 @ 0.46
+  confusion matrix (f1-optimal):
+[[567  37]
+ [ 57 110]]
+Fold 4 Epoch 16/250
+  train loss=3.1728  cls=0.1617  recon=0.8404  con=4.8279  acc=0.802
+  val loss=4.0202  cls=0.1409  recon=1.6708  con=4.5778
+  best acc=0.8729 @ 0.48   best f1=0.6765 @ 0.44
+  confusion matrix (f1-optimal):
+[[546  58]
+ [ 52 115]]
+Fold 4 Epoch 17/250
+  train loss=3.1547  cls=0.1497  recon=0.8384  con=4.8188  acc=0.823
+  val loss=3.7851  cls=0.1292  recon=1.4868  con=4.5590
+  best acc=0.8859 @ 0.57   best f1=0.7032 @ 0.52
+  confusion matrix (f1-optimal):
+[[570  34]
+ [ 58 109]]
+Fold 4 Epoch 18/250
+  train loss=3.1480  cls=0.1456  recon=0.8386  con=4.8120  acc=0.830
+  val loss=3.3440  cls=0.1308  recon=1.1074  con=4.5638
+  best acc=0.8807 @ 0.64   best f1=0.7173 @ 0.63
+  confusion matrix (f1-optimal):
+[[560  44]
+ [ 49 118]]
+Fold 4 Epoch 19/250
+  train loss=3.1463  cls=0.1442  recon=0.8382  con=4.8126  acc=0.837
+  val loss=3.4783  cls=0.1245  recon=1.2269  con=4.5653
+  best acc=0.8846 @ 0.58   best f1=0.7118 @ 0.48
+  confusion matrix (f1-optimal):
+[[552  52]
+ [ 46 121]]
+Fold 4 Epoch 20/250
+  train loss=3.1372  cls=0.1408  recon=0.8366  con=4.8034  acc=0.847
+  val loss=3.9988  cls=0.1241  recon=1.6753  con=4.5539
+  best acc=0.8923 @ 0.66   best f1=0.7329 @ 0.62
+  confusion matrix (f1-optimal):
+[[567  37]
+ [ 49 118]]
+Fold 4 Epoch 21/250
+  train loss=3.1260  cls=0.1330  recon=0.8357  con=4.7978  acc=0.855
+  val loss=3.8294  cls=0.1389  recon=1.5166  con=4.5583
+  best acc=0.8833 @ 0.65   best f1=0.7193 @ 0.62
+  confusion matrix (f1-optimal):
+[[552  52]
+ [ 44 123]]
+Fold 4 Epoch 22/250
+  train loss=3.1144  cls=0.1255  recon=0.8358  con=4.7879  acc=0.867
+  val loss=3.9177  cls=0.1185  recon=1.6140  con=4.5454
+  best acc=0.8936 @ 0.60   best f1=0.7192 @ 0.60
+  confusion matrix (f1-optimal):
+[[584  20]
+ [ 62 105]]
+Fold 4 Epoch 23/250
+  train loss=3.1134  cls=0.1247  recon=0.8358  con=4.7874  acc=0.858
+  val loss=4.2877  cls=0.1322  recon=1.9150  con=4.5537
+  best acc=0.8898 @ 0.41   best f1=0.7418 @ 0.39
+  confusion matrix (f1-optimal):
+[[559  45]
+ [ 42 125]]
+Fold 4 Epoch 24/250
+  train loss=3.1102  cls=0.1233  recon=0.8353  con=4.7845  acc=0.866
+  val loss=3.8173  cls=0.1166  recon=1.5289  con=4.5484
+  best acc=0.8923 @ 0.58   best f1=0.7255 @ 0.54
+  confusion matrix (f1-optimal):
+[[576  28]
+ [ 56 111]]
+Fold 4 Epoch 25/250
+  train loss=3.1050  cls=0.1203  recon=0.8350  con=4.7801  acc=0.871
+  val loss=3.3375  cls=0.1186  recon=1.1181  con=4.5476
+  best acc=0.8911 @ 0.62   best f1=0.7289 @ 0.58
+  confusion matrix (f1-optimal):
+[[560  44]
+ [ 46 121]]
+Fold 4 Epoch 26/250
+  train loss=3.0983  cls=0.1153  recon=0.8356  con=4.7742  acc=0.882
+  val loss=3.0761  cls=0.1180  recon=0.8954  con=4.5480
+  best acc=0.8911 @ 0.59   best f1=0.7273 @ 0.59
+  confusion matrix (f1-optimal):
+[[575  29]
+ [ 55 112]]
+Fold 4 Epoch 27/250
+  train loss=3.0973  cls=0.1140  recon=0.8350  con=4.7766  acc=0.879
+  val loss=3.5777  cls=0.1172  recon=1.3275  con=4.5386
+  best acc=0.8898 @ 0.62   best f1=0.7311 @ 0.59
+  confusion matrix (f1-optimal):
+[[561  43]
+ [ 46 121]]
+Fold 4 Epoch 28/250
+  train loss=3.0832  cls=0.1043  recon=0.8346  con=4.7673  acc=0.896
+  val loss=3.4371  cls=0.1192  recon=1.2034  con=4.5451
+  best acc=0.8898 @ 0.57   best f1=0.7195 @ 0.57
+  confusion matrix (f1-optimal):
+[[577  27]
+ [ 58 109]]
+Fold 4 Epoch 29/250
+  train loss=3.0778  cls=0.1033  recon=0.8339  con=4.7589  acc=0.899
+  val loss=3.7127  cls=0.1179  recon=1.4352  con=4.5578
+  best acc=0.8820 @ 0.53   best f1=0.7095 @ 0.48
+  confusion matrix (f1-optimal):
+[[560  44]
+ [ 51 116]]
+Fold 4 Epoch 30/250
+  train loss=3.0746  cls=0.0992  recon=0.8338  con=4.7610  acc=0.902
+  val loss=3.9155  cls=0.1318  recon=1.5918  con=4.5706
+  best acc=0.8846 @ 0.61   best f1=0.7215 @ 0.36
+  confusion matrix (f1-optimal):
+[[530  74]
+ [ 31 136]]
+Fold 4 Epoch 31/250
+  train loss=3.0621  cls=0.0925  recon=0.8339  con=4.7469  acc=0.912
+  val loss=3.7947  cls=0.1288  recon=1.4898  con=4.5746
+  best acc=0.8807 @ 0.69   best f1=0.6952 @ 0.49
+  confusion matrix (f1-optimal):
+[[542  62]
+ [ 45 122]]
+Fold 4 Epoch 32/250
+  train loss=3.0583  cls=0.0868  recon=0.8350  con=4.7486  acc=0.917
+  val loss=3.7081  cls=0.1163  recon=1.4327  con=4.5576
+  best acc=0.8859 @ 0.58   best f1=0.7246 @ 0.50
+  confusion matrix (f1-optimal):
+[[551  53]
+ [ 42 125]]
+Fold 4 Epoch 33/250
+  train loss=3.0489  cls=0.0817  recon=0.8337  con=4.7418  acc=0.924
+  val loss=3.7491  cls=0.1219  recon=1.4623  con=4.5593
+  best acc=0.8911 @ 0.57   best f1=0.7423 @ 0.57
+  confusion matrix (f1-optimal):
+[[566  38]
+ [ 46 121]]
+Fold 4 Epoch 34/250
+  train loss=3.0373  cls=0.0752  recon=0.8332  con=4.7310  acc=0.938
+  val loss=4.5281  cls=0.1431  recon=2.0982  con=4.5890
+  best acc=0.8755 @ 0.64   best f1=0.7015 @ 0.63
+  confusion matrix (f1-optimal):
+[[560  44]
+ [ 53 114]]
+Fold 4 Epoch 35/250
+  train loss=3.0353  cls=0.0731  recon=0.8339  con=4.7295  acc=0.936
+  val loss=3.4900  cls=0.1462  recon=1.2199  con=4.5606
+  best acc=0.8820 @ 0.46   best f1=0.7129 @ 0.46
+  confusion matrix (f1-optimal):
+[[567  37]
+ [ 54 113]]
+Fold 4 Epoch 36/250
+  train loss=3.0290  cls=0.0686  recon=0.8340  con=4.7250  acc=0.937
+  val loss=3.6870  cls=0.1472  recon=1.3855  con=4.5654
+  best acc=0.8781 @ 0.67   best f1=0.7017 @ 0.42
+  confusion matrix (f1-optimal):
+[[536  68]
+ [ 40 127]]
+Fold 4 Epoch 37/250
+  train loss=3.0166  cls=0.0614  recon=0.8336  con=4.7136  acc=0.950
+  val loss=3.7439  cls=0.1477  recon=1.4243  con=4.5914
+  best acc=0.8859 @ 0.73   best f1=0.7262 @ 0.63
+  confusion matrix (f1-optimal):
+[[564  40]
+ [ 49 118]]
+Fold 4 Epoch 38/250
+  train loss=3.0080  cls=0.0536  recon=0.8344  con=4.7092  acc=0.953
+  val loss=3.7505  cls=0.1617  recon=1.4225  con=4.5787
+  best acc=0.8859 @ 0.67   best f1=0.6968 @ 0.57
+  confusion matrix (f1-optimal):
+[[569  35]
+ [ 59 108]]
+Fold 4 Epoch 39/250
+  train loss=3.0060  cls=0.0541  recon=0.8341  con=4.7043  acc=0.952
+  val loss=4.5372  cls=0.1677  recon=2.0903  con=4.5739
+  best acc=0.8846 @ 0.60   best f1=0.7205 @ 0.57
+  confusion matrix (f1-optimal):
+[[565  39]
+ [ 51 116]]
+Fold 4 Epoch 40/250
+  train loss=2.9927  cls=0.0477  recon=0.8330  con=4.6910  acc=0.962
+  val loss=3.6941  cls=0.1621  recon=1.3726  con=4.5830
+  best acc=0.8807 @ 0.63   best f1=0.7044 @ 0.60
+  confusion matrix (f1-optimal):
+[[565  39]
+ [ 55 112]]
+Fold 4 Epoch 41/250
+  train loss=2.9909  cls=0.0448  recon=0.8336  con=4.6919  acc=0.965
+  val loss=4.3942  cls=0.1750  recon=1.9545  con=4.5950
+  best acc=0.8755 @ 0.72   best f1=0.6927 @ 0.48
+  confusion matrix (f1-optimal):
+[[537  67]
+ [ 43 124]]
+Fold 4 Epoch 42/250
+  train loss=2.9968  cls=0.0504  recon=0.8330  con=4.6944  acc=0.959
+  val loss=4.1350  cls=0.1722  recon=1.7410  con=4.5804
+  best acc=0.8833 @ 0.69   best f1=0.6869 @ 0.66
+  confusion matrix (f1-optimal):
+[[576  28]
+ [ 65 102]]
+Fold 4 Epoch 43/250
+  train loss=2.9766  cls=0.0402  recon=0.8328  con=4.6710  acc=0.966
+  val loss=3.9457  cls=0.1797  recon=1.5739  con=4.5781
+  best acc=0.8833 @ 0.68   best f1=0.7138 @ 0.61
+  confusion matrix (f1-optimal):
+[[562  42]
+ [ 51 116]]
+Fold 4 Epoch 44/250
+  train loss=2.9683  cls=0.0351  recon=0.8316  con=4.6666  acc=0.969
+  val loss=4.0071  cls=0.2041  recon=1.6028  con=4.5857
+  best acc=0.8859 @ 0.61   best f1=0.7161 @ 0.61
+  confusion matrix (f1-optimal):
+[[572  32]
+ [ 56 111]]
+Fold 4 Epoch 45/250
+  train loss=2.9666  cls=0.0347  recon=0.8322  con=4.6622  acc=0.972
+  val loss=3.9940  cls=0.2077  recon=1.5869  con=4.5903
+  best acc=0.8768 @ 0.71   best f1=0.6921 @ 0.48
+  confusion matrix (f1-optimal):
+[[548  56]
+ [ 49 118]]
+Fold 4 Epoch 46/250
+  train loss=2.9630  cls=0.0340  recon=0.8323  con=4.6548  acc=0.975
+  val loss=4.0657  cls=0.2187  recon=1.6407  con=4.5846
+  best acc=0.8794 @ 0.68   best f1=0.6847 @ 0.68
+  confusion matrix (f1-optimal):
+[[577  27]
+ [ 66 101]]
+Fold 4 Epoch 47/250
+  train loss=2.9565  cls=0.0299  recon=0.8317  con=4.6510  acc=0.979
+  val loss=4.6924  cls=0.2238  recon=2.1679  con=4.5935
+  best acc=0.8768 @ 0.60   best f1=0.6945 @ 0.60
+  confusion matrix (f1-optimal):
+[[568  36]
+ [ 59 108]]
+Fold 4 Epoch 48/250
+  train loss=2.9578  cls=0.0326  recon=0.8321  con=4.6464  acc=0.976
+  val loss=4.5183  cls=0.2119  recon=2.0234  con=4.6108
+  best acc=0.8859 @ 0.77   best f1=0.7030 @ 0.49
+  confusion matrix (f1-optimal):
+[[557  47]
+ [ 51 116]]
+Fold 4 Epoch 49/250
+  train loss=2.9645  cls=0.0325  recon=0.8315  con=4.6644  acc=0.976
+  val loss=4.2662  cls=0.2145  recon=1.8161  con=4.5825
+  best acc=0.8833 @ 0.69   best f1=0.6987 @ 0.57
+  confusion matrix (f1-optimal):
+[[568  36]
+ [ 58 109]]
+Fold 4 Epoch 50/250
+  train loss=2.9587  cls=0.0324  recon=0.8317  con=4.6502  acc=0.974
+  val loss=4.0774  cls=0.2227  recon=1.6454  con=4.5902
+  best acc=0.8833 @ 0.54   best f1=0.7097 @ 0.54
+  confusion matrix (f1-optimal):
+[[571  33]
+ [ 57 110]]
+Fold 4 Epoch 51/250
+  train loss=2.9489  cls=0.0245  recon=0.8303  con=4.6494  acc=0.980
+  val loss=4.7794  cls=0.2402  recon=2.2287  con=4.5919
+  best acc=0.8833 @ 0.79   best f1=0.6892 @ 0.51
+  confusion matrix (f1-optimal):
+[[558  46]
+ [ 55 112]]
+Fold 4 Epoch 52/250
+  train loss=2.9491  cls=0.0263  recon=0.8318  con=4.6413  acc=0.981
+  val loss=4.2116  cls=0.2440  recon=1.7399  con=4.5951
+  best acc=0.8781 @ 0.60   best f1=0.7006 @ 0.60
+  confusion matrix (f1-optimal):
+[[567  37]
+ [ 57 110]]
+Fold 4 Epoch 53/250
+  train loss=2.9521  cls=0.0258  recon=0.8320  con=4.6492  acc=0.980
+  val loss=4.7775  cls=0.2426  recon=2.2232  con=4.5972
+  best acc=0.8846 @ 0.73   best f1=0.7039 @ 0.69
+  confusion matrix (f1-optimal):
+[[574  30]
+ [ 60 107]]
+Early stopping at epoch 53
+Fold 4 result (best epoch 33): val_loss=3.7491 (cls=0.1219, recon=1.4623, con=4.5593), val_f1=0.742 @ 0.57, val_acc=0.891 @ 0.57
+  Confusion Matrix:
+[[566  38]
+ [ 46 121]]
+Fold 4 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/resnet_ae_checkpoints_cv_holdout/fold_3.pt
+
+===== Fold 5/5 =====
+Train: 3084 | repeaters: 668 (21.7%)
+Val:   771   | repeaters: 166   (21.5%)
+Model: 9.81M params (source trial 36)
+Fold 5 Epoch 1/250
+  train loss=17.5958  cls=0.2863  recon=12.9777  con=5.0026  acc=0.616
+  val loss=24.8866  cls=0.2021  recon=19.4111  con=4.6094
+  best acc=0.7847 @ 0.51   best f1=0.3807 @ 0.47
+  confusion matrix (f1-optimal):
+[[235 370]
+ [ 40 126]]
+Fold 5 Epoch 2/250
+  train loss=4.5949  cls=0.2196  recon=1.9945  con=4.8555  acc=0.674
+  val loss=3.2496  cls=0.2029  recon=0.9516  con=4.6020
+  best acc=0.7847 @ 0.48   best f1=0.3589 @ 0.46
+  confusion matrix (f1-optimal):
+[[ 12 593]
+ [  0 166]]
+Fold 5 Epoch 3/250
+  train loss=3.3474  cls=0.2162  recon=0.9362  con=4.8465  acc=0.714
+  val loss=3.5359  cls=0.2038  recon=1.1970  con=4.5969
+  best acc=0.7847 @ 0.48   best f1=0.3578 @ 0.47
+  confusion matrix (f1-optimal):
+[[  9 596]
+ [  0 166]]
+Fold 5 Epoch 4/250
+  train loss=3.3231  cls=0.2114  recon=0.9200  con=4.8451  acc=0.738
+  val loss=3.3209  cls=0.2032  recon=1.0144  con=4.5957
+  best acc=0.7847 @ 0.48   best f1=0.3692 @ 0.47
+  confusion matrix (f1-optimal):
+[[ 51 554]
+ [  3 163]]
+Fold 5 Epoch 5/250
+  train loss=3.2924  cls=0.2102  recon=0.8950  con=4.8448  acc=0.769
+  val loss=4.2713  cls=0.2020  recon=1.8260  con=4.5969
+  best acc=0.7847 @ 0.47   best f1=0.3555 @ 0.46
+  confusion matrix (f1-optimal):
+[[  3 602]
+ [  0 166]]
+Fold 5 Epoch 6/250
+  train loss=3.2640  cls=0.2095  recon=0.8713  con=4.8449  acc=0.767
+  val loss=7.8934  cls=0.2019  recon=4.9169  con=4.5960
+  best acc=0.7847 @ 0.48   best f1=0.3562 @ 0.46
+  confusion matrix (f1-optimal):
+[[  5 600]
+ [  0 166]]
+Fold 5 Epoch 7/250
+  train loss=3.2482  cls=0.2083  recon=0.8591  con=4.8444  acc=0.776
+  val loss=3.8810  cls=0.2014  recon=1.4934  con=4.5972
+  best acc=0.7847 @ 0.48   best f1=0.3624 @ 0.46
+  confusion matrix (f1-optimal):
+[[ 21 584]
+ [  0 166]]
+Fold 5 Epoch 8/250
+  train loss=3.2407  cls=0.2088  recon=0.8522  con=4.8445  acc=0.775
+  val loss=4.0171  cls=0.1994  recon=1.6109  con=4.5983
+  best acc=0.7847 @ 0.47   best f1=0.4154 @ 0.46
+  confusion matrix (f1-optimal):
+[[359 246]
+ [ 58 108]]
+Fold 5 Epoch 9/250
+  train loss=3.2324  cls=0.2064  recon=0.8471  con=4.8446  acc=0.778
+  val loss=4.8777  cls=0.1925  recon=2.3522  con=4.5949
+  best acc=0.7951 @ 0.47   best f1=0.4758 @ 0.46
+  confusion matrix (f1-optimal):
+[[441 164]
+ [ 63 103]]
+Fold 5 Epoch 10/250
+  train loss=3.2280  cls=0.2036  recon=0.8455  con=4.8454  acc=0.774
+  val loss=4.0284  cls=0.1915  recon=1.6279  con=4.5964
+  best acc=0.7847 @ 0.50   best f1=0.5312 @ 0.49
+  confusion matrix (f1-optimal):
+[[489 116]
+ [ 64 102]]
+Fold 5 Epoch 11/250
+  train loss=3.2192  cls=0.1963  recon=0.8442  con=4.8454  acc=0.764
+  val loss=3.6113  cls=0.1718  recon=1.2854  con=4.6060
+  best acc=0.8171 @ 0.50   best f1=0.5562 @ 0.49
+  confusion matrix (f1-optimal):
+[[514  91]
+ [ 67  99]]
+Fold 5 Epoch 12/250
+  train loss=3.2087  cls=0.1888  recon=0.8424  con=4.8433  acc=0.743
+  val loss=7.3443  cls=0.1606  recon=4.4834  con=4.5966
+  best acc=0.8353 @ 0.49   best f1=0.6044 @ 0.49
+  confusion matrix (f1-optimal):
+[[547  58]
+ [ 69  97]]
+Fold 5 Epoch 13/250
+  train loss=3.1981  cls=0.1798  recon=0.8417  con=4.8414  acc=0.765
+  val loss=3.5675  cls=0.1607  recon=1.2643  con=4.5870
+  best acc=0.8560 @ 0.47   best f1=0.6325 @ 0.43
+  confusion matrix (f1-optimal):
+[[531  74]
+ [ 55 111]]
+Fold 5 Epoch 14/250
+  train loss=3.1884  cls=0.1720  recon=0.8421  con=4.8358  acc=0.764
+  val loss=3.5422  cls=0.1462  recon=1.2574  con=4.5804
+  best acc=0.8651 @ 0.52   best f1=0.6645 @ 0.52
+  confusion matrix (f1-optimal):
+[[564  41]
+ [ 63 103]]
+Fold 5 Epoch 15/250
+  train loss=3.1793  cls=0.1662  recon=0.8414  con=4.8297  acc=0.796
+  val loss=5.2265  cls=0.1375  recon=2.7046  con=4.5731
+  best acc=0.8599 @ 0.55   best f1=0.6421 @ 0.47
+  confusion matrix (f1-optimal):
+[[513  92]
+ [ 44 122]]
+Fold 5 Epoch 16/250
+  train loss=3.1732  cls=0.1620  recon=0.8411  con=4.8264  acc=0.800
+  val loss=4.1310  cls=0.1377  recon=1.7680  con=4.5779
+  best acc=0.8703 @ 0.51   best f1=0.6919 @ 0.45
+  confusion matrix (f1-optimal):
+[[546  59]
+ [ 47 119]]
+Fold 5 Epoch 17/250
+  train loss=3.1605  cls=0.1536  recon=0.8393  con=4.8209  acc=0.815
+  val loss=4.5779  cls=0.1281  recon=2.1619  con=4.5652
+  best acc=0.8781 @ 0.59   best f1=0.6994 @ 0.55
+  confusion matrix (f1-optimal):
+[[559  46]
+ [ 52 114]]
+Fold 5 Epoch 18/250
+  train loss=3.1542  cls=0.1511  recon=0.8385  con=4.8138  acc=0.826
+  val loss=3.4573  cls=0.1458  recon=1.1937  con=4.5572
+  best acc=0.8820 @ 0.47   best f1=0.7003 @ 0.38
+  confusion matrix (f1-optimal):
+[[552  53]
+ [ 48 118]]
+Fold 5 Epoch 19/250
+  train loss=3.1391  cls=0.1435  recon=0.8369  con=4.8007  acc=0.841
+  val loss=3.6464  cls=0.1209  recon=1.3817  con=4.5418
+  best acc=0.8911 @ 0.57   best f1=0.7184 @ 0.55
+  confusion matrix (f1-optimal):
+[[573  32]
+ [ 55 111]]
+Fold 5 Epoch 20/250
+  train loss=3.1307  cls=0.1361  recon=0.8364  con=4.7997  acc=0.840
+  val loss=3.6785  cls=0.1164  recon=1.4136  con=4.5401
+  best acc=0.8898 @ 0.59   best f1=0.7230 @ 0.51
+  confusion matrix (f1-optimal):
+[[552  53]
+ [ 42 124]]
+Fold 5 Epoch 21/250
+  train loss=3.1295  cls=0.1377  recon=0.8364  con=4.7931  acc=0.843
+  val loss=3.7122  cls=0.1182  recon=1.4396  con=4.5433
+  best acc=0.8872 @ 0.62   best f1=0.7289 @ 0.50
+  confusion matrix (f1-optimal):
+[[553  52]
+ [ 41 125]]
+Fold 5 Epoch 22/250
+  train loss=3.1148  cls=0.1273  recon=0.8361  con=4.7836  acc=0.866
+  val loss=3.6017  cls=0.1157  recon=1.3515  con=4.5320
+  best acc=0.8898 @ 0.65   best f1=0.7362 @ 0.55
+  confusion matrix (f1-optimal):
+[[553  52]
+ [ 39 127]]
+Fold 5 Epoch 23/250
+  train loss=3.1177  cls=0.1287  recon=0.8358  con=4.7881  acc=0.860
+  val loss=3.6732  cls=0.1297  recon=1.3943  con=4.5495
+  best acc=0.8859 @ 0.43   best f1=0.7284 @ 0.43
+  confusion matrix (f1-optimal):
+[[565  40]
+ [ 48 118]]
+Fold 5 Epoch 24/250
+  train loss=3.1111  cls=0.1246  recon=0.8363  con=4.7808  acc=0.864
+  val loss=3.3761  cls=0.1169  recon=1.1513  con=4.5508
+  best acc=0.8911 @ 0.57   best f1=0.7273 @ 0.54
+  confusion matrix (f1-optimal):
+[[568  37]
+ [ 50 116]]
+Fold 5 Epoch 25/250
+  train loss=3.1090  cls=0.1223  recon=0.8356  con=4.7831  acc=0.868
+  val loss=3.5480  cls=0.1155  recon=1.3021  con=4.5427
+  best acc=0.8949 @ 0.66   best f1=0.7385 @ 0.59
+  confusion matrix (f1-optimal):
+[[566  39]
+ [ 46 120]]
+Fold 5 Epoch 26/250
+  train loss=3.0959  cls=0.1144  recon=0.8353  con=4.7713  acc=0.878
+  val loss=3.6035  cls=0.1229  recon=1.3410  con=4.5486
+  best acc=0.8911 @ 0.60   best f1=0.7198 @ 0.49
+  confusion matrix (f1-optimal):
+[[554  51]
+ [ 44 122]]
+Fold 5 Epoch 27/250
+  train loss=3.0918  cls=0.1102  recon=0.8350  con=4.7728  acc=0.892
+  val loss=3.5824  cls=0.1164  recon=1.3298  con=4.5451
+  best acc=0.8846 @ 0.63   best f1=0.7273 @ 0.54
+  confusion matrix (f1-optimal):
+[[561  44]
+ [ 46 120]]
+Fold 5 Epoch 28/250
+  train loss=3.0814  cls=0.1065  recon=0.8352  con=4.7563  acc=0.898
+  val loss=3.4584  cls=0.1153  recon=1.2260  con=4.5419
+  best acc=0.8846 @ 0.55   best f1=0.7316 @ 0.49
+  confusion matrix (f1-optimal):
+[[556  49]
+ [ 42 124]]
+Fold 5 Epoch 29/250
+  train loss=3.0776  cls=0.1049  recon=0.8344  con=4.7533  acc=0.890
+  val loss=3.4761  cls=0.1228  recon=1.2327  con=4.5477
+  best acc=0.8962 @ 0.53   best f1=0.7484 @ 0.53
+  confusion matrix (f1-optimal):
+[[572  33]
+ [ 47 119]]
+Fold 5 Epoch 30/250
+  train loss=3.0788  cls=0.1041  recon=0.8347  con=4.7569  acc=0.903
+  val loss=3.7535  cls=0.1181  recon=1.4779  con=4.5352
+  best acc=0.8885 @ 0.63   best f1=0.7354 @ 0.51
+  confusion matrix (f1-optimal):
+[[544  61]
+ [ 34 132]]
+Fold 5 Epoch 31/250
+  train loss=3.0636  cls=0.0951  recon=0.8336  con=4.7454  acc=0.907
+  val loss=3.4593  cls=0.1242  recon=1.2145  con=4.5549
+  best acc=0.8936 @ 0.54   best f1=0.7545 @ 0.54
+  confusion matrix (f1-optimal):
+[[563  42]
+ [ 40 126]]
+Fold 5 Epoch 32/250
+  train loss=3.0647  cls=0.0932  recon=0.8357  con=4.7466  acc=0.918
+  val loss=3.4607  cls=0.1250  recon=1.2160  con=4.5524
+  best acc=0.8872 @ 0.54   best f1=0.7389 @ 0.43
+  confusion matrix (f1-optimal):
+[[544  61]
+ [ 33 133]]
+Fold 5 Epoch 33/250
+  train loss=3.0626  cls=0.0915  recon=0.8340  con=4.7505  acc=0.909
+  val loss=3.4658  cls=0.1283  recon=1.2197  con=4.5463
+  best acc=0.8885 @ 0.60   best f1=0.7389 @ 0.44
+  confusion matrix (f1-optimal):
+[[544  61]
+ [ 33 133]]
+Fold 5 Epoch 34/250
+  train loss=3.0443  cls=0.0813  recon=0.8336  con=4.7323  acc=0.931
+  val loss=3.4476  cls=0.1292  recon=1.1996  con=4.5571
+  best acc=0.8975 @ 0.57   best f1=0.7443 @ 0.57
+  confusion matrix (f1-optimal):
+[[577  28]
+ [ 51 115]]
+Fold 5 Epoch 35/250
+  train loss=3.0321  cls=0.0743  recon=0.8337  con=4.7193  acc=0.934
+  val loss=3.4261  cls=0.1340  recon=1.1752  con=4.5625
+  best acc=0.8936 @ 0.67   best f1=0.7230 @ 0.67
+  confusion matrix (f1-optimal):
+[[582  23]
+ [ 59 107]]
+Fold 5 Epoch 36/250
+  train loss=3.0248  cls=0.0678  recon=0.8331  con=4.7193  acc=0.940
+  val loss=3.3685  cls=0.1408  recon=1.1197  con=4.5642
+  best acc=0.8885 @ 0.70   best f1=0.7341 @ 0.52
+  confusion matrix (f1-optimal):
+[[552  53]
+ [ 39 127]]
+Fold 5 Epoch 37/250
+  train loss=3.0225  cls=0.0683  recon=0.8327  con=4.7136  acc=0.940
+  val loss=3.4749  cls=0.1345  recon=1.2199  con=4.5525
+  best acc=0.8936 @ 0.63   best f1=0.7394 @ 0.54
+  confusion matrix (f1-optimal):
+[[563  42]
+ [ 44 122]]
+Fold 5 Epoch 38/250
+  train loss=3.0081  cls=0.0576  recon=0.8335  con=4.7027  acc=0.952
+  val loss=3.7829  cls=0.1423  recon=1.4739  con=4.5585
+  best acc=0.8936 @ 0.59   best f1=0.7438 @ 0.59
+  confusion matrix (f1-optimal):
+[[570  35]
+ [ 47 119]]
+Fold 5 Epoch 39/250
+  train loss=3.0060  cls=0.0556  recon=0.8333  con=4.7030  acc=0.947
+  val loss=3.5988  cls=0.1523  recon=1.3096  con=4.5551
+  best acc=0.8923 @ 0.75   best f1=0.7195 @ 0.63
+  confusion matrix (f1-optimal):
+[[577  28]
+ [ 57 109]]
+Fold 5 Epoch 40/250
+  train loss=3.0001  cls=0.0537  recon=0.8325  con=4.6958  acc=0.962
+  val loss=3.5684  cls=0.1588  recon=1.2762  con=4.5604
+  best acc=0.8962 @ 0.69   best f1=0.7375 @ 0.54
+  confusion matrix (f1-optimal):
+[[569  36]
+ [ 48 118]]
+Fold 5 Epoch 41/250
+  train loss=3.0084  cls=0.0560  recon=0.8337  con=4.7064  acc=0.952
+  val loss=3.5187  cls=0.1522  recon=1.2401  con=4.5585
+  best acc=0.8949 @ 0.68   best f1=0.7254 @ 0.68
+  confusion matrix (f1-optimal):
+[[583  22]
+ [ 59 107]]
+Fold 5 Epoch 42/250
+  train loss=2.9907  cls=0.0493  recon=0.8333  con=4.6816  acc=0.965
+  val loss=3.5801  cls=0.1655  recon=1.2712  con=4.5863
+  best acc=0.8962 @ 0.75   best f1=0.7351 @ 0.75
+  confusion matrix (f1-optimal):
+[[580  25]
+ [ 55 111]]
+Fold 5 Epoch 43/250
+  train loss=2.9876  cls=0.0472  recon=0.8327  con=4.6810  acc=0.964
+  val loss=3.7702  cls=0.1743  recon=1.4297  con=4.5755
+  best acc=0.8911 @ 0.74   best f1=0.7143 @ 0.74
+  confusion matrix (f1-optimal):
+[[582  23]
+ [ 61 105]]
+Fold 5 Epoch 44/250
+  train loss=2.9797  cls=0.0399  recon=0.8327  con=4.6797  acc=0.965
+  val loss=3.6130  cls=0.1807  recon=1.2952  con=4.5614
+  best acc=0.8936 @ 0.69   best f1=0.7307 @ 0.58
+  confusion matrix (f1-optimal):
+[[566  39]
+ [ 48 118]]
+Fold 5 Epoch 45/250
+  train loss=2.9898  cls=0.0491  recon=0.8323  con=4.6826  acc=0.964
+  val loss=3.7009  cls=0.1673  recon=1.3781  con=4.5711
+  best acc=0.8923 @ 0.64   best f1=0.7296 @ 0.64
+  confusion matrix (f1-optimal):
+[[576  29]
+ [ 54 112]]
+Fold 5 Epoch 46/250
+  train loss=2.9814  cls=0.0428  recon=0.8325  con=4.6772  acc=0.963
+  val loss=3.6593  cls=0.1782  recon=1.3364  con=4.5624
+  best acc=0.8911 @ 0.54   best f1=0.7401 @ 0.51
+  confusion matrix (f1-optimal):
+[[565  40]
+ [ 45 121]]
+Fold 5 Epoch 47/250
+  train loss=2.9776  cls=0.0397  recon=0.8324  con=4.6759  acc=0.966
+  val loss=3.4647  cls=0.1902  recon=1.1477  con=4.5974
+  best acc=0.8885 @ 0.60   best f1=0.7208 @ 0.60
+  confusion matrix (f1-optimal):
+[[574  31]
+ [ 55 111]]
+Fold 5 Epoch 48/250
+  train loss=2.9714  cls=0.0316  recon=0.8324  con=4.6805  acc=0.974
+  val loss=3.6805  cls=0.1969  recon=1.3412  con=4.5551
+  best acc=0.8872 @ 0.43   best f1=0.7449 @ 0.43
+  confusion matrix (f1-optimal):
+[[557  48]
+ [ 39 127]]
+Fold 5 Epoch 49/250
+  train loss=2.9700  cls=0.0345  recon=0.8320  con=4.6711  acc=0.975
+  val loss=3.5097  cls=0.1987  recon=1.1889  con=4.5693
+  best acc=0.8859 @ 0.53   best f1=0.7301 @ 0.53
+  confusion matrix (f1-optimal):
+[[564  41]
+ [ 47 119]]
+Fold 5 Epoch 50/250
+  train loss=2.9670  cls=0.0309  recon=0.8322  con=4.6719  acc=0.973
+  val loss=3.5684  cls=0.1941  recon=1.2506  con=4.5480
+  best acc=0.8846 @ 0.54   best f1=0.7295 @ 0.54
+  confusion matrix (f1-optimal):
+[[562  43]
+ [ 46 120]]
+Fold 5 Epoch 51/250
+  train loss=2.9692  cls=0.0359  recon=0.8316  con=4.6669  acc=0.969
+  val loss=3.4756  cls=0.1952  recon=1.1662  con=4.5598
+  best acc=0.8859 @ 0.60   best f1=0.7284 @ 0.49
+  confusion matrix (f1-optimal):
+[[558  47]
+ [ 44 122]]
+Early stopping at epoch 51
+Fold 5 result (best epoch 31): val_loss=3.4593 (cls=0.1242, recon=1.2145, con=4.5549), val_f1=0.754 @ 0.54, val_acc=0.894 @ 0.54
+  Confusion Matrix:
+[[563  42]
+ [ 40 126]]
+Fold 5 checkpoint saved -> /scratch/gpfs/MLISANTI/ra0438/resnet_ae_checkpoints_cv_holdout/fold_4.pt
+
+===== 5-Fold Cross-Validation Summary =====
+Fold 1: F1=0.7335  Accuracy=0.8898  Val Loss=4.7872
+Fold 2: F1=0.7209  Accuracy=0.8755  Val Loss=3.2118
+Fold 3: F1=0.7318  Accuracy=0.8781  Val Loss=3.9434
+Fold 4: F1=0.7423  Accuracy=0.8911  Val Loss=3.7491
+Fold 5: F1=0.7545  Accuracy=0.8936  Val Loss=3.4593
+
+Mean F1       : 0.7366 +/- 0.0112
+Mean Accuracy : 0.8856 +/- 0.0074
+Mean Val Loss : 3.8301 +/- 0.5395
+
+All fold checkpoints saved to: /scratch/gpfs/MLISANTI/ra0438/resnet_ae_checkpoints_cv_holdout
+
+===== Holdout Evaluation Per Fold =====
+Holdout: 681 | repeaters: 147 (21.6%)
+
+----- Fold 1/5 on Holdout -----
+  @ val threshold 0.53: F1=0.6619  Acc=0.8620
+  confusion matrix:
+[[495  39]
+ [ 55  92]]
+  swept on holdout: F1=0.6978 @ 0.45  Acc=0.8664 @ 0.57  Loss=4.5438
+  confusion matrix (f1-optimal):
+[[472  62]
+ [ 35 112]]
+
+----- Fold 2/5 on Holdout -----
+  @ val threshold 0.46: F1=0.6879  Acc=0.8561
+  confusion matrix:
+[[475  59]
+ [ 39 108]]
+  swept on holdout: F1=0.7031 @ 0.54  Acc=0.8722 @ 0.54  Loss=3.2793
+  confusion matrix (f1-optimal):
+[[491  43]
+ [ 44 103]]
+
+----- Fold 3/5 on Holdout -----
+  @ val threshold 0.51: F1=0.6481  Acc=0.8326
+  confusion matrix:
+[[462  72]
+ [ 42 105]]
+  swept on holdout: F1=0.6645 @ 0.56  Acc=0.8620 @ 0.82  Loss=3.9416
+  confusion matrix (f1-optimal):
+[[474  60]
+ [ 44 103]]
+
+----- Fold 4/5 on Holdout -----
+  @ val threshold 0.57: F1=0.6502  Acc=0.8546
+  confusion matrix:
+[[490  44]
+ [ 55  92]]
+  swept on holdout: F1=0.6629 @ 0.41  Acc=0.8649 @ 0.67  Loss=3.8964
+  confusion matrix (f1-optimal):
+[[447  87]
+ [ 31 116]]
+
+----- Fold 5/5 on Holdout -----
+  @ val threshold 0.54: F1=0.6877  Acc=0.8546
+  confusion matrix:
+[[473  61]
+ [ 38 109]]
+  swept on holdout: F1=0.7023 @ 0.62  Acc=0.8693 @ 0.62  Loss=3.5590
+  confusion matrix (f1-optimal):
+[[487  47]
+ [ 42 105]]
+
+===== Holdout Evaluation Summary =====
+Fold 1: F1(val thr)=0.6619  Acc(val thr)=0.8620  F1(swept)=0.6978  Acc(swept)=0.8664  Loss=4.5438
+Fold 2: F1(val thr)=0.6879  Acc(val thr)=0.8561  F1(swept)=0.7031  Acc(swept)=0.8722  Loss=3.2793
+Fold 3: F1(val thr)=0.6481  Acc(val thr)=0.8326  F1(swept)=0.6645  Acc(swept)=0.8620  Loss=3.9416
+Fold 4: F1(val thr)=0.6502  Acc(val thr)=0.8546  F1(swept)=0.6629  Acc(swept)=0.8649  Loss=3.8964
+Fold 5: F1(val thr)=0.6877  Acc(val thr)=0.8546  F1(swept)=0.7023  Acc(swept)=0.8693  Loss=3.5590
+
+Mean Holdout F1  (val threshold): 0.6672 +/- 0.0175
+Mean Holdout Acc (val threshold): 0.8520 +/- 0.0101
+Mean Holdout F1  (swept)        : 0.6861 +/- 0.0184
+Mean Holdout Acc (swept)        : 0.8670 +/- 0.0035
+Mean Holdout Loss               : 3.8440 +/- 0.4248
